@@ -1262,6 +1262,9 @@ blockquote {
 .top-1\/2 {
   top: calc(1/2 * 100%);
 }
+.top-1\/4 {
+  top: calc(1/4 * 100%);
+}
 .top-2 {
   top: calc(var(--spacing) * 2);
 }
@@ -1279,9 +1282,6 @@ blockquote {
 }
 .top-28 {
   top: calc(var(--spacing) * 28);
-}
-.top-36 {
-  top: calc(var(--spacing) * 36);
 }
 .top-full {
   top: 100%;
@@ -5475,6 +5475,11 @@ blockquote {
   }
 }
 @media (width < 64rem) {
+  .max-lg\:aspect-3\/4 {
+    aspect-ratio: 3/4;
+  }
+}
+@media (width < 64rem) {
   .max-lg\:aspect-square {
     aspect-ratio: 1 / 1;
   }
@@ -5980,6 +5985,11 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:top-22 {
     top: calc(var(--spacing) * 22);
+  }
+}
+@media (width >= 64rem) {
+  .lg\:top-36 {
+    top: calc(var(--spacing) * 36);
   }
 }
 @media (width >= 64rem) {
