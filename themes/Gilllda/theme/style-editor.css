@@ -4889,9 +4889,9 @@ blockquote {
   content: var(--tw-content);
   border-radius: calc(infinity * 1px);
 }
-.before\:rounded-xl::before {
+.before\:rounded-lg::before {
   content: var(--tw-content);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
 }
 .before\:bg-icon::before {
   content: var(--tw-content);
@@ -4905,13 +4905,13 @@ blockquote {
   content: var(--tw-content);
   background-color: color-mix(in oklab, var(--color-secondary) 50%, transparent);
 }
-.before\:bg-white::before {
-  content: var(--tw-content);
-  background-color: var(--color-white);
-}
 .before\:bg-white\/20::before {
   content: var(--tw-content);
   background-color: color-mix(in oklab, var(--color-white) 20%, transparent);
+}
+.before\:bg-white\/50::before {
+  content: var(--tw-content);
+  background-color: color-mix(in oklab, var(--color-white) 50%, transparent);
 }
 .before\:bg-gradient-to-b::before {
   content: var(--tw-content);
