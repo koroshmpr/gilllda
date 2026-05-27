@@ -21,7 +21,7 @@ if ($show) :
                 <source media="(max-width: 969px)" srcset="<?= $popUp['image']['mobile']['url'] ?? ''; ?>">
                 <img class="lg:max-w-[600px] group-hover:scale-110 transition-all duration-300 object-cover aspect-3/4 md:aspect-video" src="<?= esc_url($popUp['image']['desktop']['url'] ?? ''); ?>" alt="<?= esc_attr($popUp['image']['desktop']['title'] ?? ''); ?>">
             </picture>
-            <a class="absolute bottom-3 inset-x-3 border font-bold border-white/40 py-4 shadow text-center rounded-md text-lg text-white bg-secondary hover:brightness-125 transition-all" href="<?= esc_url($popUp['link']['url'] ?? '#'); ?>"><?= esc_html($popUp['link']['title'] ?? ''); ?></a>
+            <a @click.self="closePopup()" class="absolute bottom-3 inset-x-3 border font-bold border-white/40 py-4 shadow text-center rounded-md text-lg text-white bg-secondary hover:brightness-125 transition-all" href="<?= esc_url($popUp['link']['url'] ?? '#'); ?>"><?= esc_html($popUp['link']['title'] ?? ''); ?></a>
         </div>
     </div>
     <script>
