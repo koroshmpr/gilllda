@@ -1,0 +1,49 @@
+/**
+ * Custom `@font-face` rules
+ *
+ * These will be added immediately before Tailwind’s `base` layer.
+ */
+@font-face {
+	font-family: Peyda;
+	font-style: normal;
+	font-weight: 300;
+	font-display: swap;
+	src: url('../../../theme/fonts/Peyda/fonts/woff2/PeydaWebFaNum-Light.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../../../theme/fonts/Peyda/fonts/woff/PeydaWebFaNum-Light.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+}
+@font-face {
+	font-family: Peyda;
+	font-style: normal;
+	font-display: swap;
+	font-weight: 400;
+	src: url('../../../theme/fonts/Peyda/fonts/woff2/PeydaWebFaNum-Regular.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+	url('../../../theme/fonts/Peyda/fonts/woff/PeydaWebFaNum-Regular.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+}
+@font-face {
+	font-family: Peyda;
+	font-style: normal;
+	font-display: swap;
+	font-weight: 500;
+	src: url('../../../theme/fonts/Peyda/fonts/woff2/PeydaWebFaNum-Medium.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../../../theme/fonts/Peyda/fonts/woff/PeydaWebFaNum-Medium.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+}
+@font-face {
+	font-family: Peyda;
+	font-style: normal;
+	font-display: swap;
+	font-weight: 700;
+	src: url('../../../theme/fonts/Peyda/fonts/woff2/PeydaWebFaNum-Bold.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+	url('../../../theme/fonts/Peyda/fonts/woff/PeydaWebFaNum-Bold.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+}
+@font-face {
+	font-family: Peyda;
+	font-style: normal;
+	font-display: swap;
+	font-weight: 900;
+	src: url('../../../theme/fonts/Peyda/fonts/woff2/PeydaWebFaNum-Black.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../../../theme/fonts/Peyda/fonts/woff/PeydaWebFaNum-Black.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+}
+
+.font-peyda {
+	font-family: Peyda, serif;
+}

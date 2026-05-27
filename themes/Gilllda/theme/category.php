@@ -1,0 +1,49 @@
+<?php
+get_header();
+$term_id = get_queried_object_id();
+$term = get_queried_object();
+$term_id = $term->term_id;
+$content = get_field('content', 'category_' . $term_id);
+?>
+    <article class="container bg-white grid lg:grid-cols-12 gap-4 max-lg:px-3 pt-2">
+        <header class="lg:col-span-12 border-b border-black/10">
+            <h1 class="text-black text-3xl border-b-2 pb-3 border-primary w-fit"><?= esc_html(single_cat_title('', false)); ?></h1>
+        </header>
+        <?php
+        if (have_posts()) :
+
+            $args = array(
+                'term_id' => $term_id,
+            );
+            get_template_part('template-parts/blog/sidebar', null, $args); ?>
+            <section x-data="{ gridView: 'large' }"
+                     class="lg:col-span-8 xl:col-span-9 max-w-content flex flex-col gap-3 mb-8">
+                <?php get_template_part('template-parts/global/grid-button'); ?>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
+                     :class="gridView === 'large' ? 'md:grid-cols-1 lg:!grid-cols-2 xl:!grid-cols-3' : 'grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4'">
+                    <?php
+                    while (have_posts()) :
+                        the_post();
+                        $args = array(
+                            'class' => 'transition-all duration-500',
+                        );
+                        get_template_part('template-parts/blog/archive-card', null, $args);
+                    endwhile;
+                    ?>
+                </div>
+            </section>
+            <?php get_template_part('template-parts/global/pagination');
+            // Reset query
+            wp_reset_postdata();
+        endif;
+        ?>
+    </article>
+<?php
+if ($content) :
+    $args = array(
+        'id' => 'category_' . $term_id,
+        'class' => 'container max-w-content my-3'
+    );
+    get_template_part('template-parts/shop/shop-content', null, $args);
+endif;
+get_footer();

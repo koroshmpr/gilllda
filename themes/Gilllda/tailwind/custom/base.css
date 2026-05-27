@@ -1,0 +1,82 @@
+/**
+ * Custom styles to immediately follow Tailwind’s `base` layer
+ */
+
+/**
+ * This uses the background and foreground colors declared in the `theme.json`
+ * file and is applied both to the front end and in the block editor.
+ */
+@import 'swiper/swiper-bundle.css';
+
+/* Define the style for the scrollbar thumb */
+::-webkit-scrollbar {
+	width: 7px;
+	height: 0;
+}
+::-webkit-scrollbar-thumb {
+	@apply bg-gradient-to-b via-primary;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.ltr {
+	direction: ltr;
+}
+.page-item {
+	&.next a,
+	&.prev a,
+	.page-numbers{
+		@apply bg-primary/90 hover:bg-primary rounded-md size-10 flex items-center justify-center aspect-square text-white cursor-pointer;
+		&.current {
+			@apply bg-primary/50 cursor-default
+		}
+	}
+}
+
+a {
+	@apply !no-underline;
+}
+
+* {
+	scroll-margin-top: 150px;
+	scroll-behavior: smooth;
+}
+
+
+.swiper-pagination-vertical {
+	@apply flex-col !w-4 !h-fit;
+
+	.swiper-pagination-bullet  {
+		@apply bg-white !h-2 !w-full transform !scale-100 !rounded-[1px] !m-0 opacity-100 !static !transition-all !duration-500;
+		&.swiper-pagination-bullet-active {
+			@apply bg-primary !h-6;
+		}
+	}
+}
+
+.swiper-pagination-horizontal {
+	@apply  !h-4 !w-fit;
+	.swiper-pagination-bullet {
+		@apply bg-white !w-2 !h-full transform !scale-100 !rounded-[1px] !m-0 opacity-100 !static !transition-all !duration-500;
+		&.swiper-pagination-bullet-active {
+			@apply bg-primary !w-6;
+		}
+	}
+}
+.wc-block-cart__submit-button {
+	@apply !bg-primary rounded-md hover:brightness-110 transition-all duration-500;
+}
+.wc-block-checkout__contact-fields ,
+.wc-block-components-address-form-wrapper{
+	input ,
+	textarea,
+	select {
+		@apply !border-gray-200 border
+	}
+}
+blockquote {
+	@apply border-s-4 border !border-s-primary !border-primary/30 rounded-xl bg-primary/5 p-3;
+}
+

@@ -1,0 +1,107 @@
+body:not(.page-template-form) {
+	.gform_wrapper {
+		@apply text-black;
+		.gfield_label.gform-field-label {
+			@apply mb-8 lg:mb-6 lg:text-xl
+		}
+		.gform-loader {
+			@apply fixed left-2 top-2;
+		}
+		.gform_fields {
+			@apply max-lg:!flex flex-wrap;
+			.gfield {
+				@apply max-lg:w-full;
+			}
+			.gfield--type-submit{
+				@apply max-lg:w-fit;
+			}
+		}
+
+		.gform_required_legend {
+			@apply !hidden
+		}
+		input[id^="gform_submit_button_"]{
+			@apply !border-white/20 !bg-primary/85 !px-12 !py-4 !text-white hover:!bg-primary max-lg:!w-full
+		}
+		.gform_body {
+
+			input:not([type="submit"]):not([type="file"]),  textarea {
+				&::placeholder {
+					@apply text-black/60
+				}
+				@apply !bg-white/50 !border !border-white/20 max-lg:!w-full p-5;
+			}
+
+			input:not([type="submit"]), select {
+				@apply  max-lg:!w-full;
+			}
+		}
+	}
+
+	.gfield--type-fileupload {
+		input[type="file"] {
+			@apply !bg-transparent !border !border-white/20 max-lg:!w-full !text-black;
+		}
+	}
+}
+
+#respond, #wp-temp-form-div {
+	@apply bg-gray-50 p-5 xl:sticky top-28 border border-black/5 xl:row-span-4 xl:order-2 !block;
+}
+.comment #respond {
+	@apply xl:static
+}
+#comments {
+	#reply-title {
+		@apply mb-5
+	}
+	.comment-notes {
+		@apply hidden
+	}
+	#cancel-comment-reply-link {
+		@apply ms-5 bg-primary px-2 py-1 rounded-sm text-white
+	}
+	ol.children {
+		@apply w-11/12 mr-auto;
+	}
+}
+.comment-form {
+	.form-submit {
+		@apply me-auto;
+		#submit {
+			@apply !bg-gray-700 transition-all !rounded-md hover:brightness-110 !text-white !px-6 !py-3 cursor-pointer;
+		}
+	}
+	@apply grid lg:grid-cols-2 gap-3;
+	.comment-form-comment, .comment-notes {
+		@apply w-full flex flex-col lg:col-span-2 items-stretch;
+	}
+	label {
+		@apply absolute top-0 start-2 bg-gray-50 px-2 w-fit -translate-y-1/2;
+	}
+	p {
+		@apply flex gap-2 items-center relative mt-2;
+	}
+	p.logged-in-as {
+		@apply block lg:col-span-2
+	}
+	input , textarea {
+		@apply border border-black/10 rounded-sm w-full py-3 px-2;
+	}
+	.comment-form-cookies-consent {
+		@apply flex lg:col-span-2 justify-start;
+		label {
+			@apply w-full relative translate-y-0 text-xs
+		}
+	}
+	.comment-notes { @apply text-xs mb-3}
+	#wp-comment-cookies-consent {
+		@apply w-fit;
+	}
+}
+	.input-text {
+		@apply !border !border-black/10 !rounded-sm !w-full !py-3 !px-2;
+	}
+.select2-selection {
+	@apply !border !border-black/10 !rounded-sm !w-full !px-2 !py-1;
+}

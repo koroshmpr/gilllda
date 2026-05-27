@@ -1,0 +1,22 @@
+/**
+ * Custom styles to immediately follow Tailwind’s `utilities` layer
+ *
+ * Add your own utility classes to this theme. Complex utility classes should
+ * be added using Tailwind’s plugin system:
+ *
+ * https://tailwindcss.com/docs/adding-custom-styles#adding-custom-utilities
+ */
+@utility container {
+	margin-inline: auto;
+	padding-inline: 1.5rem;
+}
+.text-stroke-3 {
+	-webkit-text-stroke: 1px rgba(255, 255, 255, 0.30);
+}
+.swiper-button-disabled {
+	@apply opacity-0
+}
+.animate-duration-4000::after {
+	animation-duration: 4000ms!important;
+	animation-timing-function: linear!important;
+}

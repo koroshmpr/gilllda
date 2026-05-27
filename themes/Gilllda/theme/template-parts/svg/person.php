@@ -1,0 +1,13 @@
+<svg width="<?= $args['size'] ?? '20' ?>" height="<?= $args['size'] ?? '20' ?>"
+	 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+	 stroke-linejoin="round" class="feather feather-user shrink-0 <?= $args['class'] ?? '' ?>">
+	<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+	<circle cx="12" cy="7" r="4"></circle>
+</svg>
+<?php
+//$args = array(
+//    'size' => 20,
+//    'class' => ''
+//);
+//get_template_part('template-parts/svg/person', null, $args);
+?>
