@@ -1262,9 +1262,6 @@ blockquote {
 .top-1\/2 {
   top: calc(1/2 * 100%);
 }
-.top-1\/4 {
-  top: calc(1/4 * 100%);
-}
 .top-2 {
   top: calc(var(--spacing) * 2);
 }
@@ -5395,6 +5392,11 @@ blockquote {
   }
 }
 @media (width < 64rem) {
+  .max-lg\:inset-0 {
+    inset: calc(var(--spacing) * 0);
+  }
+}
+@media (width < 64rem) {
   .max-lg\:inset-x-0 {
     inset-inline: calc(var(--spacing) * 0);
   }
@@ -5487,6 +5489,11 @@ blockquote {
 @media (width < 64rem) {
   .max-lg\:h-\[70vh\] {
     height: 70vh;
+  }
+}
+@media (width < 64rem) {
+  .max-lg\:h-full {
+    height: 100%;
   }
 }
 @media (width < 64rem) {
@@ -5694,6 +5701,11 @@ blockquote {
   }
 }
 @media (width < 64rem) {
+  .max-lg\:p-7 {
+    padding: calc(var(--spacing) * 7);
+  }
+}
+@media (width < 64rem) {
   .max-lg\:px-0 {
     padding-inline: calc(var(--spacing) * 0);
   }
@@ -5811,8 +5823,8 @@ blockquote {
   }
 }
 @media (width < 64rem) {
-  .max-lg\:brightness-80 {
-    --tw-brightness: brightness(80%);
+  .max-lg\:brightness-50 {
+    --tw-brightness: brightness(50%);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
 }
