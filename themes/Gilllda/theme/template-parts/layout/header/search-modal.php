@@ -22,7 +22,7 @@
         <!-- Mobile Menu Items -->
         <form class="container max-lg:px-2 max-w-content my-3" role="search" method="get" action="<?= home_url() ?>">
             <fieldset class="relative overflow-hidden">
-                <label for="search-input" class="screen-reader-text">Search:</label>
+                <label for="search-input" class="sr-only screen-reader-text">Search:</label>
                 <input type="text" id="search-input"
                        class="w-full p-3 border border-gray-200 rounded-md"
                        name="s"
