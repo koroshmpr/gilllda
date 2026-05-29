@@ -59,7 +59,7 @@ function get_toc($content, $levels = [2])
     foreach ($headings as $heading) : ?>
         <li class="border-s-2 transition-all duration-300 border-transparent ps-4 -ms-0.5" :class="active === '<?= esc_attr($heading['id']); ?>' ? '!border-primary' : 'border-transparent'">
             <button aria-label="link to <?= esc_attr($heading['name']); ?>"
-                    class="<?= $textColor; ?> w-full flex justify-start py-0.5 max-w-[90%] lg:text-sm text-xs cursor-pointer transition-all duration-300"
+                    class="<?= $textColor; ?> w-full text-start flex justify-start py-0.5 max-w-[90%] lg:text-sm text-xs cursor-pointer transition-all duration-300"
                     :class="active === '<?= esc_attr($heading['id']); ?>' ? 'text-primary font-bold' : 'text-gray-400 hover:text-gray-600'"
                     @click.prevent="document.getElementById('<?= esc_attr($heading['id']); ?>').scrollIntoView({ behavior: 'smooth' }); toc = false">
                 <?= esc_html($heading['name']); ?>

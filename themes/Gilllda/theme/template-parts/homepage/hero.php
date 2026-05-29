@@ -10,10 +10,10 @@
 		<div :class="scrollingDown ? 'lg:-translate-y-24 -translate-y-8 scale-85' : (scrollingUp ? 'scale-105' : '')"
 			 class="absolute duration-700 text-white transition-all bottom-20 lg:bottom-0 z-[2] w-full inset-x-0 flex flex-col items-center">
 			<div class="flex ltr items-center text-nowrap">
-				<p class="lg:text-9xl !leading-0 tracking-[-5px] lg:tracking-[-10px] me-5 stroke-3 text-secondary font-bold stroke-white text-6xl"><?= $hero['title'] ?? ''; ?></p>
-				<p class="!leading-0 lg:text-5xl font-thin pb-4 text-xl text-primary/50 stroke-white border-b border-white"><?= $hero['adjectives'] ?? ''; ?></p>
+				<p class="lg:text-9xl !leading-0 tracking-[-5px] lg:tracking-[-10px] me-2 lg:me-5 stroke-3 text-secondary font-bold stroke-white text-6xl"><?= $hero['title'] ?? ''; ?></p>
+				<p class="!leading-0 lg:text-5xl font-thin pb-2 lg:pb-4 text-xl text-primary/50 stroke-white border-b border-white"><?= $hero['adjectives'] ?? ''; ?></p>
 			</div>
-			<h1 class="lg:text-4xl px-3 bg-gradient-to-t from-primary/60 border border-t-0 lg:pt-3 pb-1 border-white/50 xl:me-32 text-2xl"><?= $hero['subtitle'] ?? ''; ?></h1>
+			<h1 class="lg:text-4xl bg-gradient-to-t from-primary/60 border border-t-0 p-3 pb-1 border-white/50 xl:me-32 text-2xl"><?= $hero['subtitle'] ?? ''; ?></h1>
 			<a href="<?= $hero['button']['url'] ?? ''; ?>" aria-label="link to <?= $hero['button']['title'] ?? ''; ?>"
 			   class="px-5 font-bold flex gap-2 items-center group/add transition-all ease-in-out mt-10 lg:mt-4 bg-secondary rounded-sm lg:-mb-10 hover:brightness-125 hover:rounded-sm hover:ring-1 border shadow-lg backdrop-blur-sm ring-white duration-700 hover:scale-110 py-3"
 			   :class="scrollingDown ? 'translate-y-12 px-24 py-4 lg:py-8 text-2xl' : (scrollingUp ? '' : '')">

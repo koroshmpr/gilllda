@@ -1,8 +1,9 @@
 <div class="flex md:col-span-3 xl:col-span-1 flex-col gap-y-4 justify-center">
     <?php
     $args = array(
-        'logoSize' => 'h-full',
+        'logoSize' => 'max-h-15 w-auto',
         'class' => 'xl:justify-start ',
+        'logoLink' => 'footer_logo',
     );
     get_template_part('template-parts/global/logo', null, $args);
     ?>

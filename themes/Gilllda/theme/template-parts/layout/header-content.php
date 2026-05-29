@@ -13,7 +13,7 @@ global $woo_active;
             <!-- Logo -->
             <?php
             $args = array(
-                'logoSize' => 'h-full  !max-w-28'
+                'logoSize' => 'max-h-12 w-auto'
             );
             get_template_part('template-parts/global/logo', null, $args);
             ?>
@@ -25,7 +25,7 @@ global $woo_active;
                     'theme_location' => 'menu-1',
                     'menu_id' => 'primary-menu',
                     'menu_class' => 'max-lg:hidden flex gap-x-3 justify-center lg:justify-start',
-                    'show_submenus'  => true,
+                    'show_submenus' => true,
                     'walker' => new Footer_Walker_Nav_Menu(),
                 )
             );
@@ -57,17 +57,24 @@ global $woo_active;
 					<?= WC()->cart->get_cart_contents_count() ?? '0'; ?>
 				</span>
                 </a>
-            <?php endif; ?>
-            <a aria-label="go to home page" href="<?= home_url(); ?>"
-               class="<?= $class; ?>  lg:hidden bg-primary/15 border-x border-primary/20 px-4 mx-5 text-black/60">
-                <?php
-                $args = array(
-                    'size' => '25',
-                );
-                get_template_part('template-parts/svg/home', null, $args);
+            <?php endif;
+            $showLogo = get_field('show_logo_in_navbar', 'option');
+            if ($showLogo) :
                 ?>
-            </a>
-            <?php if ($woo_active) : ?>
+                <a aria-label="go to home page" href="<?= home_url(); ?>"
+                   class="flex items-center justify-center p-1 scale-125 border border-secondary aspect-square lg:hidden bg-primary rounded-full mx-5 text-black/60">
+                    <?php
+                    $logo = get_field('footer_logo', 'option') ?? ''; ?>
+                    <img width="45" height="45" class="object-fit" src="<?= $logo['url'] ?? ''; ?>" alt="<?= $logo['title'] ?? ''; ?>">
+                </a>
+            <?php else : ?>
+                <a aria-label="go to home page" href="<?= home_url(); ?>"
+                   class="<?= $class; ?>  lg:hidden bg-primary/15 border-x border-primary/20 px-4 mx-5 text-black/60">
+                    <?php get_template_part('template-parts/svg/home', null, ['size' => '25']); ?>
+                </a>
+            <?php
+            endif;
+            if ($woo_active) : ?>
                 <a aria-label="go to compare page" href="<?= home_url('/compare'); ?>" class="<?= $class; ?> relative"
                    x-data="{ compareCount: 0 }"
                    x-init="compareCount = JSON.parse(localStorage.getItem('compare_products') || '[]').length;"

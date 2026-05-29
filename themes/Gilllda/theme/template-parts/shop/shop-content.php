@@ -9,7 +9,7 @@ if ($content) :?>
 		x-data="{showMore : true}">
 		<article :class="showMore ? 'max-h-[150px] lg:max-h-[120px]' : ''"
 				 class="prose prose-sm prose-h1:max-lg:text-2xl max-w-none h-fit duration-500 overflow-hidden text-justify transition-all pb-5 leading-7">
-			<?php the_field('content'); ?>
+			<?= $content; ?>
 		</article>
 
 		<div :class="showMore ? '' : 'hidden'"
