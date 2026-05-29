@@ -137,15 +137,15 @@ function bluebox_html5_comment($comment, $args, $depth)
     $show_pending_links = !empty($commenter['comment_author']);
 
     if ($commenter['comment_author_email']) {
-        $moderation_note = __('Your comment is awaiting moderation.', 'bluebox');
+        $moderation_note = __('نظر شما در انتظار بررسی است.', 'bluebox');
     } else {
-        $moderation_note = __('Your comment is awaiting moderation. This is a preview; your comment will be visible after it has been approved.', 'bluebox');
+        $moderation_note = __('نظر شما در انتظار بررسی است. این یک پیش‌نمایش است؛ نظر شما پس از تأیید قابل مشاهده خواهد بود..', 'bluebox');
     }
     ?>
     <<?php echo esc_attr($tag); ?> id="comment-<?php comment_ID(); ?>" <?php comment_class($comment->has_children ? 'parent' : '', $comment); ?>>
     <article id="div-comment-<?php comment_ID(); ?>"
              class="comment-body bg-gray-50 border border-black/5 rounded-sm my-2 pt-4 pr-4">
-        <footer class="comment-meta flex items-center gap-2">
+        <footer class="comment-meta relative flex items-center gap-2">
             <div class="comment-author vcard flex gap-3 items-center">
                <span class="p-2 mb-2 bg-primary/90 text-white rounded-full flex justify-center items-center">
              <?php
@@ -170,7 +170,7 @@ function bluebox_html5_comment($comment, $args, $depth)
                 ?>
             </div><!-- .comment-author -->
 
-            <div class="comment-metadata text-xs flex gap-2">
+            <div class="comment-metadata text-xs flex gap-2 text-nowrap">
                 <time datetime="<?= get_comment_time('U'); ?>"
                 class="flex items-center gap-2 opacity-75">
                 <?php get_template_part('template-parts/blog/single/date',null , ['time' => get_comment_time('U')]); ?>
@@ -180,7 +180,7 @@ function bluebox_html5_comment($comment, $args, $depth)
             </div><!-- .comment-metadata -->
 
             <?php if ('0' === $comment->comment_approved) : ?>
-                <em class="comment-awaiting-moderation"><?php echo esc_html($moderation_note); ?></em>
+                <em class="comment-awaiting-moderation max-w-24 text-xs absolute top-0 end-0 bg-white border border-gray-200 text-center border-l-0 p-2"><?php echo esc_html($moderation_note); ?></em>
             <?php endif; ?>
         </footer><!-- .comment-meta -->
 
