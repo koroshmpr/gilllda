@@ -96,6 +96,7 @@ Underscores and Varia are distributed under the terms of the GNU GPL v2 or later
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
   --radius-2xl: 1rem;
+  --drop-shadow-md: 0 3px 3px rgb(0 0 0 / 0.12);
   --drop-shadow-xl: 0 9px 7px rgb(0 0 0 / 0.1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
@@ -1164,6 +1165,9 @@ blockquote {
   float: right;
   margin-left: calc(var(--spacing) * 8);
 }
+.pointer-events-none {
+  pointer-events: none;
+}
 .collapse {
   visibility: collapse;
 }
@@ -2215,6 +2219,9 @@ blockquote {
 .mt-0 {
   margin-top: calc(var(--spacing) * 0);
 }
+.mt-1 {
+  margin-top: calc(var(--spacing) * 1);
+}
 .mt-2 {
   margin-top: calc(var(--spacing) * 2);
 }
@@ -2667,6 +2674,10 @@ blockquote {
   --tw-translate-x: calc(var(--spacing) * -2);
   translate: var(--tw-translate-x) var(--tw-translate-y);
 }
+.-translate-x-\[150\%\] {
+  --tw-translate-x: calc(150% * -1);
+  translate: var(--tw-translate-x) var(--tw-translate-y);
+}
 .translate-x-1\/2 {
   --tw-translate-x: calc(1/2 * 100%);
   translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -2801,6 +2812,10 @@ blockquote {
 }
 .rotate-180 {
   rotate: 180deg;
+}
+.skew-x-\[-25deg\] {
+  --tw-skew-x: skewX(-25deg);
+  transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-rotate-z) var(--tw-skew-x) var(--tw-skew-y);
 }
 .transform {
   transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-rotate-z) var(--tw-skew-x) var(--tw-skew-y);
@@ -3544,10 +3559,6 @@ blockquote {
   --tw-gradient-position: to top in oklab;
   background-image: linear-gradient(var(--tw-gradient-stops));
 }
-.bg-gradient-to-tl {
-  --tw-gradient-position: to top left in oklab;
-  background-image: linear-gradient(var(--tw-gradient-stops));
-}
 .from-black {
   --tw-gradient-from: var(--color-black);
   --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
@@ -3572,10 +3583,6 @@ blockquote {
   --tw-gradient-from: var(--color-gray-50);
   --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
 }
-.from-primary {
-  --tw-gradient-from: var(--color-primary);
-  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-}
 .from-primary\/10 {
   --tw-gradient-from: color-mix(in oklab, var(--color-primary) 10%, transparent);
   --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
@@ -3588,8 +3595,16 @@ blockquote {
   --tw-gradient-from: color-mix(in oklab, var(--color-primary) 60%, transparent);
   --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
 }
+.from-primary\/90 {
+  --tw-gradient-from: color-mix(in oklab, var(--color-primary) 90%, transparent);
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+}
 .from-secondary\/15 {
   --tw-gradient-from: color-mix(in oklab, var(--color-secondary) 15%, transparent);
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+}
+.from-transparent {
+  --tw-gradient-from: transparent;
   --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
 }
 .from-white {
@@ -3635,8 +3650,13 @@ blockquote {
   --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-via-stops);
 }
-.via-transparent {
-  --tw-gradient-via: transparent;
+.via-primary\/30 {
+  --tw-gradient-via: color-mix(in oklab, var(--color-primary) 30%, transparent);
+  --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-via-stops);
+}
+.via-white\/20 {
+  --tw-gradient-via: color-mix(in oklab, var(--color-white) 20%, transparent);
   --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-via-stops);
 }
@@ -3671,9 +3691,6 @@ blockquote {
 .to-white\/5 {
   --tw-gradient-to: color-mix(in oklab, var(--color-white) 5%, transparent);
   --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-}
-.to-90\% {
-  --tw-gradient-to-position: 90%;
 }
 .bg-cover {
   background-size: cover;
@@ -4248,6 +4265,9 @@ blockquote {
 .opacity-75 {
   opacity: 75%;
 }
+.opacity-80 {
+  opacity: 80%;
+}
 .opacity-90 {
   opacity: 90%;
 }
@@ -4297,6 +4317,10 @@ blockquote {
 }
 .ring-white {
   --tw-ring-color: var(--color-white);
+}
+.drop-shadow-md {
+  --tw-drop-shadow: drop-shadow(var(--drop-shadow-md));
+  filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
 }
 .drop-shadow-xl {
   --tw-drop-shadow: drop-shadow(var(--drop-shadow-xl));
@@ -4360,8 +4384,8 @@ blockquote {
   transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
   transition-duration: var(--tw-duration, var(--default-transition-duration));
 }
-.delay-100 {
-  transition-delay: 100ms;
+.delay-75 {
+  transition-delay: 75ms;
 }
 .delay-200 {
   transition-delay: 200ms;
@@ -4499,6 +4523,12 @@ blockquote {
   }
 }
 @media (hover: hover) {
+  .group-hover\:translate-x-\[150\%\]:is(:where(.group):hover *) {
+    --tw-translate-x: 150%;
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+}
+@media (hover: hover) {
   .group-hover\:translate-y-0:is(:where(.group):hover *) {
     --tw-translate-y: calc(var(--spacing) * 0);
     translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -4606,22 +4636,6 @@ blockquote {
   }
 }
 @media (hover: hover) {
-  .group-hover\:ps-2:is(:where(.group):hover *) {
-    padding-inline-start: calc(var(--spacing) * 2);
-  }
-}
-@media (hover: hover) {
-  .group-hover\:pb-7:is(:where(.group):hover *) {
-    padding-bottom: calc(var(--spacing) * 7);
-  }
-}
-@media (hover: hover) {
-  .group-hover\:text-2xl:is(:where(.group):hover *) {
-    font-size: var(--text-2xl);
-    line-height: var(--tw-leading, var(--text-2xl--line-height));
-  }
-}
-@media (hover: hover) {
   .group-hover\:\!text-icon:is(:where(.group):hover *) {
     color: #f7e0c7 !important;
   }
@@ -4634,6 +4648,11 @@ blockquote {
 @media (hover: hover) {
   .group-hover\:text-primary:is(:where(.group):hover *) {
     color: var(--color-primary);
+  }
+}
+@media (hover: hover) {
+  .group-hover\:opacity-90:is(:where(.group):hover *) {
+    opacity: 90%;
   }
 }
 @media (hover: hover) {
@@ -5028,6 +5047,12 @@ blockquote {
   }
 }
 @media (hover: hover) {
+  .hover\:-translate-y-1:hover {
+    --tw-translate-y: calc(var(--spacing) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+}
+@media (hover: hover) {
   .hover\:scale-95:hover {
     --tw-scale-x: 95%;
     --tw-scale-y: 95%;
@@ -5261,6 +5286,12 @@ blockquote {
 @media (hover: hover) {
   .hover\:underline:hover {
     text-decoration-line: underline;
+  }
+}
+@media (hover: hover) {
+  .hover\:shadow-xl:hover {
+    --tw-shadow: 0 20px 25px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 8px 10px -6px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
 }
 @media (hover: hover) {
@@ -5720,11 +5751,6 @@ blockquote {
 @media (width < 64rem) {
   .max-lg\:px-1 {
     padding-inline: calc(var(--spacing) * 1);
-  }
-}
-@media (width < 64rem) {
-  .max-lg\:px-1\.5 {
-    padding-inline: calc(var(--spacing) * 1.5);
   }
 }
 @media (width < 64rem) {

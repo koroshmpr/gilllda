@@ -36,7 +36,7 @@ if (have_posts()) :?>
             مقالات
             <span >(<?= count_user_posts($author_id);?>)</span>
         </h2>
-        <div class=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pb-4 xl:grid-cols-5 gap-4">
+        <div class="grid md:grid-cols-3 lg:grid-cols-4 pb-4 xl:grid-cols-5 gap-4">
             <?php
             // Load posts loop.
             while (have_posts()) :

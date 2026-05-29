@@ -11,7 +11,7 @@ $args = array(
 $loop = new WP_Query($args);
 if ($loop->have_posts()) :?>
 
-    <section class="container max-lg:px-1.5 my-12 overflow-hidden">
+    <section class="container max-lg:px-3 my-12 overflow-hidden">
         <div class="flex justify-between items-center border-b mb-4 border-black/10">
             <h2 class="pb-2 text-lg lg:text-2xl border-b-2 border-primary/90">مطالب خواندنی</h2>
             <a class="flex gap-1 items-center group" href="/blog">
