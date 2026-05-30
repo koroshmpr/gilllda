@@ -2655,6 +2655,9 @@ blockquote {
 .min-w-20 {
   min-width: calc(var(--spacing) * 20);
 }
+.min-w-32 {
+  min-width: calc(var(--spacing) * 32);
+}
 .min-w-\[200px\] {
   min-width: 200px;
 }

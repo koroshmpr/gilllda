@@ -22,7 +22,7 @@ function render_inline_ad_shortcode($atts)
             <?php endif; ?>
 
             <a href="<?= esc_url($a['link']); ?>" target="_blank" rel="noopener nofollow"
-               class="absolute w-fit max-lg:py-3 p-4 end-5 bg-secondary text-white text-sm text-center rounded-lg font-semibold hover:brightness-125 hover:scale-105 transition-all duration-300 shadow-md">
+               class="absolute w-fit max-lg:py-3 p-4 end-5 bg-secondary min-w-32 text-white text-sm text-center rounded-xl font-semibold hover:brightness-125 hover:scale-105 transition-all duration-300 shadow-md">
                 <?= esc_html($a['text']); ?>
             </a>
         </div>
