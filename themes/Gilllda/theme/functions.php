@@ -201,6 +201,7 @@ require get_template_directory() . '/inc/post-type-functions/post-view.php';
 require get_template_directory() . '/inc/post-type-functions/post-rating.php';
 require get_template_directory() . '/inc/post-type-functions/toc.php';
 require get_template_directory() . '/inc/post-type-functions/comments-field.php';
+require get_template_directory() . '/inc/post-type-functions/inline-ads.php';
 //product functions
 require get_template_directory() . '/inc/product/check-woocommerce-active.php';
 require get_template_directory() . '/inc/product/compare-function.php';

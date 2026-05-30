@@ -99,6 +99,7 @@ Underscores and Varia are distributed under the terms of the GNU GPL v2 or later
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
   --radius-2xl: 1rem;
+  --drop-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.15);
   --drop-shadow-md: 0 3px 3px rgb(0 0 0 / 0.12);
   --drop-shadow-xl: 0 9px 7px rgb(0 0 0 / 0.1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
@@ -1248,6 +1249,9 @@ blockquote {
 .end-4 {
   inset-inline-end: calc(var(--spacing) * 4);
 }
+.end-5 {
+  inset-inline-end: calc(var(--spacing) * 5);
+}
 .end-7 {
   inset-inline-end: calc(var(--spacing) * 7);
 }
@@ -1367,6 +1371,9 @@ blockquote {
 }
 .left-0 {
   left: calc(var(--spacing) * 0);
+}
+.left-1\/2 {
+  left: calc(1/2 * 100%);
 }
 .left-2 {
   left: calc(var(--spacing) * 2);
@@ -2438,6 +2445,9 @@ blockquote {
 .h-24 {
   height: calc(var(--spacing) * 24);
 }
+.h-32 {
+  height: calc(var(--spacing) * 32);
+}
 .h-56 {
   height: calc(var(--spacing) * 56);
 }
@@ -2470,6 +2480,9 @@ blockquote {
 }
 .h-\[70dvh\] {
   height: 70dvh;
+}
+.h-\[200\%\] {
+  height: 200%;
 }
 .h-\[350px\] {
   height: 350px;
@@ -2594,6 +2607,9 @@ blockquote {
 .w-\[150px\] {
   width: 150px;
 }
+.w-\[200\%\] {
+  width: 200%;
+}
 .w-auto {
   width: auto;
 }
@@ -2672,6 +2688,10 @@ blockquote {
 .\!translate-x-0 {
   --tw-translate-x: calc(var(--spacing) * 0) !important;
   translate: var(--tw-translate-x) var(--tw-translate-y) !important;
+}
+.-translate-x-1\/2 {
+  --tw-translate-x: calc(calc(1/2 * 100%) * -1);
+  translate: var(--tw-translate-x) var(--tw-translate-y);
 }
 .-translate-x-2 {
   --tw-translate-x: calc(var(--spacing) * -2);
@@ -2822,6 +2842,9 @@ blockquote {
 }
 .transform {
   transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-rotate-z) var(--tw-skew-x) var(--tw-skew-y);
+}
+.animate-\[spin_2\.5s_linear_infinite\] {
+  animation: spin 2.5s linear infinite;
 }
 .animate-bounce {
   animation: var(--animate-bounce);
@@ -3469,6 +3492,9 @@ blockquote {
 .bg-icon\/80 {
   background-color: color-mix(in oklab, #f7e0c7 80%, transparent);
 }
+.bg-neutral-50 {
+  background-color: var(--color-neutral-50);
+}
 .bg-primary {
   background-color: var(--color-primary);
 }
@@ -3564,6 +3590,9 @@ blockquote {
 .bg-gradient-to-t {
   --tw-gradient-position: to top in oklab;
   background-image: linear-gradient(var(--tw-gradient-stops));
+}
+.bg-\[conic-gradient\(transparent_270deg\,currentColor\)\] {
+  background-image: conic-gradient(transparent 270deg,currentColor);
 }
 .from-black {
   --tw-gradient-from: var(--color-black);
@@ -4326,6 +4355,10 @@ blockquote {
 }
 .drop-shadow-md {
   --tw-drop-shadow: drop-shadow(var(--drop-shadow-md));
+  filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+}
+.drop-shadow-sm {
+  --tw-drop-shadow: drop-shadow(var(--drop-shadow-sm));
   filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
 }
 .drop-shadow-xl {
