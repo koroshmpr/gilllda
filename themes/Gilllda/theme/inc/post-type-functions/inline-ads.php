@@ -10,7 +10,7 @@ function render_inline_ad_shortcode($atts)
 
     ob_start();
     ?>
-    <div class="not-prose relative my-5 w-full h-32 rounded-xl overflow-hidden p-1 text-secondary drop-shadow-sm group">
+    <div class="not-prose relative my-5 w-full h-24 lg:h-32 rounded-xl overflow-hidden p-1 text-secondary drop-shadow-sm group">
         <!-- Spinning border animation (inherits your 'secondary' color automatically) -->
         <div class="absolute top-1/2 left-1/2 w-[200%] h-[200%] -translate-x-1/2 -translate-y-1/2 animate-[spin_2.5s_linear_infinite] bg-[conic-gradient(transparent_270deg,currentColor)]"></div>
 
@@ -22,7 +22,7 @@ function render_inline_ad_shortcode($atts)
             <?php endif; ?>
 
             <a href="<?= esc_url($a['link']); ?>" target="_blank" rel="noopener nofollow"
-               class="absolute w-fit max-lg:py-3 p-4 end-5 bg-secondary min-w-32 text-white text-sm text-center rounded-xl font-semibold hover:brightness-125 hover:scale-105 transition-all duration-300 shadow-md">
+               class="absolute w-fit max-lg:py-3 p-4 end-5 bg-secondary min-w-28 lg:min-w-32 text-white text-sm text-center rounded-xl font-semibold hover:brightness-125 hover:scale-105 transition-all duration-300 shadow-md">
                 <?= esc_html($a['text']); ?>
             </a>
         </div>

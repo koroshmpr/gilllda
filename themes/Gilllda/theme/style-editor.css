@@ -2445,9 +2445,6 @@ blockquote {
 .h-24 {
   height: calc(var(--spacing) * 24);
 }
-.h-32 {
-  height: calc(var(--spacing) * 32);
-}
 .h-56 {
   height: calc(var(--spacing) * 56);
 }
@@ -2655,8 +2652,8 @@ blockquote {
 .min-w-20 {
   min-width: calc(var(--spacing) * 20);
 }
-.min-w-32 {
-  min-width: calc(var(--spacing) * 32);
+.min-w-28 {
+  min-width: calc(var(--spacing) * 28);
 }
 .min-w-\[200px\] {
   min-width: 200px;
@@ -6286,6 +6283,11 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
+  .lg\:h-32 {
+    height: calc(var(--spacing) * 32);
+  }
+}
+@media (width >= 64rem) {
   .lg\:h-\[80vh\] {
     height: 80vh;
   }
@@ -6423,6 +6425,11 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:max-w-\[600px\] {
     max-width: 600px;
+  }
+}
+@media (width >= 64rem) {
+  .lg\:min-w-32 {
+    min-width: calc(var(--spacing) * 32);
   }
 }
 @media (width >= 64rem) {
