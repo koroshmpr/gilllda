@@ -40,10 +40,18 @@ $categories = get_the_terms(get_the_ID(), 'category');
 
     <div class="grid grid-cols-2 items-center gap-2 justify-center text-sm">
         <?php
-        if (get_the_modified_time('U') > get_the_time('U')) : ?>
+        // Get just the dates without the hours/minutes/seconds
+        $published_date = get_the_time('Y-m-d');
+        $modified_date = get_the_modified_time('Y-m-d');
+
+        // Only show if the modified date is strictly after the published date
+        if ($modified_date > $published_date):
+            ?>
             <time datetime="<?= shamsi_date('d F, Y', get_the_modified_time('U')); ?>" itemprop="modified"
                   class="<?= $boxClass; ?> col-span-2 pb-2 border-b border-black/10 flex justify-start gap-x-2">
-                <span class=" rounded-lg p-1.5 bg-green-100 border border-green-200 text-green-600"><?php get_template_part('template-parts/svg/check', null, $args); ?></span>
+                <span class="rounded-lg p-1.5 bg-green-100 border border-green-200 text-green-600">
+                    <?php get_template_part('template-parts/svg/check', null, $args); ?>
+                </span>
                 <span>آخرین بروز رسانی:</span>
                 <span><?= shamsi_date('d F, Y', get_the_modified_time('U')); ?></span>
             </time>

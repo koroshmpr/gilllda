@@ -1,4 +1,4 @@
-<aside class="lg:sticky lg:col-span-4 xl:col-span-3 order-2 <?= current_user_can('administrator') ? 'top-28' : 'top-20'; ?> grid gap-4 max-md:w-11/12 max-lg:mx-auto border border-black/15 bg-gray-100/50 rounded-xl p-4">
+<aside class="lg:sticky lg:col-span-4 xl:col-span-3 order-2 <?= current_user_can('administrator') ? 'top-28' : 'top-20'; ?> grid gap-4 border border-black/15 bg-gray-100/50 lg:rounded-xl p-4">
     <?php
     get_template_part('template-parts/blog/single/post-information');
     get_template_part('template-parts/blog/single/toc');

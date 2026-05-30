@@ -13,8 +13,10 @@ $showingDate = '';
 if ($gap < 0) {
     $gap = 0;
 }
-
-if ($gap < 3600) {
+if ($gap < 100) {
+    $showingDate = ' <span class="text-xs">همین الان</span>';
+}
+elseif ($gap < 3600) {
     // Less than 1 hour: show minutes
     $minutes = floor($gap / 60);
     $showingDate = $minutes . ' <span class="text-xs">دقیقه پیش</span>';

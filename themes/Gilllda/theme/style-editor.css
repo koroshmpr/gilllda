@@ -54,6 +54,9 @@ Underscores and Varia are distributed under the terms of the GNU GPL v2 or later
   --color-gray-700: oklch(0.373 0.034 259.733);
   --color-gray-800: oklch(0.278 0.033 256.848);
   --color-gray-900: oklch(0.21 0.034 264.665);
+  --color-neutral-50: oklch(0.985 0 0);
+  --color-neutral-100: oklch(0.97 0 0);
+  --color-neutral-200: oklch(0.922 0 0);
   --color-neutral-900: oklch(0.205 0 0);
   --color-black: #000;
   --color-white: #fff;
@@ -1452,14 +1455,8 @@ blockquote {
 .col-2 {
   grid-column: 2;
 }
-.col-span-1 {
-  grid-column: span 1 / span 1;
-}
 .col-span-2 {
   grid-column: span 2 / span 2;
-}
-.row-span-2 {
-  grid-row: span 2 / span 2;
 }
 .container {
   width: 100%;
@@ -2336,6 +2333,9 @@ blockquote {
 .table {
   display: table;
 }
+.aspect-2\/1 {
+  aspect-ratio: 2/1;
+}
 .aspect-3\/4 {
   aspect-ratio: 3/4;
 }
@@ -2626,6 +2626,9 @@ blockquote {
 }
 .max-w-none {
   max-width: none;
+}
+.max-w-screen {
+  max-width: 100vw;
 }
 .min-w-1\/4 {
   min-width: calc(1/4 * 100%);
@@ -3297,6 +3300,9 @@ blockquote {
 }
 .border-primary\/30 {
   border-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
+}
+.border-primary\/50 {
+  border-color: color-mix(in oklab, var(--color-primary) 50%, transparent);
 }
 .border-primary\/70 {
   border-color: color-mix(in oklab, var(--color-primary) 70%, transparent);
@@ -4499,6 +4505,14 @@ blockquote {
   backface-visibility: hidden;
 }
 @media (hover: hover) {
+  .group-hover\:line-clamp-2:is(:where(.group):hover *) {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}
+@media (hover: hover) {
   .group-hover\:size-fit:is(:where(.group):hover *) {
     width: fit-content;
     height: fit-content;
@@ -5480,11 +5494,6 @@ blockquote {
   }
 }
 @media (width < 64rem) {
-  .max-lg\:mx-auto {
-    margin-inline: auto;
-  }
-}
-@media (width < 64rem) {
   .max-lg\:my-5 {
     margin-block: calc(var(--spacing) * 5);
   }
@@ -5587,11 +5596,6 @@ blockquote {
   }
 }
 @media (width < 64rem) {
-  .max-lg\:list-disc {
-    list-style-type: disc;
-  }
-}
-@media (width < 64rem) {
   .max-lg\:flex-col {
     flex-direction: column;
   }
@@ -5624,14 +5628,6 @@ blockquote {
 @media (width < 64rem) {
   .max-lg\:gap-2 {
     gap: calc(var(--spacing) * 2);
-  }
-}
-@media (width < 64rem) {
-  :where(.max-lg\:divide-x-2 > :not(:last-child)) {
-    --tw-divide-x-reverse: 0;
-    border-inline-style: var(--tw-border-style);
-    border-inline-start-width: calc(2px * var(--tw-divide-x-reverse));
-    border-inline-end-width: calc(2px * calc(1 - var(--tw-divide-x-reverse)));
   }
 }
 @media (width < 64rem) {
@@ -5862,11 +5858,6 @@ blockquote {
   }
 }
 @media (width < 48rem) {
-  .max-md\:w-11\/12 {
-    width: calc(11/12 * 100%);
-  }
-}
-@media (width < 48rem) {
   .max-md\:scale-95 {
     --tw-scale-x: 95%;
     --tw-scale-y: 95%;
@@ -6068,6 +6059,11 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
+  .lg\:col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+}
+@media (width >= 64rem) {
   .lg\:col-span-2 {
     grid-column: span 2 / span 2;
   }
@@ -6100,6 +6096,11 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:col-span-12 {
     grid-column: span 12 / span 12;
+  }
+}
+@media (width >= 64rem) {
+  .lg\:row-span-2 {
+    grid-row: span 2 / span 2;
   }
 }
 @media (width >= 64rem) {
@@ -6215,6 +6216,11 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:aspect-\[4\/1\] {
     aspect-ratio: 4/1;
+  }
+}
+@media (width >= 64rem) {
+  .lg\:aspect-\[4\/3\] {
+    aspect-ratio: 4/3;
   }
 }
 @media (width >= 64rem) {
@@ -7228,6 +7234,9 @@ blockquote {
     flex-basis: calc(2/5 * 100%);
   }
 }
+.prose-headings\:text-start :is(:where(h1,h2,h3,h4,h5,h6,th):not(:where([class~="not-prose"],[class~="not-prose"] *,[class~="acf-block-body"][class~="is-selected"] *))) {
+  text-align: start;
+}
 .prose-headings\:text-black :is(:where(h1,h2,h3,h4,h5,h6,th):not(:where([class~="not-prose"],[class~="not-prose"] *,[class~="acf-block-body"][class~="is-selected"] *))) {
   color: var(--color-black);
 }
@@ -7257,6 +7266,9 @@ blockquote {
 }
 .prose-a\:text-primary :is(:where(a):not(:where([class~="not-prose"],[class~="not-prose"] *,[class~="acf-block-body"][class~="is-selected"] *))) {
   color: var(--color-primary);
+}
+.prose-a\:text-secondary :is(:where(a):not(:where([class~="not-prose"],[class~="not-prose"] *,[class~="acf-block-body"][class~="is-selected"] *))) {
+  color: var(--color-secondary);
 }
 .prose-a\:no-underline :is(:where(a):not(:where([class~="not-prose"],[class~="not-prose"] *,[class~="acf-block-body"][class~="is-selected"] *))) {
   text-decoration-line: none;
@@ -7299,6 +7311,72 @@ blockquote {
 :is(.\[\&_select\]\:focus\:ring-0 select):focus {
   --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentColor);
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+.\[\&_table\]\:block table {
+  display: block;
+}
+.\[\&_table\]\:max-w-screen table {
+  max-width: 100vw;
+}
+.\[\&_table\]\:overflow-x-auto table {
+  overflow-x: auto;
+}
+.\[\&_table\]\:rounded-lg table {
+  border-radius: var(--radius-lg);
+}
+.\[\&_table\]\:border table {
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+}
+.\[\&_table\]\:border-neutral-200 table {
+  border-color: var(--color-neutral-200);
+}
+.\[\&_table\]\:whitespace-nowrap table {
+  white-space: nowrap;
+}
+.\[\&_table\]\:shadow-sm table {
+  --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+.\[\&_td\]\:border-t td {
+  border-top-style: var(--tw-border-style);
+  border-top-width: 1px;
+}
+.\[\&_td\]\:border-neutral-100 td {
+  border-color: var(--color-neutral-100);
+}
+.\[\&_td\]\:px-5 td {
+  padding-inline: calc(var(--spacing) * 5);
+}
+.\[\&_td\]\:py-4 td {
+  padding-block: calc(var(--spacing) * 4);
+}
+.\[\&_th\]\:px-5 th {
+  padding-inline: calc(var(--spacing) * 5);
+}
+.\[\&_th\]\:py-4 th {
+  padding-block: calc(var(--spacing) * 4);
+}
+.\[\&_th\]\:text-left th {
+  text-align: left;
+}
+.\[\&_th\]\:font-semibold th {
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+.\[\&_th\]\:text-black th {
+  color: var(--color-black);
+}
+.\[\&_thead\]\:bg-neutral-100 thead {
+  background-color: var(--color-neutral-100);
+}
+.\[\&_tr\]\:transition-colors tr {
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+  transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+  transition-duration: var(--tw-duration, var(--default-transition-duration));
+}
+.\[\&_tr\:hover\]\:bg-neutral-50 tr:hover {
+  background-color: var(--color-neutral-50);
 }
 .\[\&\>\.swiper-button-disabled\]\:hidden > .swiper-button-disabled {
   display: none;

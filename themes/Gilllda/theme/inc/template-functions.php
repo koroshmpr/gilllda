@@ -180,7 +180,7 @@ function bluebox_html5_comment($comment, $args, $depth)
             </div><!-- .comment-metadata -->
 
             <?php if ('0' === $comment->comment_approved) : ?>
-                <em class="comment-awaiting-moderation max-w-24 text-xs absolute top-0 end-0 bg-white border border-gray-200 text-center border-l-0 p-2"><?php echo esc_html($moderation_note); ?></em>
+                <em class="comment-awaiting-moderation max-w-24 text-xs absolute top-0 end-0 bg-white border border-gray-200 text-center border-l-0 -mt-2 p-2"><?php echo esc_html($moderation_note); ?></em>
             <?php endif; ?>
         </footer><!-- .comment-meta -->
 
