@@ -26,7 +26,7 @@ if (!empty($posts)) :?>
                         <span><?= $view; ?></span>
                     </span>
                 <?php endif; ?>
-                <img class="w-full group-hover:scale-110 transition-all duration-300 <?=  $i > 0 ? 'aspect-2/1 lg:aspect-[4/3]' : 'aspect-[4/3]' ?> object-cover"  src="<?= the_post_thumbnail_url(); ?>"
+                <img fetchpriority=high class="w-full group-hover:scale-110 transition-all duration-300 <?=  $i > 0 ? 'aspect-2/1 lg:aspect-[4/3]' : 'aspect-[4/3]' ?> object-cover"  src="<?= the_post_thumbnail_url(); ?>"
                       alt="image of the <?= get_the_title(); ?> post">
                 <p class="absolute bottom-0 group-hover:bg-black/50 inset-x-0 transition-all duration-300 line-clamp-1 bg-black/20 backdrop-blur-[2px] leading-[1.7] text-center text-white p-3"><?= wp_trim_words(get_the_title(), 9); ?></p>
             </a>

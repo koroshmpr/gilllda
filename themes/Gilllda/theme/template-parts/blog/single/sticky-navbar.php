@@ -50,7 +50,7 @@ $args = array(
     <div class="bg-gray-100 text-black w-full py-4 px-6 h-[40vh] rounded-t-2xl flex flex-col gap-y-3 translate-y-full transition-all duration-300"
          :class="toc ? 'delay-200 !translate-y-0' : 'translate-y-full'">
         <div class="flex justify-between items-center">
-            <button @click="toc = false"
+            <button @click="toc = false" aria-label="close toc modal"
                     class="p-2 transition-all border bg-white border-gray-200 rounded-lg aspect-square z-[5]">
                 <?php get_template_part('template-parts/svg/close', null, $args); ?>
             </button>

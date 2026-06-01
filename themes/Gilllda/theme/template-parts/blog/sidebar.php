@@ -9,6 +9,7 @@
         class="lg:contents flex flex-col transition-all h-[40vh] bg-gray-50 translate-y-full duration-500 w-full fixed inset-x-0 bottom-0 z-[100]">
         <div class="lg:hidden flex text-lg border-b border-gray-200 justify-between items-center py-3 px-5 font-bold lg:pt-0">
             <button
+                    aria-label="close category modal"
                     :class="intro ? '!translate-y-0' : ''"
                     class="p-2 transition-all border bg-gray-100 border-gray-200 rounded-lg aspect-square"
                     @click="open = !open">

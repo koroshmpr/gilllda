@@ -65,7 +65,7 @@ global $woo_active;
                    class="flex items-center justify-center p-1 scale-125 border border-secondary aspect-square lg:hidden bg-primary rounded-full mx-5 text-black/60">
                     <?php
                     $logo = get_field('footer_logo', 'option') ?? ''; ?>
-                    <img width="45" height="45" class="object-fit" src="<?= $logo['url'] ?? ''; ?>" alt="<?= $logo['title'] ?? ''; ?>">
+                    <img width="<?= $logo['width'] ?? '98' ?>" height="<?= $logo['height'] ?? '59' ?>" class="w-11 object-fit" src="<?= $logo['url'] ?? ''; ?>" alt="<?= $logo['title'] ?? ''; ?>">
                 </a>
             <?php else : ?>
                 <a aria-label="go to home page" href="<?= home_url(); ?>"
