@@ -147,20 +147,40 @@ add_action( 'widgets_init', 'bluebox_widgets_init' );
  * Enqueue scripts and styles.
  */
 function bluebox_scripts() {
-	wp_enqueue_style( 'bluebox-style', get_stylesheet_uri(), array(), BLUEBOX_VERSION );
-//	wp_enqueue_style('font-face', get_template_directory_uri() . '/fonts/Peyda/fontface.css', array());
-	wp_enqueue_script( 'bluebox-script', get_template_directory_uri() . '/js/script.min.js', array('jquery'), BLUEBOX_VERSION, true );
-    wp_localize_script('main-js', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
-    if (is_product()) { // Load only on single product pages
-        wp_enqueue_script('single-product', get_template_directory_uri() . '/js/single-product.js', array('jquery'), BLUEBOX_VERSION, true);
-    }
-    wp_localize_script('main-js', 'jsData', array('root_url' => get_site_url(), 'nonce' => wp_create_nonce('my-nonce')));
+    // 1. Load your main stylesheet
+    wp_enqueue_style( 'bluebox-style', get_stylesheet_uri(), array(), BLUEBOX_VERSION );
 
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
+    // 2. Load script with the modern 'defer' strategy
+    wp_enqueue_script( 'bluebox-script', get_template_directory_uri() . '/js/script.min.js', array('jquery'), BLUEBOX_VERSION, array(
+        'in_footer' => true,
+        'strategy'  => 'defer'
+    ));
+
+    // 3. BUG FIX: Changed 'main-js' to 'bluebox-script' so the data attaches to your actual script
+    wp_localize_script('bluebox-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+    wp_localize_script('bluebox-script', 'jsData', array('root_url' => get_site_url(), 'nonce' => wp_create_nonce('my-nonce')));
+
+    // 4. Defer conditional scripts
+    if (is_product()) {
+        wp_enqueue_script('single-product', get_template_directory_uri() . '/js/single-product.js', array('jquery'), BLUEBOX_VERSION, array(
+            'in_footer' => true,
+            'strategy'  => 'defer'
+        ));
+    }
+
+    if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+        wp_enqueue_script( 'comment-reply' );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'bluebox_scripts' );
+
+
+// 5. Programmatically preload your main font to break the CSS chain
+function bluebox_preload_fonts() {
+    echo '<link rel="preload" href="' . get_template_directory_uri() . '/fonts/Peyda/fonts/woff2/PeydaWebFaNum-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">';
+}
+// Using priority 5 to ensure it loads high up in the <head>
+add_action( 'wp_head', 'bluebox_preload_fonts', 5 );
 
 /**
  * Enqueue the block editor script.
