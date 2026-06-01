@@ -20,12 +20,12 @@ $args = array(
 <div :class="stickyMenu ? 'bottom-14' : '-bottom-14'"
      class="lg:hidden duration-500 transition-all fixed shadow-sm  divide-x divide-gray-200 inset-x-0 bg-white z-40 py-2 flex items-center rtl">
     <button @click="share = true"
-            aria-label="comment count and scroll to comment section" class="<?= $buttonCLass; ?> cursor-pointer">
+            aria-label="open share links" class="<?= $buttonCLass; ?> cursor-pointer">
         <?php get_template_part('template-parts/svg/share', null, ['size' => '15']); ?>
         <span class="<?= $textCLass; ?>">اشتراک گذاری</span>
     </button>
     <button @click="toc = true"
-            aria-label="comment count and scroll to comment section" class="<?= $buttonCLass; ?> cursor-pointer">
+            aria-label="open toc modal" class="<?= $buttonCLass; ?> cursor-pointer">
         <?php get_template_part('template-parts/svg/list', null, $args); ?>
         <span class="<?= $textCLass; ?>">فهرست مطالب </span>
     </button>

@@ -15,7 +15,7 @@ $author_id = get_post_field('post_author', get_the_ID());
         endif; ?>
     <div class="flex-1 flex max-lg:flex-col gap-5 items-center justify-between">
        <div class="flex flex-col lg:w-2/3 max-lg:items-center gap-y-2">
-           <h5 class="text-lg font-bold"><?= get_the_author_meta('display_name', get_queried_object()->post_author); ?></h5>
+           <p class="text-lg font-bold"><?= get_the_author_meta('display_name', get_queried_object()->post_author); ?></p>
            <p class="text-sm opacity-75 text-justify">
                <?= get_the_author_meta('description', get_queried_object()->post_author); ?>
            </p>
