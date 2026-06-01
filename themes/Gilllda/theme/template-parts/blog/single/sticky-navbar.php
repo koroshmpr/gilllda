@@ -5,7 +5,7 @@ $args = array(
     'size' => 20,
 );
 ?>
-<button @click="stickyMenu = !stickyMenu"
+<button @click="stickyMenu = !stickyMenu" aria-label="show more detail"
         class="w-10 h-10 lg:hidden fixed left-4 bottom-28 bg-gray-700 hover:bg-gray-900 cursor-pointer justify-center border border-white/20 transition-all duration-700 items-center flex text-white rounded-sm z-[5]">
         <span class="absolute transition-all duration-500" :class="stickyMenu ? 'opacity-0 rotate-90' : ''">
             <?php get_template_part('template-parts/svg/menu-dot', null, $args); ?>

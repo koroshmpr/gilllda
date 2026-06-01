@@ -87,7 +87,6 @@ Underscores and Varia are distributed under the terms of the GNU GPL v2 or later
   --text-9xl--line-height: 1;
   --font-weight-thin: 100;
   --font-weight-light: 300;
-  --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
@@ -2550,9 +2549,6 @@ blockquote {
 .w-5 {
   width: calc(var(--spacing) * 5);
 }
-.w-5\/6 {
-  width: calc(5/6 * 100%);
-}
 .w-6 {
   width: calc(var(--spacing) * 6);
 }
@@ -3173,10 +3169,6 @@ blockquote {
   border-style: var(--tw-border-style);
   border-width: 2px;
 }
-.border-4 {
-  border-style: var(--tw-border-style);
-  border-width: 4px;
-}
 .border-x {
   border-inline-style: var(--tw-border-style);
   border-inline-width: 1px;
@@ -3606,14 +3598,6 @@ blockquote {
   --tw-gradient-from: color-mix(in oklab, var(--color-black) 80%, transparent);
   --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
 }
-.from-black\/90 {
-  --tw-gradient-from: color-mix(in oklab, var(--color-black) 90%, transparent);
-  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-}
-.from-foreground\/80 {
-  --tw-gradient-from: color-mix(in oklab, var(--color-foreground) 80%, transparent);
-  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-}
 .from-gray-50 {
   --tw-gradient-from: var(--color-gray-50);
   --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
@@ -3663,9 +3647,6 @@ blockquote {
 }
 .from-30\% {
   --tw-gradient-from-position: 30%;
-}
-.from-50\% {
-  --tw-gradient-from-position: 50%;
 }
 .from-90\% {
   --tw-gradient-from-position: 90%;
@@ -4068,10 +4049,6 @@ blockquote {
   --tw-leading: calc(var(--spacing) * 12);
   line-height: calc(var(--spacing) * 12);
 }
-.leading-\[1\.3\] {
-  --tw-leading: 1.3;
-  line-height: 1.3;
-}
 .leading-\[1\.7\] {
   --tw-leading: 1.7;
   line-height: 1.7;
@@ -4099,10 +4076,6 @@ blockquote {
 .font-medium {
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
-}
-.font-normal {
-  --tw-font-weight: var(--font-weight-normal);
-  font-weight: var(--font-weight-normal);
 }
 .font-semibold {
   --tw-font-weight: var(--font-weight-semibold);
@@ -4290,9 +4263,6 @@ blockquote {
 }
 .opacity-50 {
   opacity: 50%;
-}
-.opacity-65 {
-  opacity: 65%;
 }
 .opacity-70 {
   opacity: 70%;
@@ -5497,11 +5467,6 @@ blockquote {
   }
 }
 @media (width < 64rem) {
-  .max-lg\:bottom-8 {
-    bottom: calc(var(--spacing) * 8);
-  }
-}
-@media (width < 64rem) {
   .max-lg\:bottom-full {
     bottom: 100%;
   }
@@ -5564,11 +5529,6 @@ blockquote {
 @media (width < 64rem) {
   .max-lg\:aspect-square {
     aspect-ratio: 1 / 1;
-  }
-}
-@media (width < 64rem) {
-  .max-lg\:h-\[70vh\] {
-    height: 70vh;
   }
 }
 @media (width < 64rem) {
@@ -6027,11 +5987,6 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
-  .lg\:top-1\/2 {
-    top: calc(1/2 * 100%);
-  }
-}
-@media (width >= 64rem) {
   .lg\:top-3 {
     top: calc(var(--spacing) * 3);
   }
@@ -6313,11 +6268,6 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
-  .lg\:max-h-\[80vh\] {
-    max-height: 80vh;
-  }
-}
-@media (width >= 64rem) {
   .lg\:max-h-\[120px\] {
     max-height: 120px;
   }
@@ -6405,11 +6355,6 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:w-full {
     width: 100%;
-  }
-}
-@media (width >= 64rem) {
-  .lg\:max-w-3\/5 {
-    max-width: calc(3/5 * 100%);
   }
 }
 @media (width >= 64rem) {
@@ -6780,12 +6725,6 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
-  .lg\:from-black {
-    --tw-gradient-from: var(--color-black);
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
-}
-@media (width >= 64rem) {
   .lg\:object-cover {
     object-fit: cover;
   }
@@ -6981,11 +6920,6 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
-  .lg\:text-center {
-    text-align: center;
-  }
-}
-@media (width >= 64rem) {
   .lg\:text-2xl {
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
@@ -7131,27 +7065,9 @@ blockquote {
     }
   }
 }
-@media (width >= 64rem) {
-  @media (hover: hover) {
-    .lg\:hover\:text-xl:hover {
-      font-size: var(--text-xl);
-      line-height: var(--tw-leading, var(--text-xl--line-height));
-    }
-  }
-}
-@media (width >= 80rem) {
-  .xl\:bottom-32 {
-    bottom: calc(var(--spacing) * 32);
-  }
-}
 @media (width >= 80rem) {
   .xl\:order-1 {
     order: 1;
-  }
-}
-@media (width >= 80rem) {
-  .xl\:order-3 {
-    order: 3;
   }
 }
 @media (width >= 80rem) {
@@ -7215,18 +7131,6 @@ blockquote {
   }
 }
 @media (width >= 80rem) {
-  .xl\:-translate-y-12 {
-    --tw-translate-y: calc(var(--spacing) * -12);
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
-}
-@media (width >= 80rem) {
-  .xl\:translate-y-1\/2 {
-    --tw-translate-y: calc(1/2 * 100%);
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
-}
-@media (width >= 80rem) {
   .xl\:\!grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
@@ -7259,12 +7163,6 @@ blockquote {
 @media (width >= 80rem) {
   .xl\:justify-start {
     justify-content: flex-start;
-  }
-}
-@media (width >= 80rem) {
-  .xl\:text-6xl {
-    font-size: var(--text-6xl);
-    line-height: var(--tw-leading, var(--text-6xl--line-height));
   }
 }
 @media (width >= 96rem) {

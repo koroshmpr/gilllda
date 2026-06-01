@@ -129,6 +129,15 @@ if ($parent_categories) : ?>
         <?php endforeach; ?>
     </nav>
 <?php
-else :
-    echo '<p class="text-center opacity-75 text-2xl ">دسته بندی وجود ندارد!</p>';
-endif; ?>
+else :?>
+    <div class="text-center opacity-50 py-6 text-lg flex flex-col gap-4 justify-center items-center">
+        <?php
+        $args = array(
+        'size' => 60,
+        'class' => 'opacity-25',
+        );
+        get_template_part('template-parts/svg/tag', null, $args);
+        ?>
+        <span>دسته بندی وجود ندارد!</span>
+    </div>
+<?php endif; ?>

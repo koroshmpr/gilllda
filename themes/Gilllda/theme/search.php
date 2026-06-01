@@ -22,7 +22,7 @@ get_header();
     <form class="container max-lg:px-3 max-w-content py-3 sticky top-0 lg:top-22 z-10 bg-white" role="search"
           method="get" action="<?= home_url() ?>">
         <fieldset class="relative overflow-hidden">
-            <label for="search-input" class="screen-reader-text">Search:</label>
+            <label for="search-input" class="sr-only screen-reader-text">Search:</label>
             <input type="text" id="search-input"
                    class="w-full p-3 border border-gray-200 rounded-md"
                    name="s"
@@ -55,19 +55,21 @@ if (!empty($recent_searches)):
     </nav>
 <?php endif; ?>
     <section x-data="{ gridView: 'small' }" class="container max-w-content px-3 flex flex-col gap-3 my-3 lg:mb-8">
-<?php get_template_part('template-parts/global/grid-button');
-if (have_posts()) :?>
-    <ul class="grid  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
-        :class="gridView === 'large' ? 'md:grid-cols-1 lg:!grid-cols-2 xl:!grid-cols-3' : 'md:grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4'">
-        <?php while (have_posts()) :
-            the_post();
-            $current_post_type = get_post_type();
-            if ($current_post_type == 'product') :
-                get_template_part('template-parts/product/card/product-card', null, ['isArchive' => true]);
-            endif;
-        endwhile;
+        <?php
+        if (have_posts()) :
+        get_template_part('template-parts/global/grid-button');
         ?>
-    </ul>
+        <ul class="grid  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
+            :class="gridView === 'large' ? 'md:grid-cols-1 lg:!grid-cols-2 xl:!grid-cols-3' : 'md:grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4'">
+            <?php while (have_posts()) :
+                the_post();
+                $current_post_type = get_post_type();
+                if ($current_post_type == 'product') :
+                    get_template_part('template-parts/product/card/product-card', null, ['isArchive' => true]);
+                endif;
+            endwhile;
+            ?>
+        </ul>
     </section>
 
     <?php get_template_part('template-parts/global/pagination');
@@ -84,7 +86,7 @@ else : ?>
         ?>
         <p class="font-bold text-3xl opacity-20"> موردی یافت نشد!</p>
     </div>
-<?php endif;?>
+<?php endif; ?>
     <script>
         function saveSearchToCookie() {
             const input = document.getElementById('search-input');
@@ -122,7 +124,7 @@ else : ?>
             // نکته: استفاده از JSON.stringify و سپس encodeURIComponent برای جلوگیری از خراب شدن کاراکترهای فارسی
             const jsonString = JSON.stringify(searches);
             const encodedString = encodeURIComponent(jsonString);
-            document.cookie = `${cookieName}=${encodedString}; path=/; max-age=${60*60*24*30}`;
+            document.cookie = `${cookieName}=${encodedString}; path=/; max-age=${60 * 60 * 24 * 30}`;
         }
     </script>
 <?php get_footer();
