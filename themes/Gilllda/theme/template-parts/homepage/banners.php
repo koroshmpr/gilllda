@@ -3,7 +3,7 @@ $bannerSection = get_field('banners');
 $title = $bannerSection['title'];
 $content = $bannerSection['content'];
 if ($bannerSection) : ?>
-    <section class="container px-3 my-5">
+    <section class="container px-3 lg:my-5">
         <?php if (!empty($title) || !empty($content)) : ?>
             <div class="flex flex-col items-center gap-5 mb-5">
                 <?php if (!empty($title)) : ?>

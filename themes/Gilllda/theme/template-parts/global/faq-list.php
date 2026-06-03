@@ -71,9 +71,9 @@ if (empty($items)) return;
 //);
 //get_template_part('template-parts/svg/faq-list', null, $args);
 ?>
-<?php if (!empty($items)) : ?>
+<?php if (!empty($items) && empty($args['disable_schema'])) : ?>
     <script type="application/ld+json">
-<?php
+        <?php
         $faq_schema = [
             '@context' => 'https://schema.org',
             '@type' => 'FAQPage',
@@ -87,15 +87,15 @@ if (empty($items)) return;
 
             $faq_schema['mainEntity'][] = [
                 '@type' => 'Question',
-                'name' => wp_strip_all_tags($question), // strip tags for safety
+                'name' => wp_strip_all_tags($question),
                 'acceptedAnswer' => [
                     '@type' => 'Answer',
-                    'text' => wp_strip_all_tags($answer), // plain text answer recommended
+                    'text' => wp_strip_all_tags($answer),
                 ]
             ];
         }
 
         echo wp_json_encode($faq_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
         ?>
-</script>
+    </script>
 <?php endif; ?>

@@ -1,7 +1,7 @@
 <?php $hero = get_field('hero');
 ?>
-<section class="relative overflow-hidden lg:h-[85vh] h-[50vh] lg:pb-16">
-	<div class="absolute bottom-0 inset-x-0 h-2/3 bg-gradient-to-t from-white from-20% via-white/30 via-40% z-1"></div>
+<section class="relative overflow-hidden lg:h-[85vh] h-[45vh] lg:pb-16">
+	<div class="absolute bottom-0 inset-x-0 h-1/2 lg:h-2/3 bg-gradient-to-t from-white from-20% via-white/30 via-40% z-1"></div>
 	<div class="container max-lg:w-full h-full relative">
 		<img width="390" height="374" fetchpriority="high"
 			:class="scrollingDown ? 'scale-95' : (scrollingUp ? 'lg:scale-105 lg:mt-5' : '')"

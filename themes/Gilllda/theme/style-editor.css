@@ -2397,11 +2397,11 @@ blockquote {
 .h-1\.5 {
   height: calc(var(--spacing) * 1.5);
 }
+.h-1\/2 {
+  height: calc(1/2 * 100%);
+}
 .h-2 {
   height: calc(var(--spacing) * 2);
-}
-.h-2\/3 {
-  height: calc(2/3 * 100%);
 }
 .h-4 {
   height: calc(var(--spacing) * 4);
@@ -2447,6 +2447,9 @@ blockquote {
 }
 .h-\[40vh\] {
   height: 40vh;
+}
+.h-\[45vh\] {
+  height: 45vh;
 }
 .h-\[46vh\] {
   height: 46vh;
@@ -6219,6 +6222,11 @@ blockquote {
   .lg\:size-36 {
     width: calc(var(--spacing) * 36);
     height: calc(var(--spacing) * 36);
+  }
+}
+@media (width >= 64rem) {
+  .lg\:h-2\/3 {
+    height: calc(2/3 * 100%);
   }
 }
 @media (width >= 64rem) {

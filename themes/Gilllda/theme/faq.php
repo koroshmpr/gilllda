@@ -1,18 +1,18 @@
 <?php
 /* Template Name: faq */
-
 get_header();
 
 $faqCat = get_field('faq_cat');
-
+$all_faq_items = []; // Array to collect all questions for the master schema
 ?>
-<header class="container border-b mt-3 mb-5 border-black/10">
-    <h1 class="text-black text-3xl border-b-2 pb-2 border-primary w-fit"><?php single_post_title(); ?></h1>
-</header>
+
+    <header class="container border-b mt-3 mb-5 border-black/10">
+        <h1 class="text-black text-3xl border-b-2 pb-2 border-primary w-fit"><?php single_post_title(); ?></h1>
+    </header>
+
 <?php if ($faqCat): ?>
     <section class="container mt-3 grid lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2 gap-3">
-        <?php
-        foreach ($faqCat as $i => $faq):?>
+        <?php foreach ($faqCat as $i => $faq): ?>
             <button
                     @click.prevent="document.getElementById('faqList-<?= $i; ?>').scrollIntoView({behavior: 'smooth'})"
                     class="border group relative overflow-hidden cursor-pointer rounded-lg border-gray-200">
@@ -39,45 +39,65 @@ $faqCat = get_field('faq_cat');
                     <img class="absolute z-0 top-0 w-full aspect-video  object-cover" src="<?= $faq['image']['url'] ?? ''; ?>" alt="<?= $faq['image']['title'] ?? ''; ?>">
                 <?php endif; ?>
             </button>
-        <?php endforeach;
-        ?>
+        <?php endforeach; ?>
     </section>
+
     <section class="container mt-12 mb-5 flex flex-col gap-y-12">
-        <?php
-        foreach ($faqCat as $i => $faq):?>
-            <div id="faqList-<?= $i; ?>"
-                 class="">
+        <?php foreach ($faqCat as $i => $faq): ?>
+            <div id="faqList-<?= $i; ?>">
                 <div class="border-b flex border-black/10">
                     <h3 class="text-black text-3xl border-b-2 pb-2 border-primary w-fit"><?= $faq['title'] ?? ''; ?></h3>
-                    <?php
-                    $args = array(
-                        'size' => 40,
-                        'class' => 'opacity-10'
-                    );
-                    get_template_part('template-parts/svg/faq', null, $args);
-                    ?>
                 </div>
+
                 <?php
                 $faqList = $faq['faq_list'];
+
+                // Collect items for the master schema
+                if (!empty($faqList)) {
+                    $all_faq_items = array_merge($all_faq_items, $faqList);
+                }
+
                 $args = array(
-                    'items' => $faqList
+                    'items' => $faqList,
+                    'disable_schema' => true // Prevent the child from outputting schema
                 );
                 get_template_part('template-parts/global/faq-list', null, $args);
                 ?>
             </div>
         <?php endforeach; ?>
     </section>
-<?php else : ?>
-    <section class=" h-[50vh] flex flex-col justify-center opacity-50 items-center gap-y-4">
-        <?php
-        $args = array(
-            'size' => 100,
-            'class' => ''
-        );
-        get_template_part('template-parts/svg/faq', null, $args);
-        ?>
-        <h2 class="text-3xl text-center">لیستی وجود ندارد!</h2>
-    </section>
 
+    <?php if (!empty($all_faq_items)) : ?>
+        <script type="application/ld+json">
+            <?php
+            $master_schema = [
+                '@context' => 'https://schema.org',
+                '@type' => 'FAQPage',
+                'mainEntity' => []
+            ];
+
+            foreach ($all_faq_items as $item) {
+                $question = $item['question'] ?? '';
+                $answer = $item['answer'] ?? '';
+                if (empty($question) || empty($answer)) continue;
+
+                $master_schema['mainEntity'][] = [
+                    '@type' => 'Question',
+                    'name' => wp_strip_all_tags($question),
+                    'acceptedAnswer' => [
+                        '@type' => 'Answer',
+                        'text' => wp_strip_all_tags($answer),
+                    ]
+                ];
+            }
+
+            echo wp_json_encode($master_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+            ?>
+        </script>
+    <?php endif; ?>
+
+<?php else : ?>
 <?php endif;
-get_footer(); ?>
+
+get_footer();
+?>
