@@ -24,6 +24,9 @@
             <span>دسته بندی‌ها</span>
 
         </div>
+        <div class="border-b max-lg:hidden border-primary/15 flex mb-3">
+            <span class="border-b-2 w-fit pb-1">دسته بندی‌ها</span>
+        </div>
         <?php
         $stickyClass = current_user_can('administrator') ? 'top-24' : 'top-18';
         ;

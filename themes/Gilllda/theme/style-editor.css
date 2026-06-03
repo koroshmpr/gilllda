@@ -2397,8 +2397,8 @@ blockquote {
 .h-1\.5 {
   height: calc(var(--spacing) * 1.5);
 }
-.h-1\/2 {
-  height: calc(1/2 * 100%);
+.h-1\/3 {
+  height: calc(1/3 * 100%);
 }
 .h-2 {
   height: calc(var(--spacing) * 2);
@@ -2448,14 +2448,14 @@ blockquote {
 .h-\[40vh\] {
   height: 40vh;
 }
-.h-\[45vh\] {
-  height: 45vh;
-}
 .h-\[46vh\] {
   height: 46vh;
 }
 .h-\[50vh\] {
   height: 50vh;
+}
+.h-\[55vh\] {
+  height: 55vh;
 }
 .h-\[60vh\] {
   height: 60vh;
@@ -2606,9 +2606,6 @@ blockquote {
 }
 .w-px {
   width: 1px;
-}
-.max-w-11\/12 {
-  max-width: calc(11/12 * 100%);
 }
 .max-w-24 {
   max-width: calc(var(--spacing) * 24);
@@ -3308,9 +3305,6 @@ blockquote {
 .border-primary\/30 {
   border-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
 }
-.border-primary\/50 {
-  border-color: color-mix(in oklab, var(--color-primary) 50%, transparent);
-}
 .border-primary\/70 {
   border-color: color-mix(in oklab, var(--color-primary) 70%, transparent);
 }
@@ -3547,6 +3541,9 @@ blockquote {
 }
 .bg-white\/30 {
   background-color: color-mix(in oklab, var(--color-white) 30%, transparent);
+}
+.bg-white\/70 {
+  background-color: color-mix(in oklab, var(--color-white) 70%, transparent);
 }
 .bg-white\/80 {
   background-color: color-mix(in oklab, var(--color-white) 80%, transparent);
@@ -4940,10 +4937,6 @@ blockquote {
 .before\:bg-white\/20::before {
   content: var(--tw-content);
   background-color: color-mix(in oklab, var(--color-white) 20%, transparent);
-}
-.before\:bg-white\/50::before {
-  content: var(--tw-content);
-  background-color: color-mix(in oklab, var(--color-white) 50%, transparent);
 }
 .before\:bg-gradient-to-b::before {
   content: var(--tw-content);
@@ -6693,6 +6686,11 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:border-s-amber-400 {
     border-inline-start-color: var(--color-amber-400);
+  }
+}
+@media (width >= 64rem) {
+  .lg\:bg-black\/20 {
+    background-color: color-mix(in oklab, var(--color-black) 20%, transparent);
   }
 }
 @media (width >= 64rem) {
