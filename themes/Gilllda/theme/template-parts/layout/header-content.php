@@ -2,13 +2,9 @@
 global $woo_active;
 ?>
 <header id="header"
-        :class="[
-<!--	scrollingDown ? '-translate-y-full' : (scrollingUp ? 'translate-y-0' : ''),-->
-	 scrolled ? 'shadow-sm <?= current_user_can('administrator') ? '!lg:top-0' : ''; ?>' : '']"
-        class="fixed <?= current_user_can('administrator') ? 'lg:top-8' : 'lg:top-0'; ?> max-lg:bottom-0 max-lg:border-t border-black/10 left-0 w-full bg-white transition-all duration-200 z-50"
->
-    <nav
-            class="container <?= is_admin() ? 'lg:pt-12' : '' ?> flex items-center lg:h-14 max-lg:px-2 lg:py-4 justify-between">
+        :class="[scrolled ? 'lg:shadow-sm <?= current_user_can('administrator') ? '!lg:top-0' : ''; ?>' : '']"
+        class="fixed <?= current_user_can('administrator') ? 'lg:top-8' : 'lg:top-0'; ?> shadow-[0_-5px_10px_-3px_rgba(0,0,0,0.1)] max-lg:bottom-0 left-0 w-full bg-white transition-all duration-200 z-50">
+    <nav class="container <?= is_admin() ? 'lg:pt-12' : '' ?> flex items-center lg:h-14 max-lg:px-3 lg:py-4 justify-between">
         <div class="flex items-center gap-5 max-lg:hidden">
             <!-- Logo -->
             <?php
@@ -59,13 +55,14 @@ global $woo_active;
                 </a>
             <?php endif;
             $showLogo = get_field('show_logo_in_navbar', 'option');
-            if ($showLogo) :
-                ?>
+            if ($showLogo) : ?>
                 <a aria-label="go to home page" href="<?= home_url(); ?>"
-                   class="flex items-center justify-center p-1 scale-125 border border-secondary aspect-square lg:hidden bg-primary rounded-full mx-5 text-black/60">
-                    <?php
-                    $logo = get_field('footer_logo', 'option') ?? ''; ?>
-                    <img width="<?= $logo['width'] ?? '98' ?>" height="<?= $logo['height'] ?? '59' ?>" class="w-11 object-fit" src="<?= $logo['url'] ?? ''; ?>" alt="<?= $logo['title'] ?? ''; ?>">
+                   class="relative z-10 flex items-center justify-center aspect-square lg:hidden bg-primary rounded-2xl p-1 mx-2 border border-secondary">
+                    <?php $logo = get_field('footer_logo', 'option') ?? ''; ?>
+                    <img fetchpriority="high" decoding="sync" width="<?= esc_attr($logo['width'] ?? '98') ?>"
+                         height="<?= esc_attr($logo['height'] ?? '59') ?>" class="w-12 h-12 object-contain"
+                         src="<?= esc_url($logo['url'] ?? '') ?>"
+                         alt="<?= esc_attr($logo['title'] ?? get_bloginfo('name')) ?>">
                 </a>
             <?php else : ?>
                 <a aria-label="go to home page" href="<?= home_url(); ?>"

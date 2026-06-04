@@ -27,31 +27,16 @@
     ?>
 </head>
 
-<body
-        x-data="{
-		atBottom: false,
-		scrolled: false,
-        lastScroll: 0,
-        scrollingDown: false,
-        openForm: false,
-        scrollingUp: false,
-        menuOpen: false,
-        searchOpen: false,
-        shopContact: false,
-        categoryOpen: false,
-        intro : false
-    }"
+<body   <?php body_class('font-peyda'); ?>
+        x-data="{ atBottom: false, scrolled: false, lastScroll: 0, scrollingDown: false, openForm: false, scrollingUp: false, menuOpen: false, searchOpen: false, shopContact: false, categoryOpen: false, intro : false }"
         x-init="window.addEventListener('scroll', () => {
-        let currentScroll = window.pageYOffset;
-        scrollingDown = currentScroll > lastScroll && currentScroll > 20;
-        scrollingUp = currentScroll < lastScroll;
-        lastScroll = currentScroll;
-        scrolled = window.scrollY > 150;
-        atBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 250;
-    },
-    setTimeout(() => { intro = true }, 200)
-    )"
-    <?php body_class('font-peyda'); ?>>
+                let currentScroll = window.pageYOffset;
+                scrollingDown = currentScroll > lastScroll && currentScroll > 20;
+                scrollingUp = currentScroll < lastScroll;
+                lastScroll = currentScroll;
+                scrolled = window.scrollY > 150;
+                atBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 250;
+                },setTimeout(() => { intro = true }, 200))">
 <?php
 $scripts = get_field('body-scripts', 'option');
 echo $scripts ?? '';
