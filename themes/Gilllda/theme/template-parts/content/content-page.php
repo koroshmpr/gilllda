@@ -10,18 +10,21 @@ global $woo_active;
 ?>
 
 <?php if ($woo_active && !is_shop()) : ?>
-    <header class="entry-header border-b mt-2 mb-4 max-lg:justify-center flex lg:mb-5 border-black/10 overflow-hidden">
-        <?php
-        if (!is_front_page()) { ?>
-            <h1 :class="intro ? 'max-lg:!translate-y-0 !translate-x-0' : '' "
-                class="border-b-3 pb-2 text-3xl max-lg:translate-y-full lg:translate-x-full transition-all w-fit duration-300 border-flower"><?php the_title(); ?></h1>
-        <?php } else {
-            the_title('<h2 class="entry-title">', '</h2>');
-        }
-        ?>
-    </header><!-- .entry-header -->
+    <?php if (is_account_page() && is_user_logged_in()) : ?>
 
-<?php
+        <header class="entry-header border-b mt-2 mb-4 max-lg:justify-center flex lg:mb-5 border-black/10 overflow-hidden">
+            <?php
+            if (!is_front_page()) { ?>
+                <h1 :class="intro ? 'max-lg:!translate-y-0 !translate-x-0' : '' "
+                    class="border-b-3 pb-2 text-3xl max-lg:translate-y-full lg:translate-x-full transition-all w-fit duration-300 border-flower"><?php the_title(); ?></h1>
+            <?php } else {
+                the_title('<h2 class="entry-title">', '</h2>');
+            }
+            ?>
+        </header><!-- .entry-header -->
+
+    <?php
+    endif;
 endif;
 // Check if it's the shop AND the first page
 if ($woo_active && is_shop()) :

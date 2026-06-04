@@ -20,21 +20,21 @@ if ($bannerSection) : ?>
         <?php endif;
         $banners = $bannerSection['banners'];
         if ($banners) :?>
-            <div class="grid lg:grid-cols-2 gap-4">
+            <div class="grid lg:grid-cols-2 gap-3">
                 <?php foreach ($banners as $i => $banner) : ?>
                     <a target="<?= $banner['link']['target'] ?? ''; ?>" href="<?= $banner['link']['url'] ?? ''; ?>"
-                       class="<?= $i === 0 ? 'lg:col-span-2' : ''; ?> relative group rounded-xl h-60 border border-primary/10 overflow-hidden block shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 ease-out">
+                       class="<?= $i === 0 ? 'lg:col-span-2' : ''; ?> relative group rounded-sm h-60 border border-primary/10 overflow-hidden block shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 ease-out">
 
-                        <div class="absolute inset-0 -translate-x-[150%] skew-x-[-25deg] group-hover:translate-x-[150%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 z-10 pointer-events-none"></div>
+                        <div class="absolute inset-0 -translate-x-[150%] skew-x-[-25deg] group-hover:translate-x-[150%] bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 z-10 pointer-events-none"></div>
 
                         <img class="absolute inset-0 size-full group-hover:scale-110 transition-transform duration-700 ease-out object-cover"
                              src="<?= $banner['image']['url'] ?? ''; ?>" alt="<?= $banner['image']['title'] ?? 'banner-'. $i; ?>">
 
-                        <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="absolute inset-0 bg-gradient-to-tl from-black via-transparent group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                        <div class="absolute inset-0 text-white p-6 flex flex-col justify-end z-20">
+                        <div class="absolute inset-0 text-white p-5 flex flex-col justify-end z-20">
                             <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                                <p class="font-bold text-2xl drop-shadow-md">
+                                <p class="font-bold text-2xl">
                                     <?= $banner['title'] ?? '' ?>
                                 </p>
 

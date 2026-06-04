@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php do_action( 'woocommerce_before_customer_login_form' ); ?>
 
-	<div id="customer_login" class="lg:w-1/2 mx-auto my-4 h-[70dvh] overflow-hidden lg:px-4 rtl" dir="rtl" x-data="{ tab: 'login' }">
+	<div id="customer_login" class="lg:w-1/2 mx-auto my-4 lg:h-[70dvh] overflow-hidden lg:px-4 rtl" dir="rtl" x-data="{ tab: 'login' }">
 
 		<?php if ( 'yes' === get_option( 'woocommerce_enable_myaccount_registration' ) ) : ?>
 			<div class="flex mb-6 bg-gray-100 p-1.5 rounded-2xl relative z-10">
@@ -52,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		<?php endif; ?>
 
-		<div class="bg-white rounded-lg border border-gray-100 overflow-hidden relative">
+		<div class="bg-gray-50 rounded-lg border border-gray-100 overflow-hidden relative">
 
 			<div x-show="tab === 'login'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4">
 				<div class="p-3 lg:p-5">
