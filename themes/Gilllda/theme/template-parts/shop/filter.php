@@ -80,6 +80,7 @@ ob_start(); ?>
     <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
         <h4 class="text-sm font-black text-gray-700 m-0">فقط کالاهای موجود</h4>
         <button type="button"
+                aria-label="add filter to show in stock products"
                 @click="filters.in_stock = !filters.in_stock"
                 :class="filters.in_stock ? 'bg-primary' : 'bg-gray-200'"
                 class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none">
@@ -92,6 +93,7 @@ ob_start(); ?>
     <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
         <h4 class="text-sm font-black text-gray-700 m-0">فقط کالاهای تخفیف‌دار</h4>
         <button type="button"
+                aria-label="add filter to show on sale products"
                 @click="filters.on_sale = !filters.on_sale"
                 :class="filters.on_sale ? 'bg-primary' : 'bg-gray-200'"
                 class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none">

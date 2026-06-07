@@ -22,7 +22,7 @@ if (!is_search()):
     $args = array(
         'class' => $is_woo_account ? 'hidden' : '',
         // Fixed nested quotation marks so it renders valid HTML
-        'attr'  => ':class="scrolled ? \'right-4\' : \'-right-full\'"'
+        'attr' => ':class="scrolled ? \'right-4\' : \'-right-full\'"'
     );
     get_template_part('template-parts/layout/header/search-button', null, $args);
 endif;
@@ -45,7 +45,10 @@ if (function_exists('get_field')) {
 }
 
 get_template_part('template-parts/global/popup');
-
+$preloader = get_field('preloader', 'option');
+if ($preloader):
+    get_template_part('template-parts/global/preloader');
+endif;
 wp_footer();
 ?>
 

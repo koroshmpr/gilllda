@@ -25,6 +25,7 @@
     $scripts = get_field('header-scripts', 'option');
     echo $scripts ?? '';
     ?>
+    <noscript><style>#alpine-preloader { display: none !important; }</style></noscript>
 </head>
 
 <body   <?php body_class('font-peyda'); ?>

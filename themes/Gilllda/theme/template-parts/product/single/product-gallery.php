@@ -57,6 +57,7 @@ $total_grid_items = count($grid_images);
     <div>
         <img
                 @click="openAt(0)"
+                fetchpriority="high"
                 src="<?= get_the_post_thumbnail_url(get_the_ID(), 'large'); ?>"
                 alt="<?= the_title_attribute(['echo' => false]); ?>"
                 class="object-contain lg:object-cover w-full duration-500 aspect-video lg:aspect-square mb-1 overflow-hidden transition-all rounded-sm">
@@ -71,6 +72,7 @@ $total_grid_items = count($grid_images);
                 ?>
                 <div class="relative aspect-square overflow-hidden rounded-sm" @click="openAt(<?= $slide_index; ?>)">
                     <img class="object-cover w-full h-full"
+                         fetchpriority="high"
                          src="<?= wp_get_attachment_image_url($image_id, 'medium') ?>"
                          alt="<?= get_the_title(); ?>">
 

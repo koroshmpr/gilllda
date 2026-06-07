@@ -15,4 +15,5 @@ get_template_part('template-parts/product/single/mobile-fix-cta');
 get_template_part('template-parts/product/single/product', 'notice');
 get_template_part('template-parts/product/single/related-product');
 get_template_part('template-parts/product/single/related-post');
+get_template_part('template-parts/product/single/other-product');
  get_footer();

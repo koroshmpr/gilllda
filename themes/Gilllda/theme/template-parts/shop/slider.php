@@ -27,6 +27,7 @@ if ($slide_count > 0):
 				?>
 				<a href="<?= esc_url($link); ?>" class="swiper-slide block">
 					<img src="<?= esc_url($image['url']); ?>"
+                         fetchpriority="high"
 						 alt="<?= esc_attr($image['title'] ?: 'slide-' . ($index + 1)); ?>"
 						 class="w-full aspect-[2/1] lg:aspect-[4/1] object-cover">
 				</a>
