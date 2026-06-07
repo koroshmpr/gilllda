@@ -83,7 +83,22 @@ $stock_status = $product->get_stock_status();
                 </button>
             <?php endif; ?>
         </div>
-
+        <?php
+        if (!$catMode && $stock_status === 'instock' && wp_is_mobile()): ?>
+        <button aria-label="add to cart the <?= $product->slug ?? ''; ?>"
+                @click.stop.prevent="window.location.href = '<?= esc_url(add_query_arg('add-to-cart', $product_id)); ?>'"
+                class="absolute bottom-2 lg:hidden group/add overflow-hidden end-2 duration-300 shadow-sm z-1 flex items-center cursor-pointer justify-center gap-2 w-fit p-3 rounded-lg bg-primary text-white transition-all"
+        >
+            <?php
+            $args = array(
+                'size' => '20',
+                'class' => 'group-hover/add:delay-100 text-white duration-300 rotate-45 group-hover/add:rotate-0 translate-x-2 opacity-0 transition-all group-hover/add:opacity-100 group-hover/add:translate-x-0'
+            );
+            get_template_part('template-parts/svg/shop', null, $args);
+            ?>
+            <span class="group-hover/add:-translate-x-0 text-sm transition-all duration-300 translate-x-3">افزودن به سبد</span>
+        </button>
+        <?php endif; ?>
         <div class="flex min-h-20 lg:min-h-14 p-2 lg:px-4 max-lg:flex-col max-lg:gap-2 items-center justify-between">
 				<span class="text-md font-bold text-gray-800 line-clamp-1">
 					<?php the_title(); ?>

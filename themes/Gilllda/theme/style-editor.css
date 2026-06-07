@@ -23,6 +23,7 @@ _tw is based on Underscores https://underscores.me/ and Varia https://github.com
 Underscores and Varia are distributed under the terms of the GNU GPL v2 or later.
 */
 :root, :host {
+  --color-red-50: oklch(0.971 0.013 17.38);
   --color-red-100: oklch(0.936 0.032 17.717);
   --color-red-400: oklch(0.704 0.191 22.216);
   --color-red-500: oklch(0.637 0.237 25.331);
@@ -98,6 +99,7 @@ Underscores and Varia are distributed under the terms of the GNU GPL v2 or later
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
   --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
   --radius-4xl: 2rem;
   --drop-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.15);
   --drop-shadow-xl: 0 9px 7px rgb(0 0 0 / 0.1);
@@ -1228,6 +1230,9 @@ blockquote {
 .end-0 {
   inset-inline-end: calc(var(--spacing) * 0);
 }
+.end-2 {
+  inset-inline-end: calc(var(--spacing) * 2);
+}
 .end-3 {
   inset-inline-end: calc(var(--spacing) * 3);
 }
@@ -1317,6 +1322,9 @@ blockquote {
 }
 .bottom-0 {
   bottom: calc(var(--spacing) * 0);
+}
+.bottom-2 {
+  bottom: calc(var(--spacing) * 2);
 }
 .bottom-3 {
   bottom: calc(var(--spacing) * 3);
@@ -1446,6 +1454,9 @@ blockquote {
 }
 .col-span-2 {
   grid-column: span 2 / span 2;
+}
+.col-span-full {
+  grid-column: 1 / -1;
 }
 .container {
   width: 100%;
@@ -2460,6 +2471,9 @@ blockquote {
 .h-\[65vh\] {
   height: 65vh;
 }
+.h-\[85vh\] {
+  height: 85vh;
+}
 .h-\[200\%\] {
   height: 200%;
 }
@@ -2546,6 +2560,9 @@ blockquote {
 }
 .w-10\/12 {
   width: calc(10/12 * 100%);
+}
+.w-11 {
+  width: calc(var(--spacing) * 11);
 }
 .w-11\/12 {
   width: calc(11/12 * 100%);
@@ -2673,8 +2690,16 @@ blockquote {
   --tw-translate-x: calc(var(--spacing) * -2);
   translate: var(--tw-translate-x) var(--tw-translate-y);
 }
+.-translate-x-5 {
+  --tw-translate-x: calc(var(--spacing) * -5);
+  translate: var(--tw-translate-x) var(--tw-translate-y);
+}
 .-translate-x-\[150\%\] {
   --tw-translate-x: calc(150% * -1);
+  translate: var(--tw-translate-x) var(--tw-translate-y);
+}
+.translate-x-0 {
+  --tw-translate-x: calc(var(--spacing) * 0);
   translate: var(--tw-translate-x) var(--tw-translate-y);
 }
 .translate-x-1\/2 {
@@ -2743,6 +2768,10 @@ blockquote {
 }
 .translate-y-12 {
   --tw-translate-y: calc(var(--spacing) * 12);
+  translate: var(--tw-translate-x) var(--tw-translate-y);
+}
+.translate-y-\[13px\] {
+  --tw-translate-y: 13px;
   translate: var(--tw-translate-x) var(--tw-translate-y);
 }
 .translate-y-full {
@@ -2943,11 +2972,6 @@ blockquote {
   margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
   margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
 }
-:where(.space-y-3 > :not(:last-child)) {
-  --tw-space-y-reverse: 0;
-  margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
-  margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
-}
 :where(.space-y-4 > :not(:last-child)) {
   --tw-space-y-reverse: 0;
   margin-block-start: calc(calc(var(--spacing) * 4) * var(--tw-space-y-reverse));
@@ -3107,6 +3131,10 @@ blockquote {
 .rounded-t-2xl {
   border-top-left-radius: var(--radius-2xl);
   border-top-right-radius: var(--radius-2xl);
+}
+.rounded-t-3xl {
+  border-top-left-radius: var(--radius-3xl);
+  border-top-right-radius: var(--radius-3xl);
 }
 .rounded-t-4xl {
   border-top-left-radius: var(--radius-4xl);
@@ -3825,6 +3853,9 @@ blockquote {
 .py-3 {
   padding-block: calc(var(--spacing) * 3);
 }
+.py-3\.5 {
+  padding-block: calc(var(--spacing) * 3.5);
+}
 .py-4 {
   padding-block: calc(var(--spacing) * 4);
 }
@@ -4268,6 +4299,10 @@ blockquote {
 }
 .shadow-\[0_-5px_10px_-3px_rgba\(0\,0\,0\,0\.1\)\] {
   --tw-shadow: 0 -5px 10px -3px var(--tw-shadow-color, rgba(0,0,0,0.1));
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+.shadow-\[0_-10px_20px_rgba\(0\,0\,0\,0\.05\)\] {
+  --tw-shadow: 0 -10px 20px var(--tw-shadow-color, rgba(0,0,0,0.05));
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
 }
 .shadow-lg {
@@ -5069,11 +5104,6 @@ blockquote {
   }
 }
 @media (hover: hover) {
-  .hover\:scale-\[98\%\]:hover {
-    scale: 98%;
-  }
-}
-@media (hover: hover) {
   .hover\:rounded-sm:hover {
     border-radius: var(--radius-sm);
   }
@@ -5185,6 +5215,11 @@ blockquote {
   }
 }
 @media (hover: hover) {
+  .hover\:bg-red-50:hover {
+    background-color: var(--color-red-50);
+  }
+}
+@media (hover: hover) {
   .hover\:bg-red-700:hover {
     background-color: var(--color-red-700);
   }
@@ -5268,6 +5303,11 @@ blockquote {
 @media (hover: hover) {
   .hover\:text-red-400:hover {
     color: var(--color-red-400);
+  }
+}
+@media (hover: hover) {
+  .hover\:text-red-500:hover {
+    color: var(--color-red-500);
   }
 }
 @media (hover: hover) {
@@ -6373,6 +6413,11 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
+  .lg\:flex-none {
+    flex: none;
+  }
+}
+@media (width >= 64rem) {
   .lg\:basis-1\/2 {
     flex-basis: calc(1/2 * 100%);
   }
@@ -6635,11 +6680,6 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:rounded-lg {
     border-radius: var(--radius-lg);
-  }
-}
-@media (width >= 64rem) {
-  .lg\:rounded-sm {
-    border-radius: var(--radius-sm);
   }
 }
 @media (width >= 64rem) {

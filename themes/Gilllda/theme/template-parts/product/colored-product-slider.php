@@ -71,7 +71,7 @@ if ($woo_active && $show):
 
     <section class="rtl group/amazing overflow-hidden <?= esc_attr($class); ?>" dir="rtl"
              id="amazing-section-<?= esc_attr($slug_id); ?>">
-        <div class="bg-primary lg:rounded-sm p-3 max-lg:pt-8 flex flex-col lg:flex-row gap-8 lg:gap-6 items-stretch shadow-gray-200">
+        <div class="bg-primary lg:rounded-lg p-3 max-lg:pt-8 flex flex-col lg:flex-row gap-8 lg:gap-6 items-stretch shadow-gray-200">
 
             <div class="lg:w-1/5 relative flex flex-col items-center justify-center gap-2 text-center text-white lg:p-4 shrink-0">
                 <?php if (!empty($titleImg)) : ?>
@@ -93,7 +93,7 @@ if ($woo_active && $show):
                 endif; ?>
 
                 <?php if ($category_obj || !is_shop()): ?>
-                    <a href="<?= esc_url($view_all_link); ?>"
+                    <a href="<?= esc_url($view_all_link); ?>/?on_sale=true"
                        class="<?= empty($titleImg) ? 'mt-5' : 'mt-auto'; ?> flex items-center gap-2 text-sm font-bold border border-white/15 bg-white/10 px-12 lg:px-6 py-3 rounded-xl text-white hover:bg-white hover:text-primary transition-all duration-300 group/btn">
                         <span>مشاهده همه</span>
                         <?php get_template_part('template-parts/svg/chevron-left', null, ['size' => '22', 'class' => 'w-4 h-4 transition-all duration-500 group-hover/btn:-translate-x-2']); ?>

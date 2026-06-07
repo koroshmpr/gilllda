@@ -50,16 +50,133 @@ if (!defined('ABSPATH')) {
 
     <div class="lg:col-span-2 xl:col-span-3">
 
+        <?php
+        // --- 1. RUN THE QUERY FIRST SO WE KNOW THE RESULT COUNT ---
+
+        $term_id = get_queried_object_id();
+        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+        $posts_per_page = get_option('posts_per_page') ?? 9;
+
+        if (is_shop()) :
+            $args = array(
+                'post_type' => 'product',
+                'posts_per_page' => $posts_per_page,
+                'post_status' => 'publish',
+                'paged' => $paged,
+            );
+        else :
+            $args = array(
+                'post_type' => 'product',
+                'posts_per_page' => $posts_per_page, // FIXED: Changed -1 to $posts_per_page to fix category pagination
+                'post_status' => 'publish',
+                'paged' => $paged,
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'product_cat',
+                        'field' => 'term_id',
+                        'terms' => $term_id,
+                    ),
+                ),
+            );
+        endif;
+
+        // --- INJECT URL FILTERS ---
+        $meta_query = $args['meta_query'] ?? array();
+        $tax_query = $args['tax_query'] ?? array();
+
+        if (!empty($_GET['product_cat'])) {
+            $tax_query[] = array(
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => explode(',', sanitize_text_field($_GET['product_cat'])),
+                'operator' => 'IN',
+            );
+        }
+
+        foreach ($_GET as $key => $value) {
+            if (strpos($key, 'pa_') === 0 && !empty($value)) {
+                $tax_query[] = array(
+                    'taxonomy' => sanitize_key($key),
+                    'field'    => 'slug',
+                    'terms'    => explode(',', sanitize_text_field($value)),
+                    'operator' => 'IN',
+                );
+            }
+        }
+
+        if (!empty($_GET['max_price'])) {
+            $meta_query[] = array(
+                'key'     => '_price',
+                'value'   => sanitize_text_field($_GET['max_price']),
+                'compare' => '<=',
+                'type'    => 'NUMERIC',
+            );
+        }
+
+        if (!empty($_GET['min_weight'])) {
+            $meta_query[] = array(
+                'key'     => '_weight',
+                'value'   => sanitize_text_field($_GET['min_weight']),
+                'compare' => '>=',
+                'type'    => 'NUMERIC',
+            );
+        }
+
+        if (isset($_GET['in_stock']) && $_GET['in_stock'] === 'true') {
+            $meta_query[] = array(
+                'key'     => '_stock_status',
+                'value'   => 'instock',
+                'compare' => '='
+            );
+        }
+
+        if (isset($_GET['on_sale']) && $_GET['on_sale'] === 'true') {
+            $meta_query[] = array(
+                'key'     => '_sale_price',
+                'value'   => 0,
+                'compare' => '>',
+                'type'    => 'NUMERIC'
+            );
+        }
+
+        if (!empty($meta_query)) {
+            if (count($meta_query) > 1) $meta_query['relation'] = 'AND';
+            $args['meta_query'] = $meta_query;
+        }
+
+        if (!empty($tax_query)) {
+            if (count($tax_query) > 1) $tax_query['relation'] = 'AND';
+            $args['tax_query'] = $tax_query;
+        }
+
+        $random_query = new WP_Query($args);
+        $total_products = $random_query->found_posts;
+        $start_index = ($paged - 1) * $posts_per_page + 1;
+        $end_index = min($paged * $posts_per_page, $total_products);
+        ?>
+
         <nav class="flex items-center justify-between bg-white rounded-lg p-4 lg:p-2 border border-gray-200 mb-3 gap-3">
             <div class="flex items-center gap-4">
                 <?php get_template_part('template-parts/global/grid-button'); ?>
-                <div class="text-xs font-bold text-gray-400 text-nowrap custom-result-count [&>p]:!mb-0"><?php woocommerce_result_count(); ?></div>
+                <div class="text-xs font-bold text-gray-400 text-nowrap custom-result-count [&>p]:!mb-0">
+                    <?php
+                    // --- 2. RENDER THE CUSTOM RESULT COUNT ---
+                    if ($total_products == 0) {
+                        echo 'هیچ نتیجه‌ای یافت نشد';
+                    } elseif ($total_products == 1) {
+                        echo 'نمایش ۱ نتیجه';
+                    } elseif ($total_products <= $posts_per_page) {
+                        echo 'نمایش  ' . $total_products . ' نتیجه';
+                    } else {
+                        echo 'نمایش ' . $start_index . ' تا ' . $end_index . ' از ' . $total_products . ' نتیجه';
+                    }
+                    ?>
+                </div>
             </div>
 
             <div class="max-lg:hidden flex items-center gap-2 custom-ordering">
                 <span class="text-xs font-bold text-gray-400">مرتب‌سازی:</span>
-                <div
-                        class="[&_select]:bg-transparent [&_select]:text-xs [&_select]:w-fit [&_select]:font-black [&_select]:border-none [&>form]:!mb-0 [&_select]:focus:ring-0 [&_select]:cursor-pointer [&>form]:flex [&>form]:items-center [&>form]:border [&>form]:border-black/5 [&>form]:rounded-md [&>form]:p-2">
+                <div class="[&_select]:bg-transparent [&_select]:text-xs [&_select]:w-fit [&_select]:font-black [&_select]:border-none [&>form]:!mb-0 [&_select]:focus:ring-0 [&_select]:cursor-pointer [&>form]:flex [&>form]:items-center [&>form]:border [&>form]:border-black/5 [&>form]:rounded-md [&>form]:p-2">
                     <?php woocommerce_catalog_ordering(); ?>
                 </div>
             </div>
@@ -93,48 +210,17 @@ if (!defined('ABSPATH')) {
                     </div>
                 </div>
             </template>
+
             <?php
-            $term_id = get_queried_object_id();
-            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-            $posts_per_page = get_option('posts_per_page') ?? 9;
-            if (is_shop()) :
-            $args = array(
-                'post_type' => 'product',
-                'posts_per_page' => $posts_per_page,
-                'orderby' => 'Date', // Random order
-                'post_status' => 'publish', // Only published products
-                'paged' => $paged, // For pagination
-
-            );
-            else :
-                $args = array(
-                    'post_type' => 'product',
-                    'posts_per_page' => -1,
-                    'orderby' => 'Date', // Random order
-                    'post_status' => 'publish', // Only published products
-                    'paged' => $paged, // For pagination
-                    'tax_query' => array(
-                        array(
-                            'taxonomy' => 'product_cat',
-                            'field' => 'term_id',
-                            'terms' => $term_id,
-                        ),
-                    ),
-                );
-            endif;
-
-            $random_query = new WP_Query($args);
-            $total_products = $random_query->found_posts; // Total products
-            $start_index = ($paged - 1) * $posts_per_page + 1;
-            $end_index = min($paged * $posts_per_page, $total_products);
-
+            // --- 3. LOOP THROUGH THE ALREADY RUN QUERY ---
             if ($random_query->have_posts()) :
                 while ($random_query->have_posts()) {
                     $random_query->the_post();
                     get_template_part('template-parts/product/card/product-card',null , ['isArchive' => true]);
                 }
+                wp_reset_postdata(); // Safely resets the loop
             else : ?>
-                <h2 class="text-2xl opacity-25 text-center w-full py-4">
+                <h2 class="text-2xl opacity-25 text-center w-full py-4 col-span-full">
                     هیچ محصولی یافت نشد
                 </h2>
             <?php endif; ?>
