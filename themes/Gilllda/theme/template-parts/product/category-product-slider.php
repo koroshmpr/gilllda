@@ -40,7 +40,7 @@ if ($category):
         $count = count($amazing_query->posts);
         ?>
 
-        <section class="rtl container max-w-content max-lg:px-3 my-5" dir="rtl">
+        <section class="rtl container max-lg:px-3 my-5" dir="rtl">
             <div class="flex items-center justify-between mb-2">
                 <p class="pl-2"><?= $category->name ?></p>
                 <div class="flex-1 h-[1px] bg-gradient-to-r from-primary/10 to-primary/20"></div>

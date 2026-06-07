@@ -98,6 +98,7 @@ Underscores and Varia are distributed under the terms of the GNU GPL v2 or later
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
   --radius-2xl: 1rem;
+  --radius-4xl: 2rem;
   --drop-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.15);
   --drop-shadow-xl: 0 9px 7px rgb(0 0 0 / 0.1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
@@ -3047,6 +3048,9 @@ blockquote {
 :where(.divide-white\/40 > :not(:last-child)) {
   border-color: color-mix(in oklab, var(--color-white) 40%, transparent);
 }
+:where(.divide-white\/50 > :not(:last-child)) {
+  border-color: color-mix(in oklab, var(--color-white) 50%, transparent);
+}
 .self-end {
   align-self: flex-end;
 }
@@ -3103,6 +3107,10 @@ blockquote {
 .rounded-t-2xl {
   border-top-left-radius: var(--radius-2xl);
   border-top-right-radius: var(--radius-2xl);
+}
+.rounded-t-4xl {
+  border-top-left-radius: var(--radius-4xl);
+  border-top-right-radius: var(--radius-4xl);
 }
 .rounded-t-lg {
   border-top-left-radius: var(--radius-lg);
@@ -5474,6 +5482,11 @@ blockquote {
   }
 }
 @media (width < 64rem) {
+  .max-lg\:mt-5 {
+    margin-top: calc(var(--spacing) * 5);
+  }
+}
+@media (width < 64rem) {
   .max-lg\:mb-2 {
     margin-bottom: calc(var(--spacing) * 2);
   }
@@ -5705,11 +5718,6 @@ blockquote {
   }
 }
 @media (width < 64rem) {
-  .max-lg\:px-1 {
-    padding-inline: calc(var(--spacing) * 1);
-  }
-}
-@media (width < 64rem) {
   .max-lg\:px-2 {
     padding-inline: calc(var(--spacing) * 2);
   }
@@ -5777,6 +5785,11 @@ blockquote {
 @media (width < 64rem) {
   .max-lg\:pb-3 {
     padding-bottom: calc(var(--spacing) * 3);
+  }
+}
+@media (width < 64rem) {
+  .max-lg\:pb-20 {
+    padding-bottom: calc(var(--spacing) * 20);
   }
 }
 @media (width < 64rem) {
@@ -6698,6 +6711,11 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:bg-primary\/5 {
     background-color: color-mix(in oklab, var(--color-primary) 5%, transparent);
+  }
+}
+@media (width >= 64rem) {
+  .lg\:bg-white {
+    background-color: var(--color-white);
   }
 }
 @media (width >= 64rem) {

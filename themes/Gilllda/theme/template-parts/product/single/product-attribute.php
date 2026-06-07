@@ -8,7 +8,7 @@ $short_desc = $product->get_short_description();
 
 <div id="product-attribute"
      style="scroll-margin-top: 0;"
-     class="lg:col-span-7 xl:col-span-5 bg-white p-5 max-lg:pb-2 pt-3 lg:py-0 lg:px-5 z-[1] relative flex flex-col gap-3 lg:gap-2 rounded-t-2xl max-lg:border-t border-black/10 -mt-2 rtl"
+     class="lg:col-span-7 xl:col-span-5 bg-gray-50 lg:bg-white p-5 max-lg:pb-2 pt-3 lg:py-0 lg:px-5 z-[1] relative flex flex-col gap-3 lg:gap-2 rounded-t-4xl max-lg:border-t border-gray-100 rtl"
      dir="rtl">
     <div @click.prevent="document.getElementById('product-attribute').scrollIntoView({behavior: 'smooth'})"
             class="w-28 h-1.5 mb-3 lg:hidden bg-gray-200 rounded-full mx-auto"></div>
@@ -98,7 +98,29 @@ $short_desc = $product->get_short_description();
           ?>
        </span>
             </div>
-        <?php endif; ?>
+        <?php endif;
+        // Custom Attributes Loop
+        $attributes = $product->get_attributes();
+        foreach ($attributes as $attribute) :
+        if ($attribute->get_variation()) continue;
+        ?>
+        <div class="w-full <?= $boxClass ?>">
+            <span class="<?= $labelClass ?>"><?= wc_attribute_label($attribute->get_name()); ?>:</span>
+            <span class="flex divide-x divide-white/50 <?= $valueClass ?>">
+                  <?php
+                  $values = array();
+                  if ($attribute->is_taxonomy()) {
+                      $attribute_values = wc_get_product_terms($product->get_id(), $attribute->get_name(), array('fields' => 'names'));
+                      foreach ($attribute_values as $attribute_value) :?>
+                          <span class="px-2"><?= $values[] = esc_html($attribute_value); ?></span>
+                      <?php endforeach;
+                  }
+                  // Final check to ensure we aren't imploding an empty or nested array
+                  //				  echo !empty($values) ? implode(', ', $values) : '---';
+                  ?>
+              </span>
+        </div>
+        <?php endforeach; ?>
     </div>
 
     <?php if ($short_desc) : ?>
