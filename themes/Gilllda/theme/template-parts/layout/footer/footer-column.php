@@ -18,15 +18,17 @@
         if (!empty($posts)) :
             // Load posts loop.
             foreach ($posts as $i => $post):?>
-                <li class="flex gap-x-2 px-3 items-center group">
+                <li class="group">
                     <a href="<?php the_permalink(); ?>"
-                       class="hover:text-white max-lg:text-sm line-clamp-1 text-white/70 lg:w-fit lg:ps-4"><?= wp_trim_words(get_the_title(), 10); ?></a>
-                    <?php
-                    $args = array(
-                        'size' => 12,
-                        'class' => 'group-hover:-translate-x-1 transition-all'
-                    );
-                    get_template_part('template-parts/svg/chevron-left', null, $args); ?>
+                       class="hover:text-white max-lg:bg-white/5 rounded-md max-lg:py-3 flex gap-x-2 px-3 items-center max-lg:justify-between max-lg:text-sm text-white/70 lg:w-fit lg:ps-4">
+                        <span class="line-clamp-1"><?= wp_trim_words(get_the_title(), 10); ?></span>
+                        <?php
+                        $args = array(
+                            'size' => 12,
+                            'class' => 'group-hover:-translate-x-1 transition-all'
+                        );
+                        get_template_part('template-parts/svg/chevron-left', null, $args); ?>
+                    </a>
                 </li>
             <?php
             endforeach;

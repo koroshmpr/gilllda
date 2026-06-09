@@ -52,8 +52,8 @@ $content = get_field('content', $acf_term_id);
     </article>
 
 <?php
+
 if ($content) :
-    var_dump($acf_term_id);
     $args = array(
         'id'    => $acf_term_id,
         'class' => 'container max-w-content my-3'

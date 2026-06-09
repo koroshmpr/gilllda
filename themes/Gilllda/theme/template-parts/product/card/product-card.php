@@ -54,7 +54,7 @@ $stock_status = $product->get_stock_status();
                  fetchpriority="low"
                  src="<?= $image_url; ?>"
                  alt="<?php the_title(); ?>"
-                 class="object-cover w-full !h-full !my-0 transition-all duration-700 transform group-hover:scale-110"
+                 class="object-contain w-full !h-full !my-0 transition-all duration-700 transform group-hover:scale-110"
                  :class="hover ? '<?= $hover_image_url ? 'opacity-0' : ''; ?> scale-105' : 'opacity-100'"
             >
             <?php if ($hover_image_url) : ?>
@@ -62,7 +62,7 @@ $stock_status = $product->get_stock_status();
                      fetchpriority="low"
                      alt="<?= $gallery_ids[0]['title'] ?? ''; ?>"
                      src="<?= $hover_image_url; ?>"
-                     class="absolute inset-0 object-cover w-full !my-0 !h-full transition-all duration-700 transform-all opacity-0"
+                     class="absolute inset-0 object-contain w-full !my-0 !h-full transition-all duration-700 transform-all opacity-0"
                      :class="hover ? 'opacity-100 scale-110 duration-500' : 'opacity-0'"
                 >
             <?php

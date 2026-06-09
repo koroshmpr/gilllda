@@ -67,8 +67,21 @@ if (is_shop()) :
             </div>
         </nav>
     <?php endif;
-
 endif;
-
 ?>
 </div>
+<?php
+if (is_product_category()):
+    $term = get_queried_object();
+
+    $acf_term_id = $term->taxonomy . '_' . $term->term_id;
+
+    $content = get_field('content', $acf_term_id);
+    if ($content) :
+        $args = array(
+            'id'    => $acf_term_id,
+            'class' => 'lg:col-span-3 xl:col-span-4 my-3'
+        );
+        get_template_part('template-parts/shop/shop-content', null, $args);
+    endif;
+endif;?>

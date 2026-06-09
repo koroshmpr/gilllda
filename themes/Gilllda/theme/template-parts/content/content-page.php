@@ -7,24 +7,32 @@
  * @package bluebox
  */
 global $woo_active;
-?>
 
-<?php if ($woo_active && !is_shop()) : ?>
-    <?php if (is_account_page() && is_user_logged_in()) : ?>
+if ($woo_active) :
+    // This condition means: "Show everywhere EXCEPT on the My Account page when logged out"
+    if (!(is_account_page() && !is_user_logged_in())) :
+        ?>
 
         <header class="entry-header border-b mt-2 mb-4 max-lg:justify-center flex lg:mb-5 border-black/10 overflow-hidden">
-            <?php
-            if (!is_front_page()) { ?>
+            <?php if (!is_front_page()) : ?>
                 <h1 :class="intro ? 'max-lg:!translate-y-0 !translate-x-0' : '' "
-                    class="border-b-3 pb-2 text-3xl max-lg:translate-y-full lg:translate-x-full transition-all w-fit duration-300 border-flower"><?php the_title(); ?></h1>
-            <?php } else {
+                    class="border-b-3 pb-2 text-3xl max-lg:translate-y-full lg:translate-x-full transition-all w-fit duration-300 border-flower">
+                    <?php
+                    // Pro-Tip: the_title() on WooCommerce archives prints the first product's name.
+                    // woocommerce_page_title() correctly prints the Category/Archive name.
+                    if (is_woocommerce()) {
+                        woocommerce_page_title();
+                    } else {
+                        the_title();
+                    }
+                    ?>
+                </h1>
+            <?php else :
                 the_title('<h2 class="entry-title">', '</h2>');
-            }
-            ?>
+            endif; ?>
         </header><!-- .entry-header -->
 
-    <?php
-    endif;
+    <?php endif;
 endif;
 // Check if it's the shop AND the first page
 if ($woo_active && is_shop()) :

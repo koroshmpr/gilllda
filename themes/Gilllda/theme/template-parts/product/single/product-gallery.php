@@ -60,7 +60,7 @@ $total_grid_items = count($grid_images);
                 fetchpriority="high"
                 src="<?= get_the_post_thumbnail_url(get_the_ID(), 'large'); ?>"
                 alt="<?= the_title_attribute(['echo' => false]); ?>"
-                class="object-contain lg:object-cover w-full duration-500 aspect-video lg:aspect-square mb-1 overflow-hidden transition-all rounded-sm">
+                class="object-contain w-full duration-500 aspect-video lg:aspect-square mb-1 overflow-hidden transition-all rounded-sm">
 
         <div class="grid grid-cols-4 gap-1">
             <?php
@@ -71,7 +71,7 @@ $total_grid_items = count($grid_images);
                 $has_more = ($total_grid_items > 4);
                 ?>
                 <div class="relative aspect-square overflow-hidden rounded-sm" @click="openAt(<?= $slide_index; ?>)">
-                    <img class="object-cover w-full h-full"
+                    <img class="object-contain w-full h-full"
                          fetchpriority="high"
                          src="<?= wp_get_attachment_image_url($image_id, 'medium') ?>"
                          alt="<?= get_the_title(); ?>">

@@ -25,7 +25,7 @@ if (is_tax($taxonomy)) {
 	}
 }
 ?>
-<nav class="bg-gray-50 border border-black/5 rounded-lg p-3 flex flex-col gap-y-2 justify-start <?= $class ?? ''; ?>">
+<nav class="flex flex-col gap-y-2 justify-start <?= $class ?? ''; ?>">
 	<?php
 	if (!empty($terms) && !is_wp_error($terms)): ?>
 		<?php foreach ($terms as $term):

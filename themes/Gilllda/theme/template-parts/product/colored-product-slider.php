@@ -26,7 +26,7 @@ if ($woo_active && $show):
     $term_id_id = ($category_obj && !is_wp_error($category_obj)) ? $category_obj->term_id : '0';
 
     // Safely generate the "View All" link (defaults to shop page)
-    $view_all_link = get_permalink(wc_get_page_id('shop'));
+    $view_all_link = get_permalink(wc_get_page_id('shop')). '/?on_sale=true';
     if ($category_obj && !is_wp_error(get_term_link($category_obj))) {
         $view_all_link = get_term_link($category_obj);
     }
@@ -62,7 +62,7 @@ if ($woo_active && $show):
         $amazing_query = new WP_Query($query_args);
 
         // Change the link back to the main shop since the category was empty
-        $view_all_link = get_permalink(wc_get_page_id('shop'));
+        $view_all_link = get_permalink(wc_get_page_id('shop')). '/?on_sale=true';
     }
 
     // Stop completely if there's nothing to show (no category posts AND no sale items)
@@ -93,7 +93,7 @@ if ($woo_active && $show):
                 endif; ?>
 
                 <?php if ($category_obj || !is_shop()): ?>
-                    <a href="<?= esc_url($view_all_link); ?>/?on_sale=true"
+                    <a href="<?= esc_url($view_all_link); ?>"
                        class="<?= empty($titleImg) ? 'mt-5' : 'mt-auto'; ?> flex items-center gap-2 text-sm font-bold border border-white/15 bg-white/10 px-12 lg:px-6 py-3 rounded-xl text-white hover:bg-white hover:text-primary transition-all duration-300 group/btn">
                         <span>مشاهده همه</span>
                         <?php get_template_part('template-parts/svg/chevron-left', null, ['size' => '22', 'class' => 'w-4 h-4 transition-all duration-500 group-hover/btn:-translate-x-2']); ?>

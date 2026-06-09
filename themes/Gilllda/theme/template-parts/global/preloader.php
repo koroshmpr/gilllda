@@ -6,6 +6,16 @@
 ?>
 
 <style>
+    #alpine-preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: white;
+    }
     .dots {
         width: 13.4px;
         height: 13.4px;
@@ -47,8 +57,7 @@
 <div id="alpine-preloader"
      x-data="pageTransition()"
      x-show="isLoading"
-     x-transition.opacity.duration.500ms
-     class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white">
+     x-transition.opacity.duration.500ms>
 
     <div class="dots"></div>
 
