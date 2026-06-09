@@ -19,7 +19,7 @@
             // Load posts loop.
             foreach ($posts as $i => $post):?>
                 <li class="group">
-                    <a href="<?php the_permalink(); ?>"
+                    <a href="<?php the_permalink(); ?>" title="<?= get_the_title() ?? ''; ?>"
                        class="hover:text-white max-lg:bg-white/5 rounded-md max-lg:py-3 flex gap-x-2 px-3 items-center max-lg:justify-between max-lg:text-sm text-white/70 lg:w-fit lg:ps-4">
                         <span class="line-clamp-1"><?= wp_trim_words(get_the_title(), 10); ?></span>
                         <?php

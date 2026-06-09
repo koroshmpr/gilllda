@@ -23,8 +23,7 @@ $content = get_field('content', $acf_term_id);
             get_template_part('template-parts/blog/sidebar', null, $args);
             ?>
 
-            <section x-data="{ gridView: 'large' }"
-                     class="lg:col-span-8 xl:col-span-9 max-w-content flex flex-col gap-3 mb-8">
+            <section class="lg:col-span-8 xl:col-span-9 max-w-content flex flex-col gap-3 mb-8">
 
                 <?php get_template_part('template-parts/global/grid-button'); ?>
 

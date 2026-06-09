@@ -54,7 +54,7 @@ if (!empty($recent_searches)):
 
     </nav>
 <?php endif; ?>
-    <section x-data="{ gridView: 'small' }" class="container max-w-content px-3 flex flex-col gap-3 my-3 lg:mb-8">
+    <section class="container max-w-content px-3 flex flex-col gap-3 my-3 lg:mb-8">
         <?php
         if (have_posts()) :
         get_template_part('template-parts/global/grid-button');

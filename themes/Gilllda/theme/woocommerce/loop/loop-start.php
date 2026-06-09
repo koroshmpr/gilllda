@@ -43,7 +43,7 @@ if (!defined('ABSPATH')) {
     </button>
 </div>
 
-<div x-data="{ gridView: 'large', sortOpen: false }" @open-sort.window="sortOpen = true"
+<div x-data="{ sortOpen: false }" @open-sort.window="sortOpen = true"
      class="grid w-full lg:gap-4 mb-4 lg:grid-cols-3 xl:grid-cols-4 rtl" dir="rtl">
 
     <?php get_template_part('template-parts/shop/filter'); ?>
@@ -182,8 +182,8 @@ if (!defined('ABSPATH')) {
             </div>
         </nav>
 
-        <ul class="grid gap-3 transition-all duration-500 p-0 !my-0 list-none"
-            :class="gridView === 'large' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'">
+        <ul class="grid gap-3 transition-all duration-500 p-0 !my-0 list-none grid-cols-1"
+            :class="gridView === 'large' ? 'md:grid-cols-2 xl:grid-cols-3' : ' lg:grid-cols-3 xl:grid-cols-4'">
 
             <template x-teleport="body">
                 <div x-show="sortOpen" class="fixed inset-0 z-[50] lg:hidden rtl" dir="rtl">

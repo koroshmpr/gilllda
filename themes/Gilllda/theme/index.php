@@ -67,8 +67,7 @@ if ($posts->have_posts()) :
     <article class=" container bg-white max-lg:px-2 grid lg:grid-cols-12 gap-2 lg:gap-4 pt-2">
         <?php get_template_part('template-parts/blog/sidebar'); ?>
 
-        <section x-data="{ gridView: 'large' }"
-                 class="lg:col-span-8 xl:col-span-9 max-w-content flex flex-col gap-3 lg:mb-4">
+        <section class="lg:col-span-8 xl:col-span-9 max-w-content flex flex-col gap-3 lg:mb-4">
             <?php get_template_part('template-parts/global/grid-button'); ?>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"

@@ -29,8 +29,11 @@
 </head>
 
 <body   <?php body_class('font-peyda'); ?>
-        x-data="{ atBottom: false, scrolled: false, lastScroll: 0, scrollingDown: false, openForm: false, scrollingUp: false, menuOpen: false, searchOpen: false, shopContact: false, categoryOpen: false, intro : false }"
-        x-init="window.addEventListener('scroll', () => {
+        x-data="{atBottom: false, scrolled: false, lastScroll: 0, scrollingDown: false, openForm: false, scrollingUp: false, menuOpen: false, searchOpen: false, shopContact: false, categoryOpen: false, intro : false ,
+        gridView: (document.cookie.match(/gridView=([^;]+)/) || [])[1] || 'large'}"
+        x-init="
+        $watch('gridView', value => document.cookie = `gridView=${value}; path=/; max-age=31536000`),
+        window.addEventListener('scroll', () => {
                 let currentScroll = window.pageYOffset;
                 scrollingDown = currentScroll > lastScroll && currentScroll > 20;
                 scrollingUp = currentScroll < lastScroll;
