@@ -241,6 +241,7 @@ require get_template_directory() . '/inc/custom-post-type.php';
 require get_template_directory() . '/inc/gravity-form.php';
 require get_template_directory() . '/inc/optimize.php';
 include_once get_template_directory() . '/inc/search-route.php';
+include_once get_template_directory() . '/inc/ajax-search.php';
 
 add_action( 'wp_enqueue_scripts', function() {
     if ( is_product() ) {

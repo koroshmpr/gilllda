@@ -16,7 +16,7 @@ if ($woo_active) :
         <header class="entry-header border-b mt-2 mb-4 max-lg:justify-center flex lg:mb-5 border-black/10 overflow-hidden">
             <?php if (!is_front_page()) : ?>
                 <h1 :class="intro ? 'max-lg:!translate-y-0 !translate-x-0' : '' "
-                    class="border-b-3 pb-2 text-3xl max-lg:translate-y-full lg:translate-x-full transition-all w-fit duration-300 border-flower">
+                    class="border-b-3 pb-2 text-2xl lg:text-3xl max-lg:translate-y-full lg:translate-x-full transition-all w-fit duration-300 border-primary">
                     <?php
                     // Pro-Tip: the_title() on WooCommerce archives prints the first product's name.
                     // woocommerce_page_title() correctly prints the Category/Archive name.
