@@ -8,8 +8,8 @@
             class="bg-gray-50 text-black w-full h-full transition-all duration-300 flex flex-col overflow-hidden"
             :class="searchOpen ? 'delay-100 !translate-y-0' : 'translate-y-5'"
     >
-        <div class="container max-w-content max-lg:px-3">
-            <button @click="searchOpen = false" aria-label="close search modal" class="flex items-center justify-center absolute top-4 left-4 lg:top-6 lg:left-6 py-2 px-2 bg-gray-200 hover:bg-gray-300 cursor-pointer transition-all rounded-md text-black z-10">
+        <div class="container max-w-content max-lg:px-3 relative">
+            <button @click="searchOpen = false" aria-label="close search modal" class="flex items-center justify-center absolute top-4 start-4 py-2 px-2 bg-gray-200 hover:bg-gray-300 cursor-pointer transition-all rounded-md text-black z-10">
                 <?php
                 $args = array(
                     'size' => '18',
