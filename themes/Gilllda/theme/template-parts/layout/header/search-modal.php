@@ -1,11 +1,11 @@
 <div
         @keydown.escape.window="searchOpen = false" id="searchModal"
         :class="searchOpen ? '!z-50 !opacity-100' : ''"
-        class="fixed <?= current_user_can('administrator') ? 'pt-8' : ''; ?> inset-0 flex justify-center z-[-1] bg-black/50 opacity-0 backdrop-blur-sm transition-all duration-300"
+        class="fixed <?= current_user_can('administrator') ? 'pt-8' : ''; ?> inset-0 flex justify-center z-[-1] bg-white opacity-0 backdrop-blur-sm transition-all duration-200"
         @click.self="searchOpen = false"
 >
     <div
-            class="bg-gray-50 text-black w-full h-full transition-all duration-300 flex flex-col overflow-hidden"
+            class="bg-gray-50 text-black w-full h-full transition-all duration-200 flex flex-col overflow-hidden"
             :class="searchOpen ? 'delay-100 !translate-y-0' : 'translate-y-5'"
     >
         <div class="container max-w-content max-lg:px-3 relative">

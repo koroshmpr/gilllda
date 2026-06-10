@@ -1,7 +1,17 @@
 <?php
 global $product;
 if (!$product) return;
-$average_rating = $product->get_average_rating();
+$post_id = get_the_ID();
+$rating_value = get_post_meta($post_id, 'rating_value', true);
+
+// Get total ratings and average rating
+$total_ratings = get_post_meta($post_id, 'total_ratings', true);
+$total_rating_value = get_post_meta($post_id, 'total_rating_value', true);
+$average_rating = 0;
+
+if (is_numeric($total_ratings) && is_numeric($total_rating_value) && $total_ratings > 0) {
+    $average_rating = round($total_rating_value / $total_ratings, 1);
+}
 $review_count = $product->get_review_count();
 $short_desc = $product->get_short_description();
 ?>
@@ -11,7 +21,7 @@ $short_desc = $product->get_short_description();
      class="lg:col-span-7 xl:col-span-5 bg-gray-50 lg:bg-white p-5 max-lg:pb-2 pt-3 lg:py-0 lg:px-5 z-[1] relative flex flex-col gap-3 lg:gap-2 rounded-t-4xl max-lg:border-t border-gray-100 rtl"
      dir="rtl">
     <div @click.prevent="document.getElementById('product-attribute').scrollIntoView({behavior: 'smooth'})"
-            class="w-28 h-1.5 mb-3 lg:hidden bg-gray-200 rounded-full mx-auto"></div>
+         class="w-28 h-1.5 mb-3 lg:hidden bg-gray-200 rounded-full mx-auto"></div>
 
     <div class="text-sm">
         <?php woocommerce_breadcrumb(); ?>
@@ -50,19 +60,21 @@ $short_desc = $product->get_short_description();
                 <?php endif; ?>
             </div>
         </div>
-        <div class="flex gap-3 items-center self-end md:self-start">
+        <div class="flex flex-col gap-2 items-end self-end md:self-start">
             <?php if ($average_rating > 0) : ?>
-                <div class="flex items-center gap-1.5 bg-yellow-50 px-3 py-1.5 rounded-full border border-yellow-100">
-					<span
-                            class="font-black text-yellow-700 text-sm leading-none"><?= number_format($average_rating, 1); ?></span>
-                    <?php
-                    // Pass the class key explicitly in the array
-                    get_template_part('template-parts/svg/star-fill', null, ['class' => 'w-4 h-4 fill-yellow-400']);
-                    ?>
-                </div>
-                <button @click.prevent="document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' })"
-                        class="text-gray-400 text-xs hover:text-primary transition-colors underline underline-offset-4">
-                    <?= $review_count; ?> دیدگاه
+                    <button @click.prevent="document.getElementById('product-rating').scrollIntoView({ behavior: 'smooth' })"
+                            class="flex items-center gap-1.5 bg-yellow-50 hover:bg-yellow-100 transition-all px-3 py-1.5 rounded-xl border border-yellow-200 font-black text-yellow-700 text-sm cursor-pointer leading-none">
+                        <?php
+                        // Pass the class key explicitly in the array
+                        get_template_part('template-parts/svg/star-fill', null, ['class' => 'w-4 h-4 fill-yellow-400']);
+                        ?>
+                        <?= number_format($average_rating, 1); ?>
+
+                    </button>
+                <button @click.prevent="document.getElementById('comments').scrollIntoView({ behavior: 'smooth' })"
+                        class="bg-primary/5 border border-primary/10 hover:bg-primary/10 rounded-xl gap-1.5 flex items-center py-1 px-3 text-gray-400 text-sm cursor-pointer transition-colors">
+                    <?php get_template_part('template-parts/svg/message', null, ['class' => 'w-4 h-4 text-primary/70']); ?>
+                    <?= $review_count; ?>
                 </button>
             <?php endif; ?>
             <?php
@@ -102,11 +114,11 @@ $short_desc = $product->get_short_description();
         // Custom Attributes Loop
         $attributes = $product->get_attributes();
         foreach ($attributes as $attribute) :
-        if ($attribute->get_variation()) continue;
-        ?>
-        <div class="w-full <?= $boxClass ?>">
-            <span class="<?= $labelClass ?>"><?= wc_attribute_label($attribute->get_name()); ?>:</span>
-            <span class="flex divide-x divide-white/50 <?= $valueClass ?>">
+            if ($attribute->get_variation()) continue;
+            ?>
+            <div class="w-full <?= $boxClass ?>">
+                <span class="<?= $labelClass ?>"><?= wc_attribute_label($attribute->get_name()); ?>:</span>
+                <span class="flex divide-x divide-white/50 <?= $valueClass ?>">
                   <?php
                   $values = array();
                   if ($attribute->is_taxonomy()) {
@@ -119,7 +131,7 @@ $short_desc = $product->get_short_description();
                   //				  echo !empty($values) ? implode(', ', $values) : '---';
                   ?>
               </span>
-        </div>
+            </div>
         <?php endforeach; ?>
     </div>
 

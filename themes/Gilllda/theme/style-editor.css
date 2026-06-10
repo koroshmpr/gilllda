@@ -34,6 +34,7 @@ Underscores and Varia are distributed under the terms of the GNU GPL v2 or later
   --color-amber-500: oklch(0.769 0.188 70.08);
   --color-yellow-50: oklch(0.987 0.026 102.212);
   --color-yellow-100: oklch(0.973 0.071 103.193);
+  --color-yellow-200: oklch(0.945 0.129 101.54);
   --color-yellow-400: oklch(0.852 0.199 91.936);
   --color-yellow-700: oklch(0.554 0.135 66.442);
   --color-green-100: oklch(0.962 0.044 156.743);
@@ -3404,8 +3405,8 @@ blockquote {
 .border-white\/75 {
   border-color: color-mix(in oklab, var(--color-white) 75%, transparent);
 }
-.border-yellow-100 {
-  border-color: var(--color-yellow-100);
+.border-yellow-200 {
+  border-color: var(--color-yellow-200);
 }
 .border-s-primary\/50 {
   border-inline-start-color: color-mix(in oklab, var(--color-primary) 50%, transparent);
@@ -4230,6 +4231,9 @@ blockquote {
 .text-primary\/50 {
   color: color-mix(in oklab, var(--color-primary) 50%, transparent);
 }
+.text-primary\/70 {
+  color: color-mix(in oklab, var(--color-primary) 70%, transparent);
+}
 .text-primary\/90 {
   color: color-mix(in oklab, var(--color-primary) 90%, transparent);
 }
@@ -4280,12 +4284,6 @@ blockquote {
 }
 .no-underline {
   text-decoration-line: none;
-}
-.underline {
-  text-decoration-line: underline;
-}
-.underline-offset-4 {
-  text-underline-offset: 4px;
 }
 .accent-primary {
   accent-color: var(--color-primary);
@@ -5277,6 +5275,11 @@ blockquote {
   }
 }
 @media (hover: hover) {
+  .hover\:bg-yellow-100:hover {
+    background-color: var(--color-yellow-100);
+  }
+}
+@media (hover: hover) {
   .hover\:px-14:hover {
     padding-inline: calc(var(--spacing) * 14);
   }
@@ -6056,11 +6059,6 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
-  .lg\:top-6 {
-    top: calc(var(--spacing) * 6);
-  }
-}
-@media (width >= 64rem) {
   .lg\:top-8 {
     top: calc(var(--spacing) * 8);
   }
@@ -6123,11 +6121,6 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:bottom-8 {
     bottom: calc(var(--spacing) * 8);
-  }
-}
-@media (width >= 64rem) {
-  .lg\:left-6 {
-    left: calc(var(--spacing) * 6);
   }
 }
 @media (width >= 64rem) {

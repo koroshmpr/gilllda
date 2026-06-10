@@ -106,7 +106,7 @@ $categories = get_the_terms(get_the_ID(), 'category');
                 <?php get_template_part('template-parts/svg/eye', null, $args); ?>
                 <span><?= $view; ?></span>
             </div>
-            <button @click.prevent="document.getElementById('rating').scrollIntoView({ behavior: 'smooth' })"
+            <button @click.prevent="document.getElementById('post-rating').scrollIntoView({ behavior: 'smooth' })"
                     aria-label="rating average and scroll to rating section" class="<?= $class; ?> cursor-pointer">
                 <?php
                 $args = array(

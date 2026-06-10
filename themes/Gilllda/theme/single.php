@@ -31,7 +31,7 @@ track_post_views(get_the_ID());
         );
         get_template_part('template-parts/global/faq-list', null, $args);
         get_template_part('template-parts/blog/single/author-box');
-        get_template_part('template-parts/blog/single/rating');
+        get_template_part('template-parts/blog/single/rating', null, ['class' => 'xl:w-3/4 ']);
 
         if (comments_open() || get_comments_number()) {
             comments_template();

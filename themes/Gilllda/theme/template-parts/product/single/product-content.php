@@ -101,7 +101,10 @@ $has_portfolio = $related_portfolio->have_posts();
         $args = array(
             'title' => 'سوالات متداول'
         );
-        get_template_part('template-parts/global/faq-list', null, $args); ?>
+        get_template_part('template-parts/global/faq-list', null, $args);?>
+    <div class="bg-white relative">
+        <?php get_template_part('template-parts/blog/single/rating', null, ['class' => 'w-full']); ?>
+    </div>
 	<div id="comments-section"
 		 class="pt-8 bg-white relative"
 		 x-intersect:enter.margin.-15%.0px.-70%.0px="active = 'comments'">
