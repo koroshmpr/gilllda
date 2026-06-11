@@ -76,3 +76,29 @@ add_action( 'init', 'optimize_site' );
 
 // 6. NEW: Remove massive inline SVG filters injected by WordPress 5.9+
 remove_action( 'wp_body_open', 'wp_global_styles_render_svg_filters' );
+
+// 7. NEW: Disable specific WooCommerce CSS on Single Product Pages
+add_action( 'wp_enqueue_scripts', 'disable_woo_css_on_single_product', 99 );
+
+function disable_woo_css_on_single_product() {
+    // Check if WooCommerce is active and we are on a single product page
+    if ( function_exists( 'is_product' ) && is_product() ) {
+
+        // 1. Dequeue Core WooCommerce Styles
+        // 'woocommerce-general' handles woocommerce.css and woocommerce-rtl.css
+        wp_dequeue_style( 'woocommerce-general' );
+
+        // 'woocommerce-layout' handles woocommerce-layout.css and woocommerce-layout-rtl.css
+        wp_dequeue_style( 'woocommerce-layout' );
+
+        // 'woocommerce-smallscreen' handles woocommerce-smallscreen.css and woocommerce-smallscreen-rtl.css
+        wp_dequeue_style( 'woocommerce-smallscreen' );
+
+        // 2. Dequeue PhotoSwipe Styles (Product Image Lightbox/Gallery)
+        // Handles photoswipe.min.css
+        wp_dequeue_style( 'photoswipe' );
+
+        // Handles default-skin.min.css
+        wp_dequeue_style( 'photoswipe-default-skin' );
+    }
+}

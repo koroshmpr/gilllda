@@ -62,15 +62,15 @@ $short_desc = $product->get_short_description();
         </div>
         <div class="flex flex-col gap-2 items-end self-end md:self-start">
             <?php if ($average_rating > 0) : ?>
-                    <button @click.prevent="document.getElementById('product-rating').scrollIntoView({ behavior: 'smooth' })"
-                            class="flex items-center gap-1.5 bg-yellow-50 hover:bg-yellow-100 transition-all px-3 py-1.5 rounded-xl border border-yellow-200 font-black text-yellow-700 text-sm cursor-pointer leading-none">
-                        <?php
-                        // Pass the class key explicitly in the array
-                        get_template_part('template-parts/svg/star-fill', null, ['class' => 'w-4 h-4 fill-yellow-400']);
-                        ?>
-                        <?= number_format($average_rating, 1); ?>
+                <button @click.prevent="document.getElementById('product-rating').scrollIntoView({ behavior: 'smooth' })"
+                        class="flex items-center gap-1.5 bg-yellow-50 hover:bg-yellow-100 transition-all px-3 py-1.5 rounded-xl border border-yellow-200 font-black text-yellow-700 text-sm cursor-pointer leading-none">
+                    <?php
+                    // Pass the class key explicitly in the array
+                    get_template_part('template-parts/svg/star-fill', null, ['class' => 'w-4 h-4 fill-yellow-400']);
+                    ?>
+                    <?= number_format($average_rating, 1); ?>
 
-                    </button>
+                </button>
                 <button @click.prevent="document.getElementById('comments').scrollIntoView({ behavior: 'smooth' })"
                         class="bg-primary/5 border border-primary/10 hover:bg-primary/10 rounded-xl gap-1.5 flex items-center py-1 px-3 text-gray-400 text-sm cursor-pointer transition-colors">
                     <?php get_template_part('template-parts/svg/message', null, ['class' => 'w-4 h-4 text-primary/70']); ?>
@@ -111,26 +111,48 @@ $short_desc = $product->get_short_description();
        </span>
             </div>
         <?php endif;
-        // Custom Attributes Loop
         $attributes = $product->get_attributes();
+
         foreach ($attributes as $attribute) :
-            if ($attribute->get_variation()) continue;
+            // We only want to process taxonomy-based attributes (like pa_color)
+            if (!$attribute->is_taxonomy()) {
+                continue;
+            }
+
+            $taxonomy = $attribute->get_name(); // e.g., "pa_color"
             ?>
-            <div class="w-full <?= $boxClass ?>">
-                <span class="<?= $labelClass ?>"><?= wc_attribute_label($attribute->get_name()); ?>:</span>
-                <span class="flex divide-x divide-white/50 <?= $valueClass ?>">
-                  <?php
-                  $values = array();
-                  if ($attribute->is_taxonomy()) {
-                      $attribute_values = wc_get_product_terms($product->get_id(), $attribute->get_name(), array('fields' => 'names'));
-                      foreach ($attribute_values as $attribute_value) :?>
-                          <span class="px-2"><?= $values[] = esc_html($attribute_value); ?></span>
-                      <?php endforeach;
-                  }
-                  // Final check to ensure we aren't imploding an empty or nested array
-                  //				  echo !empty($values) ? implode(', ', $values) : '---';
-                  ?>
-              </span>
+            <div class="w-full <?= esc_attr($boxClass) ?>">
+                <span class="<?= esc_attr($labelClass) ?>"><?= wc_attribute_label($taxonomy); ?>:</span>
+                <div class="flex divide-x divide-white/50">
+                    <?php
+                    // Get all term objects for this specific attribute on this product
+                    // Changing 'fields' to 'all' returns WP_Term objects instead of just string names
+                    $terms = wc_get_product_terms($product->get_id(), $taxonomy, array('fields' => 'all'));
+
+                    foreach ($terms as $term) :
+                        // Now we have access to the actual term data
+                        $term_name = $term->name;
+                        $term_id = $term->term_id;
+
+                        // Construct the ACF target ID (Format: taxonomy_termID)
+                        $acf_target = $taxonomy . '_' . $term_id;
+
+                        // Get the ACF color field
+                        $acf_color = get_field('color', $acf_target);
+                        ?>
+                        <div class="px-2 flex items-center">
+                            <?php
+                            // If the color exists, output a small color swatch next to the name
+                            if ($acf_color) :
+                                ?>
+                                <span class="w-6 h-full rounded-s-sm border-l-2 border-white/70 inline-block"
+                                      style="background-color: <?= esc_attr($acf_color); ?>;"></span>
+                            <?php endif; ?>
+
+                            <span class="<?= esc_attr($valueClass) ?>  <?= $acf_color ? 'rounded-s-none' : '' ; ?>"><?= esc_html($term_name); ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>

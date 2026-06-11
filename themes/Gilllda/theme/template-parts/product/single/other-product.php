@@ -46,7 +46,7 @@ if ( $product ) :
                     محصولات دیگر
                 </p>
             </div>
-            <ul class="list-none flex max-w-full flex-nowrap overflow-x-scroll md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 lg:gap-4">
+            <div class="list-none flex max-w-full flex-nowrap overflow-x-scroll md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 lg:gap-4">
                 <?php
                 while ($other_products->have_posts()) :
                     $other_products->the_post();
@@ -57,7 +57,7 @@ if ( $product ) :
                 endwhile;
                 wp_reset_postdata();
                 ?>
-            </ul>
+            </div>
         </section>
     <?php
     endif;

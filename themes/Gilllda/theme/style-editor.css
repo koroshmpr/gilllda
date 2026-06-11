@@ -1139,6 +1139,9 @@ blockquote {
   padding: calc(var(--spacing) * 5);
   color: color-mix(in oklab, var(--color-black) 70%, transparent);
 }
+.screen-reader-text , #photoswipe-fullscreen-dialog {
+  display: none;
+}
 .page-title, .entry-title {
   margin-inline: auto;
   margin-bottom: calc(var(--spacing) * 6);
@@ -3160,6 +3163,14 @@ blockquote {
 .rounded-xl {
   border-radius: var(--radius-xl);
 }
+.rounded-s-none {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+.rounded-s-sm {
+  border-start-start-radius: var(--radius-sm);
+  border-end-start-radius: var(--radius-sm);
+}
 .rounded-t-2xl {
   border-top-left-radius: var(--radius-2xl);
   border-top-right-radius: var(--radius-2xl);
@@ -3271,6 +3282,10 @@ blockquote {
 .border-l-0 {
   border-left-style: var(--tw-border-style);
   border-left-width: 0px;
+}
+.border-l-2 {
+  border-left-style: var(--tw-border-style);
+  border-left-width: 2px;
 }
 .\!border-none {
   --tw-border-style: none !important;
@@ -3401,6 +3416,9 @@ blockquote {
 }
 .border-white\/50 {
   border-color: color-mix(in oklab, var(--color-white) 50%, transparent);
+}
+.border-white\/70 {
+  border-color: color-mix(in oklab, var(--color-white) 70%, transparent);
 }
 .border-white\/75 {
   border-color: color-mix(in oklab, var(--color-white) 75%, transparent);
@@ -5418,15 +5436,14 @@ blockquote {
     scale: var(--tw-scale-x) var(--tw-scale-y);
   }
 }
+.focus\:border-gray-500:focus {
+  border-color: var(--color-gray-500);
+}
 .focus\:border-primary:focus {
   border-color: var(--color-primary);
 }
 .focus\:ring-0:focus {
   --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentColor);
-  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-}
-.focus\:ring-2:focus {
-  --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentColor);
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
 }
 .focus\:ring-4:focus {
@@ -5438,9 +5455,6 @@ blockquote {
 }
 .focus\:ring-primary\/10:focus {
   --tw-ring-color: color-mix(in oklab, var(--color-primary) 10%, transparent);
-}
-.focus\:ring-primary\/50:focus {
-  --tw-ring-color: color-mix(in oklab, var(--color-primary) 50%, transparent);
 }
 .focus\:outline-none:focus {
   --tw-outline-style: none;

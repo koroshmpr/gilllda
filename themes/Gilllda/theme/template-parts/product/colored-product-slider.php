@@ -112,7 +112,7 @@ if ($woo_active && $show):
                  data-tablet="<?= esc_attr($tablet); ?>"
                  data-mobile="<?= esc_attr($mobile); ?>">
 
-                <ul class="swiper-wrapper items-center lg:bg-primary ">
+                <div class="swiper-wrapper items-center lg:bg-primary ">
                     <?php while ($amazing_query->have_posts()) : $amazing_query->the_post(); ?>
                         <?php get_template_part('template-parts/product/card/product-card', null, ['class' => 'swiper-slide h-auto w-7/12 lg:w-1/4']); ?>
                     <?php endwhile; wp_reset_postdata(); ?>
@@ -130,7 +130,7 @@ if ($woo_active && $show):
                             <?php endif; ?>
                         </li>
                     <?php endif; ?>
-                </ul>
+                </div>
 
                 <button class="amazing-prev-<?= esc_attr($term_id_id); ?> cursor-pointer absolute top-1/2 -right-6 z-30 w-12 h-12 bg-white shadow-2xl rounded-sm flex items-center justify-center text-gray-800 -translate-y-1/2 opacity-0 group-hover/amazing:opacity-100 transition-all hover:bg-gray-100 max-lg:hidden">
                     <?php get_template_part('template-parts/svg/chevron-right', null, ['size' => '22']); ?>

@@ -182,7 +182,7 @@ if (!defined('ABSPATH')) {
             </div>
         </nav>
 
-        <ul class="grid gap-3 transition-all duration-500 p-0 !my-0 list-none grid-cols-1"
+        <div class="grid gap-3 transition-all duration-500 p-0 !my-0 list-none grid-cols-1"
             :class="gridView === 'large' ? 'md:grid-cols-2 xl:grid-cols-3' : ' lg:grid-cols-3 xl:grid-cols-4'">
 
             <template x-teleport="body">

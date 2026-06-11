@@ -5,7 +5,7 @@
         @click.self="searchOpen = false"
 >
     <div
-            class="bg-gray-50 text-black w-full h-full transition-all duration-200 flex flex-col overflow-hidden"
+            class="bg-white text-black w-full h-full transition-all duration-200 flex flex-col overflow-hidden"
             :class="searchOpen ? 'delay-100 !translate-y-0' : 'translate-y-5'"
     >
         <div class="container max-w-content max-lg:px-3 relative">
@@ -21,10 +21,10 @@
 
             <div class="w-full max-w-3xl mx-auto shrink-0 mt-16 mb-8 relative z-10">
                 <form role="search" method="get" action="<?= home_url() ?>">
-                    <fieldset class="relative overflow-hidden shadow-sm">
+                    <fieldset class="relative overflow-hidden rounded-lg shadow-sm">
                         <label for="search-input" class="sr-only screen-reader-text">Search:</label>
                         <input type="text" id="search-input"
-                               class="w-full p-4 border border-gray-200 rounded-lh text-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                               class="w-full p-4 border bg-gray-50 border-gray-200 rounded-lg text-lg focus:border-gray-500"
                                name="s"
                                autocomplete="off"
                                value="<?= get_search_query() ?>"

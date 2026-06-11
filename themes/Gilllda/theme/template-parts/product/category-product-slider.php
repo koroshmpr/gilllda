@@ -67,7 +67,7 @@ if ($category):
                      data-tablet="<?= $tablet; ?>"
                      data-mobile="<?= $mobile; ?>">
 
-                    <ul class="swiper-wrapper items-center">
+                    <div class="swiper-wrapper items-center">
                         <?php
                         while ($amazing_query->have_posts()) : $amazing_query->the_post();
                             $args = array(
@@ -76,18 +76,18 @@ if ($category):
                             get_template_part('template-parts/product/card/product-card', null, $args);
                         endwhile;
                         wp_reset_postdata(); ?>
-                    </ul>
+                    </div>
                     <?php
                     if ($count > 3) :
                         $class = 'cursor-pointer absolute duration-300 top-1/2 z-30 bg-gray-50 border border-primary/15 size-12 shadow-2xl rounded-sm flex items-center justify-center text-gray-800 -translate-y-1/2 opacity-0 group-hover/amazing:opacity-100 group-hover/amazing:translate-x-0 transition-all hover:bg-gray-100 max-lg:hidden';
                         $args = array(
                             'size' => '22',
                         ); ?>
-                        <button
+                        <button aria-label="slide to prev"
                                 class="amazing-prev-<?= esc_attr($slug); ?> -right-5 translate-x-2 <?= $class; ?>">
                             <?php get_template_part('template-parts/svg/chevron-right', null, $args); ?>
                         </button>
-                        <button
+                        <button aria-label="slide to next"
                                 class="amazing-next-<?= esc_attr($slug); ?> -left-5 -translate-x-2 <?= $class; ?>">
                             <?php get_template_part('template-parts/svg/chevron-left', null, $args); ?>
                         </button>

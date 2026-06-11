@@ -32,25 +32,26 @@ $total_grid_items = count($grid_images);
         portfolioStart: <?= $product_count; ?>,
         openAt(index) {
             this.modalOpen = true;
+
             this.$nextTick(() => {
-                if (!window.modalSwiperInstance) {
+                // 1. Initialize if it doesn't exist yet
+                if (!window.modalSwiperInstance && typeof initModalGallery === 'function') {
                     initModalGallery();
                 }
 
+                // 2. Safely trigger the slide change
                 setTimeout(() => {
-                    // تغییر اسلاید اصلی بدون انیمیشن (0) برای سرعت بالا در لحظه باز شدن
-                    window.modalSwiperInstance.slideTo(index, 0);
+                    // The '?.' (optional chaining) prevents the crash if Swiper isn't ready
+                    window.modalSwiperInstance?.slideTo(index, 0);
 
-                    // آپدیت کردن اسلایدر بندانگشتی اگر به صورت جداگانه تعریف شده باشد
-                    if (window.modalSwiperInstance.thumbs && window.modalSwiperInstance.thumbs.swiper) {
-                        window.modalSwiperInstance.thumbs.swiper.slideTo(index, 0);
-                    }
-                }, 50);
+                    // Safely update the thumbnail slider if it exists
+                    window.modalSwiperInstance?.thumbs?.swiper?.slideTo(index, 0);
+                }, 100); // Increased to 100ms to ensure the DOM is fully painted
             });
         }
     }"
      @slide-changed.window="activeTab = $event.detail.index >= $event.detail.portfolioStart ? 'customer' : 'product'"
-     class="lg:col-span-5 xl:col-span-4  max-lg:sticky duration-500 transition-all top-2 lg:top-16 flex flex-col max-lg:p-2 cursor-pointer"
+     class="lg:col-span-5 xl:col-span-4 max-lg:sticky duration-500 transition-all top-2 lg:top-16 flex flex-col max-lg:p-2 cursor-pointer"
      :class="scrolled ? 'max-md:scale-95 max-md:blur-[1px] max-md:grayscale-25': ''"
      dir="rtl">
 
@@ -106,13 +107,14 @@ $total_grid_items = count($grid_images);
                         $btnCLass = 'pb-2 border-b-2 font-bold group/btn flex  cursor-pointer text-sm transition-all px-1';
                         $textClass = 'group-hover/btn:-translate-y-0.5 transition-all';
                         ?>
-                        <button @click="activeTab = 'product'; modalSwiperInstance.slideTo(0)"
+                        <button @click="activeTab = 'product'; window.modalSwiperInstance?.slideTo(0)"
                                 :class="activeTab === 'product' ? 'text-primary border-primary' : 'text-gray-400 border-transparent'"
                                 class="<?= $btnCLass; ?>">
                             <span :class="activeTab === 'product' ? '' : '<?= $textClass; ?>'">تصاویر محصول</span>
                         </button>
+
                         <?php if (!empty($portfolio_images)): ?>
-                            <button @click="activeTab = 'customer'; modalSwiperInstance.slideTo(portfolioStart)"
+                            <button @click="activeTab = 'customer'; window.modalSwiperInstance?.slideTo(portfolioStart)"
                                     :class="activeTab === 'customer' ? 'text-primary border-primary' : 'text-gray-400 border-transparent'"
                                     class="<?= $btnCLass; ?>">
                                 <span :class="activeTab === 'customer' ? '' : '<?= $textClass; ?>'">عکس‌های خریداران</span>
@@ -125,24 +127,33 @@ $total_grid_items = count($grid_images);
                     <div class="swiper main-modal-slider w-full flex-1" data-portfolio-start="<?= $product_count; ?>">
                         <div class="swiper-wrapper">
                             <?php foreach ($all_slides as $id) : ?>
-                                <div class="swiper-slide flex items-center justify-center">
-                                    <img width="400" height="400" alt="<?= the_title(); ?>-image-<?= $id; ?>" src="<?= wp_get_attachment_image_url($id, 'full'); ?>"
-                                         class="size-full max-h-full max-w-full object-contain rounded-md">
+                                <div class="swiper-slide flex items-center justify-center bg-gray-50/50">
+                                    <img width="400" height="400"
+                                         alt="<?= the_title(); ?>-image-<?= $id; ?>"
+                                         x-bind:src="modalOpen ? '<?= wp_get_attachment_image_url($id, 'full'); ?>' : null"
+                                         loading="lazy"
+                                         class="size-full max-h-full max-w-full object-contain rounded-md transition-opacity duration-300">
+                                    <div class="swiper-lazy-preloader swiper-lazy-preloader-black"></div>
                                 </div>
                             <?php endforeach; ?>
                         </div>
                     </div>
+
                     <div class="swiper thumb-modal-slider w-full h-20 mt-6 px-10">
                         <div class="swiper-wrapper">
                             <?php foreach ($all_slides as $id) : ?>
-                                <div class="swiper-slide cursor-pointer hover:scale-105 opacity-40 transition-all duration-300 [.swiper-slide-thumb-active&]:opacity-100 scale-95 [.swiper-slide-thumb-active&]:scale-100 border border-transparent [.swiper-slide-thumb-active&]:!border-primary !w-16 !h-16">
-                                    <img width="62" height="62" alt="<?= the_title(); ?>-customers-<?= $id; ?>" src="<?= wp_get_attachment_image_url($id, 'thumbnail'); ?>"
+                                <div class="swiper-slide cursor-pointer hover:scale-105 opacity-40 transition-all duration-300 [.swiper-slide-thumb-active&]:opacity-100 scale-95 [.swiper-slide-thumb-active&]:scale-100 border border-transparent [.swiper-slide-thumb-active&]:!border-primary !w-16 !h-16 bg-gray-100">
+                                    <img width="62" height="62"
+                                         alt="<?= the_title(); ?>-customers-<?= $id; ?>"
+                                         x-bind:src="modalOpen ? '<?= wp_get_attachment_image_url($id, 'thumbnail'); ?>' : null"
+                                         loading="lazy"
                                          class="w-full h-full object-cover">
                                 </div>
                             <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </template>

@@ -59,7 +59,7 @@ if (!empty($recent_searches)):
         if (have_posts()) :
         get_template_part('template-parts/global/grid-button');
         ?>
-        <ul class="grid  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
+        <div class="grid  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
             :class="gridView === 'large' ? 'md:grid-cols-1 lg:!grid-cols-2 xl:!grid-cols-3' : 'md:grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4'">
             <?php while (have_posts()) :
                 the_post();
@@ -69,7 +69,7 @@ if (!empty($recent_searches)):
                 endif;
             endwhile;
             ?>
-        </ul>
+        </div>
     </section>
 
     <?php get_template_part('template-parts/global/pagination');

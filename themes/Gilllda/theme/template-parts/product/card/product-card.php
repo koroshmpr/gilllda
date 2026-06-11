@@ -24,8 +24,9 @@ $is_on_sale = $product->is_on_sale();
 $stock_status = $product->get_stock_status();
 ?>
 
-<li
-        x-data="{ hover: false }"
+<!-- Added imgLoaded: false to x-data -->
+<div
+        x-data="{ hover: false, imgLoaded: false }"
         @mouseenter="hover = true"
         @mouseleave="hover = false"
         class="group relative bg-gray-50 border rounded-md border-gray-200 max-lg:p-1 !my-0 transition-all duration-500 hover:border-primary/5 rtl <?= $args['class'] ?? ''; ?>"
@@ -41,6 +42,7 @@ $stock_status = $product->get_stock_status();
     ?>
     <a href="<?php the_permalink(); ?>" aria-label="add to cart the <?= esc_attr($product->get_slug()); ?>"
        class="relative lg:aspect-[4/5] overflow-hidden flex <?= $isArchive ? '' : 'flex-col'; ?> lg:flex-col  rounded-sm bg-gray-50">
+
         <?php if ($is_on_sale && $stock_status === 'instock') :
             $percentage = round((($regular_price - $sale_price) / $regular_price) * 100); ?>
             <span class="absolute top-2 right-2 z-[2] bg-primary text-white text-[10px] font-bold px-2.5 py-1 rounded-lg">
@@ -53,40 +55,55 @@ $stock_status = $product->get_stock_status();
             </span>
         <?php endif; ?>
 
+        <!-- Image Wrapper -->
         <div class="block relative size-full <?= $isArchive ? 'aspect-square max-lg:w-1/3' : ' aspect-square'; ?> lg:aspect-[3/4] overflow-hidden">
+
+            <!-- SKELETON LOADER: Shows a pulsing gray box until the image finishes downloading -->
+            <div x-show="!imgLoaded"
+                 x-transition.opacity.duration.500ms
+                 class="absolute inset-0 z-[1] bg-gray-200 animate-pulse flex items-center justify-center">
+            </div>
+
             <?php
             $image_id = $product->get_image_id();
             $image_url = wp_get_attachment_image_url($image_id, 'large');
             $gallery_ids = $product->get_gallery_image_ids();
             $hover_image_url = !empty($gallery_ids) ? wp_get_attachment_image_url($gallery_ids[0], 'large') : '';
             ?>
+
+            <!-- MAIN IMAGE: Added loading="lazy", @load, x-ref, and x-init -->
             <img width="200" height="250"
-                 fetchpriority="low"
+                 x-ref="mainImg"
+                 x-init="if ($refs.mainImg.complete) imgLoaded = true"
+                 @load="imgLoaded = true"
+                 loading="lazy"
                  src="<?= $image_url; ?>"
                  alt="<?php the_title(); ?>"
                  class="object-contain w-full !h-full !my-0 transition-all duration-700 transform group-hover:scale-110"
                  :class="hover ? '<?= $hover_image_url ? 'opacity-0' : ''; ?> scale-105' : 'opacity-100'"
             >
+
+            <!-- HOVER IMAGE: Added loading="lazy" -->
             <?php if ($hover_image_url) : ?>
                 <img width="200" height="250"
-                     fetchpriority="low"
+                     loading="lazy"
                      alt="<?= $gallery_ids[0]['title'] ?? ''; ?>"
                      src="<?= $hover_image_url; ?>"
                      class="absolute inset-0 object-contain w-full !my-0 !h-full transition-all duration-700 transform-all opacity-0"
                      :class="hover ? 'opacity-100 scale-110 duration-500' : 'opacity-0'"
                 >
             <?php
+                $args_svg = array(
+                    'size' => '20',
+                    'class' => 'group-hover/add:delay-100 text-white duration-300 rotate-45 group-hover/add:rotate-0 translate-x-2 opacity-0 transition-all group-hover/add:opacity-100 group-hover/add:translate-x-0'
+                );
             endif;
-            if (!$catMode && $stock_status === 'instock'): ?>
+            if (!$catMode && $stock_status === 'instock' && !wp_is_mobile()): ?>
                 <button aria-label="add to cart the <?= $product->slug ?? ''; ?>"
                         @click.stop.prevent="window.location.href = '<?= $product->is_type('variable') ? get_the_permalink() : esc_url(add_query_arg('add-to-cart', $product_id)); ?>'"
-                        class="absolute bottom-3 group/add overflow-hidden inset-x-3 duration-300 shadow-sm translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-20 flex items-center cursor-pointer justify-center gap-2 w-11/12 py-3 bg-white/90 text-gray-800 rounded-md font-bold hover:bg-primary hover:text-white transition-all"
+                        class="absolute bottom-3 group/add overflow-hidden inset-x-3 duration-300 shadow-sm translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-20 flex items-center cursor-pointer justify-center gap-2 w-11/12 py-3 bg-white/90 backdrop-blur-[2px] border border-primary/10 text-gray-800 rounded-md font-bold hover:bg-primary hover:text-white transition-all"
                 >
                     <?php
-                    $args_svg = array(
-                        'size' => '20',
-                        'class' => 'group-hover/add:delay-100 text-white duration-300 rotate-45 group-hover/add:rotate-0 translate-x-2 opacity-0 transition-all group-hover/add:opacity-100 group-hover/add:translate-x-0'
-                    );
                     get_template_part('template-parts/svg/shop', null, $args_svg);
                     ?>
                     <span class="group-hover/add:-translate-x-0 text-sm transition-all duration-300 translate-x-3">افزودن به سبد</span>
@@ -110,7 +127,7 @@ $stock_status = $product->get_stock_status();
         <div class="flex min-h-20 lg:min-h-14 p-2 lg:px-4 max-lg:flex-col max-lg:gap-2 items-center justify-between">
 
             <!-- Title & Colors Wrapper -->
-            <div class="flex flex-col gap-1 items-start">
+            <div class="flex flex-col gap-1 items-center lg:items-start">
                  <span class="text-md font-bold text-gray-800 line-clamp-1">
                     <?php the_title(); ?>
                  </span>
@@ -163,4 +180,4 @@ $stock_status = $product->get_stock_status();
             endif; ?>
         </div>
     </a>
-</li>
+</div>

@@ -33,7 +33,7 @@ if ($related->have_posts()) :
                 محصولات مرتبط
             </p>
         </div>
-        <ul class="list-none flex max-w-full flex-nowrap overflow-x-scroll md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 lg:gap-4">
+        <div class="list-none flex max-w-full flex-nowrap overflow-x-scroll md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 lg:gap-4">
             <?php
             while ($related->have_posts()) :
                 $related->the_post();
@@ -45,6 +45,6 @@ if ($related->have_posts()) :
             endwhile;
             wp_reset_postdata();
             ?>
-        </ul>
+        </div>
     </section>
 <?php endif; ?>

@@ -83,3 +83,4 @@ blockquote {
 .term-description {
 	@apply p-5 rounded-lg mb-5 border border-gray-200 bg-gray-50 text-black/70
 }
+.screen-reader-text , #photoswipe-fullscreen-dialog { @apply hidden}
