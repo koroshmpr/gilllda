@@ -94,6 +94,7 @@ if ($woo_active && $show):
 
                 <?php if ($category_obj || !is_shop()): ?>
                     <a href="<?= esc_url($view_all_link); ?>"
+                       aria-label="go to this category page first view"
                        class="<?= empty($titleImg) ? 'mt-5' : 'mt-auto'; ?> flex items-center gap-2 text-sm font-bold border border-white/15 bg-white/10 px-12 lg:px-6 py-3 rounded-xl text-white hover:bg-white hover:text-primary transition-all duration-300 group/btn">
                         <span>مشاهده همه</span>
                         <?php get_template_part('template-parts/svg/chevron-left', null, ['size' => '22', 'class' => 'w-4 h-4 transition-all duration-500 group-hover/btn:-translate-x-2']); ?>
@@ -118,9 +119,10 @@ if ($woo_active && $show):
                     <?php endwhile; wp_reset_postdata(); ?>
 
                     <?php if ($amazing_query->post_count > 4): ?>
-                        <li class="swiper-slide h-auto">
+                        <div class="swiper-slide h-auto">
                             <?php if ($category_obj || !is_shop()): ?>
                                 <a href="<?= esc_url($view_all_link); ?>"
+                                   aria-label="go to this category page"
                                    class="flex flex-col items-center justify-center group hover:text-white text-white/70 transition-all duration-500">
                                     <div class="w-16 h-16 rounded-full border-2 border-current flex items-center justify-center mb-4 transition-transform group-hover:scale-125">
                                         <?php get_template_part('template-parts/svg/chevron-left', null, ['size' => '22', 'class' => 'w-8 h-8']); ?>
@@ -128,7 +130,7 @@ if ($woo_active && $show):
                                     <span class="font-bold text-lg">مشاهده همه</span>
                                 </a>
                             <?php endif; ?>
-                        </li>
+                        </div>
                     <?php endif; ?>
                 </div>
 

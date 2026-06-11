@@ -14,7 +14,7 @@ if ($loop->have_posts()) :?>
     <section class="container max-lg:px-3 my-12 overflow-hidden">
         <div class="flex justify-between items-center border-b mb-4 border-black/10">
             <h2 class="pb-2 text-lg lg:text-2xl border-b-2 border-primary/90">مطالب خواندنی</h2>
-            <a class="flex gap-1 items-center group" href="/blog">
+            <a class="flex gap-1 items-center group" href="/blog" aria-label="go to blog archive page">
                 <span class="group-hover:translate-x-1 transition-all">مشاهده همه</span>
                 <?php
                 $args = array(
