@@ -5,7 +5,7 @@
         <span><?= shamsi_date('Y', get_the_time('U')); ?></span>
     </div>
     <div class="absolute bottom-0 z-1 text-white inset-x-0 bg-gradient-to-t lg:translate-y-7/12 group-hover:translate-y-0 duration-500 from-black via-black/70 to-black/20 group-hover:backdrop-blur-sm transition-all flex flex-col justify-between gap-y-2 lg:gap-y-3 p-3 lg:pb-6">
-        <div class="flex justify-between gap-1">
+        <div class="flex justify-between gap-1" title="<?= get_the_title() ?? ''; ?>">
             <span class="lg:text-base text-sm line-clamp-1 transition-all group-hover:line-clamp-2 font-bold"><?php the_title(); ?></span>
             <div class="flex gap-x-3 items-center">
                 <?php

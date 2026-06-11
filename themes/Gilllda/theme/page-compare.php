@@ -45,44 +45,45 @@ $tdClass = 'border-b border-l border-black/5 py-3 px-2 font-thin flex items-cent
 		   x-cloak>
 		<thead>
 		<tr class="<?= $trClass; ?>">
-			<th class="<?= $thClass; ?>">-</th>
+			<th class="<?= $thClass; ?> py-4">-</th>
 			<th class="<?= $thClass; ?> h-56">عکس</th>
 			<th class="<?= $thClass; ?>">نام</th>
-			<th class="<?= $thClass; ?>">وزن <span class="text-[8px] mt-2 ms-1 opacity-75">(کیلوگرم)</span></th>
+			<th class="<?= $thClass; ?>">وزن <span class="text-[8px] mt-2 ms-1 opacity-75">(گرم)</span></th>
 			<th class="<?= $thClass; ?>">ابعاد</th>
-			<th class="<?= $thClass; ?>">قیمت</th>
+			<th class="<?= $thClass; ?> h-16">قیمت</th>
 			<th class="<?= $thClass; ?>">لینک</th>
 		</tr>
 		</thead>
 		<tbody class="flex-1 gap-1 flex flex-nowrap overflow-x-scroll">
 		<template x-for="product in products" :key="product.id">
-			<tr class="<?= $trClass; ?> bg-primary text-white">
+			<tr class="<?= $trClass; ?> bg-gray-100">
 				<td :id="product.id" class="<?= $tdClass; ?> !py-0 !px-0">
 					<button
-						class=" text-md size-full flex justify-center items-center hover:bg-red-700 transition-all group p-4 cursor-pointer"
+						class=" text-md size-full flex gap-3 hover:text-white justify-center items-center hover:bg-red-700 transition-all duration-300 group p-4 cursor-pointer"
 						@click="remove(product.id)">
+                        <span class="-translate-x-5 opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-0 duration-300">حذف</span>
 						<?php
 						$args = array(
 							'size' => '15',
-							'class' => 'rotate-180 group-hover:scale-125 transition-all'
+							'class' => 'rotate-180 translate-x-5 group-hover:translate-x-0 transition-all duration-300'
 						);
 						get_template_part('template-parts/svg/close',null,$args); ?>
 					</button>
 				</td>
 				<td class="<?= $tdClass; ?> !py-0 !px-0">
-					<img
+					<img alt="image"
 						:src="product.image"
 						:alt="product.name"
-						class="w-56 aspect-square mx-auto object-cover"/>
+						class="w-56 aspect-square bg-white/50 mx-auto object-contain" src="#"/>
 				</td>
 				<td class="<?= $tdClass; ?>"><p x-text="product.name"></p></td>
 				<td class="<?= $tdClass; ?>" x-text="product.weight || '-'"></td>
 				<td class="<?= $tdClass; ?>" x-html="product.dims || '-'"></td>
-				<td class="<?= $tdClass; ?>">
-					<p class="text-gray-300 flex text-xs flex-col leading-3" x-html="product.price"></p>
+				<td class="<?= $tdClass; ?> h-16">
+					<p class="text-gray-800 text-base flex flex-col [&>ins]:no-underline [&>ins]:font-bold [&>del]:text-sm [&>del]:opacity-85 " x-html="product.price"></p>
 				</td>
 
-				<td class="<?= $tdClass; ?> bg-primary/20 hover:brightness-125 transition-all">
+				<td class="<?= $tdClass; ?> bg-primary text-white hover:brightness-125 transition-all">
 					<a class="size-full flex justify-center group gap-x-1 text-sm p-0.5 text-center" :href="product.url">مشاهده
 						<?php
 						$args = array(
@@ -94,13 +95,13 @@ $tdClass = 'border-b border-l border-black/5 py-3 px-2 font-thin flex items-cent
 				</td>
 			</tr>
 		</template>
-		<tr class="<?= $trClass; ?> flex-1">
-			<td class="<?= $tdClass; ?> h-12 !py-6"></td>
+		<tr class="<?= $trClass; ?> flex-1 bg-gray-50">
+			<td class="<?= $tdClass; ?> h-14"></td>
 			<td class="<?= $tdClass; ?> h-56"></td>
 			<td class="<?= $tdClass; ?> h-12 !py-6"></td>
 			<td class="<?= $tdClass; ?> h-12 !py-6"></td>
 			<td class="<?= $tdClass; ?> h-12 !py-6"></td>
-			<td class="<?= $tdClass; ?> h-12 !py-6"></td>
+			<td class="<?= $tdClass; ?> !py-6 h-16"></td>
 			<td class="<?= $tdClass; ?> h-12 !py-6"></td>
 		</tr>
 		</tbody>

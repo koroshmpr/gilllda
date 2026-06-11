@@ -2450,6 +2450,9 @@ blockquote {
 .h-12 {
   height: calc(var(--spacing) * 12);
 }
+.h-14 {
+  height: calc(var(--spacing) * 14);
+}
 .h-16 {
   height: calc(var(--spacing) * 16);
 }
@@ -2740,6 +2743,10 @@ blockquote {
 }
 .translate-x-4 {
   --tw-translate-x: calc(var(--spacing) * 4);
+  translate: var(--tw-translate-x) var(--tw-translate-y);
+}
+.translate-x-5 {
+  --tw-translate-x: calc(var(--spacing) * 5);
   translate: var(--tw-translate-x) var(--tw-translate-y);
 }
 .translate-x-full {
@@ -3561,9 +3568,6 @@ blockquote {
 .bg-primary\/15 {
   background-color: color-mix(in oklab, var(--color-primary) 15%, transparent);
 }
-.bg-primary\/20 {
-  background-color: color-mix(in oklab, var(--color-primary) 20%, transparent);
-}
 .bg-primary\/30 {
   background-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
 }
@@ -3617,6 +3621,9 @@ blockquote {
 }
 .bg-white\/30 {
   background-color: color-mix(in oklab, var(--color-white) 30%, transparent);
+}
+.bg-white\/50 {
+  background-color: color-mix(in oklab, var(--color-white) 50%, transparent);
 }
 .bg-white\/70 {
   background-color: color-mix(in oklab, var(--color-white) 70%, transparent);
@@ -4102,10 +4109,6 @@ blockquote {
   --tw-leading: calc(var(--spacing) * 0) !important;
   line-height: calc(var(--spacing) * 0) !important;
 }
-.leading-3 {
-  --tw-leading: calc(var(--spacing) * 3);
-  line-height: calc(var(--spacing) * 3);
-}
 .leading-4 {
   --tw-leading: calc(var(--spacing) * 4);
   line-height: calc(var(--spacing) * 4);
@@ -4212,9 +4215,6 @@ blockquote {
 }
 .text-gray-100 {
   color: var(--color-gray-100);
-}
-.text-gray-300 {
-  color: var(--color-gray-300);
 }
 .text-gray-400 {
   color: var(--color-gray-400);
@@ -4597,6 +4597,12 @@ blockquote {
 @media (hover: hover) {
   .group-hover\:-translate-x-1:is(:where(.group):hover *) {
     --tw-translate-x: calc(var(--spacing) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+}
+@media (hover: hover) {
+  .group-hover\:translate-x-0:is(:where(.group):hover *) {
+    --tw-translate-x: calc(var(--spacing) * 0);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
 }

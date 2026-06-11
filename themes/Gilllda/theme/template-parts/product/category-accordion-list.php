@@ -1,7 +1,7 @@
 <?php
 $current_category = get_queried_object();
-$current_category_id = $current_category->term_id;
-$current_parent_category_id = $current_category->parent;
+$current_category_id = $current_category->term_id ?? '';
+$current_parent_category_id = $current_category->parent ?? '';
 $listClass = $args['listColor'] ?? 'bg-gray-50';
 $parent_categories = get_categories(array(
     'taxonomy' => 'product_cat',

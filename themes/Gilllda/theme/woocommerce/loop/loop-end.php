@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 ?>
-</ul>
+</div>
 <?php
 $current_page = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $term_id = get_queried_object_id();
