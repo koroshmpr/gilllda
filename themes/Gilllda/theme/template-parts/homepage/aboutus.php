@@ -13,6 +13,6 @@
 	</div>
 	<div :class="scrollingDown ? 'lg:scale-95' : (scrollingUp ? '' : '')"
 		 class="lg:basis-3/5 2xl:basis-2/5 basis-full lg:p-3 border border-black/10 shadow-md max-lg:absolute max-lg:brightness-50 bg-white h-full inset-0 z-[0] bg-cover bg-left transition-all duration-700">
-		<img class="size-full max-lg:aspect-3/4 object-cover" src="<?= $about['image']['url'] ?? ''; ?>" alt="<?= $about['image']['title'] ?? ''; ?>">
+		<img class="size-full max-lg:aspect-3/4 object-cover" loading="lazy" src="<?= $about['image']['url'] ?? ''; ?>" alt="<?= $about['image']['title'] ?? ''; ?>">
 	</div>
 </section>

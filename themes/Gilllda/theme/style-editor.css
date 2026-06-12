@@ -1247,6 +1247,9 @@ blockquote {
 .end-0 {
   inset-inline-end: calc(var(--spacing) * 0);
 }
+.end-1\.5 {
+  inset-inline-end: calc(var(--spacing) * 1.5);
+}
 .end-2 {
   inset-inline-end: calc(var(--spacing) * 2);
 }
@@ -1274,8 +1277,8 @@ blockquote {
 .top-0 {
   top: calc(var(--spacing) * 0);
 }
-.top-1 {
-  top: calc(var(--spacing) * 1);
+.top-1\.5 {
+  top: calc(var(--spacing) * 1.5);
 }
 .top-1\/2 {
   top: calc(1/2 * 100%);
@@ -3631,9 +3634,6 @@ blockquote {
 .bg-white\/80 {
   background-color: color-mix(in oklab, var(--color-white) 80%, transparent);
 }
-.bg-white\/90 {
-  background-color: color-mix(in oklab, var(--color-white) 90%, transparent);
-}
 .bg-white\/95 {
   background-color: color-mix(in oklab, var(--color-white) 95%, transparent);
 }
@@ -4053,6 +4053,9 @@ blockquote {
 }
 .text-left {
   text-align: left;
+}
+.text-right {
+  text-align: right;
 }
 .text-start {
   text-align: start;
@@ -5284,6 +5287,11 @@ blockquote {
   }
 }
 @media (hover: hover) {
+  .hover\:bg-secondary:hover {
+    background-color: var(--color-secondary);
+  }
+}
+@media (hover: hover) {
   .hover\:bg-white:hover {
     background-color: var(--color-white);
   }
@@ -6074,11 +6082,6 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
-  .lg\:top-3 {
-    top: calc(var(--spacing) * 3);
-  }
-}
-@media (width >= 64rem) {
   .lg\:top-8 {
     top: calc(var(--spacing) * 8);
   }
@@ -6567,6 +6570,12 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
+  .lg\:translate-x-1\/2 {
+    --tw-translate-x: calc(1/2 * 100%);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+}
+@media (width >= 64rem) {
   .lg\:translate-x-6 {
     --tw-translate-x: calc(var(--spacing) * 6);
     translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -6587,6 +6596,12 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:-translate-y-24 {
     --tw-translate-y: calc(var(--spacing) * -24);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+}
+@media (width >= 64rem) {
+  .lg\:translate-y-2 {
+    --tw-translate-y: calc(var(--spacing) * 2);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
 }

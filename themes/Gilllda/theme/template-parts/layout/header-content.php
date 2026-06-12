@@ -29,7 +29,7 @@ global $woo_active;
         </div>
         <div class="flex items-center max-lg:justify-between max-lg:w-full lg:gap-3">
             <?php
-            $class = 'lg:bg-primary/5 justify-center lg:border border-primary/10 p-2 max-lg:py-4 hover:bg-primary/10 flex items-center gap-3 cursor-pointer hover:scale-105 transition-all';
+            $class = 'lg:bg-primary/5 justify-center lg:border border-primary/10 p-2 max-lg:py-4 max-lg:px-5 hover:bg-primary/10 flex items-center gap-3 cursor-pointer hover:scale-105 transition-all';
             $svgClass = 'text-black/50 lg:text-black/70';
             $svgSize = '18';
             $args = array(
@@ -49,7 +49,7 @@ global $woo_active;
                     get_template_part('template-parts/svg/cart', null, $args);
                     ?>
                     <span
-                            class="absolute top-0 start-0 translate-x-1/2 lg:-translate-y-1/2 translate-y-1 bg-secondary/80 text-white flex leading-auto justify-center items-center pt-1 p-0.5 rounded-sm text-xs size-4">
+                            class="absolute top-0 start-0 lg:translate-x-1/2 lg:-translate-y-1/2 translate-y-1 bg-secondary/80 text-white flex leading-auto justify-center items-center pt-1 p-0.5 rounded-sm text-xs size-4">
 					<?= WC()->cart->get_cart_contents_count() ?? '0'; ?>
 				</span>
                 </a>
@@ -85,7 +85,7 @@ global $woo_active;
                     ?>
                     <span
                             :class="compareCount === 0 ? 'hidden' : '!opacity-100'"
-                            class="absolute top-0 start-0 opacity-0 translate-x-1/2 text-white lg:-translate-y-1/2 translate-y-1 bg-secondary/80 flex leading-auto justify-center items-center pt-1 p-0.5 rounded-sm text-xs size-4"
+                            class="absolute top-0 start-0 opacity-0 lg:translate-x-1/2 text-white lg:-translate-y-1/2 translate-y-1 bg-secondary/80 flex leading-auto justify-center items-center pt-1 p-0.5 rounded-sm text-xs size-4"
                             x-text="compareCount">
     			</span>
                 </a>

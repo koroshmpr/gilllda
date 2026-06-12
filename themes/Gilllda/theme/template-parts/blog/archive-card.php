@@ -12,7 +12,7 @@
                 $post_id = get_the_ID();
                 $view = get_post_meta($post_id, 'post_views', true);
                 $args = array(
-                        'size' => 17
+                    'size' => 17
                 );
                 if ($view): ?>
                     <span class="flex gap-x-0.5 text-xs">
@@ -29,8 +29,9 @@
         <p class="text-white/80 text-[11px] leading-[1.7] lg:text-xs text-justify line-clamp-2 transition-all"><?= wp_trim_words(get_the_content(), 25); ?></p>
     </div>
     <img class="w-full object-cover aspect-3/4 group-hover:scale-110 transition-all duration-500" height="250"
-         src="<?= the_post_thumbnail_url(); ?>"
-         alt="image of the <?= get_the_title(); ?> post">
+         loading="lazy"
+         src="<?= get_the_post_thumbnail_url(); ?>"
+         alt="<?= get_post_field('post_name', get_the_ID()); ?>">
 </a>
 <?php
 //$args = array(
