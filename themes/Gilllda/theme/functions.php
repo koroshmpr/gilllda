@@ -231,6 +231,7 @@ require get_template_directory() . '/inc/product/product-filters.php';
 //require get_template_directory() . '/inc/product/variation-function.php';
 require get_template_directory() . '/inc/product/out-stock-product.php';
 require get_template_directory() . '/inc/product/filter-search-query.php';
+require get_template_directory() . '/inc/product/return-policy-schema.php';
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
 
