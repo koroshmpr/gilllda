@@ -145,7 +145,7 @@ function bluebox_html5_comment($comment, $args, $depth) {
     ?>
 
     <<?php echo esc_attr($tag); ?> id="comment-<?php comment_ID(); ?>"  <?php comment_class($li_classes, $comment); ?>>
-    <article class="group flex flex-col h-full gap-3 bg-white/5 border border-white/10 hover:border-white/30 transition-colors rounded-lg max-lg:border-white/20 p-4 lg:p-5 pb-3">
+    <article class="group flex flex-col h-full gap-3 bg-white/5 border border-white/10 hover:border-white/30 transition-colors rounded-lg max-lg:border-white/15 p-4 lg:p-5 lg:pb-2">
 
         <header class="flex items-center justify-between border-b text-white border-white/15 pb-3">
             <div class="flex items-center gap-3">
@@ -179,7 +179,7 @@ function bluebox_html5_comment($comment, $args, $depth) {
         <footer class="flex flex-wrap items-center justify-between gap-3 mt-2 pt-3 border-t border-white/5">
             <div>
                 <?php if ($replies_count > 0) : ?>
-                    <button type="button" class="view-replies-btn flex items-center gap-1.5 text-xs font-bold text-blue-300 hover:bg-white/20 px-3 py-1.5 rounded-lg transition-colors" data-comment-id="<?php comment_ID(); ?>" data-author="<?php echo esc_attr(get_comment_author($comment)); ?>">
+                    <button type="button" class="view-replies-btn cursor-pointer flex items-center gap-1.5 text-xs font-bold text-blue-300 hover:bg-white/5 hover:text-blue-400 px-3 py-1.5 rounded-lg transition-colors" data-comment-id="<?php comment_ID(); ?>" data-author="<?php echo esc_attr(get_comment_author($comment)); ?>">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
                         مشاهده پاسخ‌ها (<?= $replies_count; ?>)
                     </button>

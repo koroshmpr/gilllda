@@ -5394,11 +5394,6 @@ blockquote {
   }
 }
 @media (hover: hover) {
-  .hover\:bg-white\/20:hover {
-    background-color: color-mix(in oklab, var(--color-white) 20%, transparent);
-  }
-}
-@media (hover: hover) {
   .hover\:bg-white\/75:hover {
     background-color: color-mix(in oklab, var(--color-white) 75%, transparent);
   }
@@ -5927,8 +5922,8 @@ blockquote {
   }
 }
 @media (width < 64rem) {
-  .max-lg\:border-white\/20 {
-    border-color: color-mix(in oklab, var(--color-white) 20%, transparent);
+  .max-lg\:border-white\/15 {
+    border-color: color-mix(in oklab, var(--color-white) 15%, transparent);
   }
 }
 @media (width < 64rem) {
@@ -7250,6 +7245,11 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:pt-24 {
     padding-top: calc(var(--spacing) * 24);
+  }
+}
+@media (width >= 64rem) {
+  .lg\:pb-2 {
+    padding-bottom: calc(var(--spacing) * 2);
   }
 }
 @media (width >= 64rem) {

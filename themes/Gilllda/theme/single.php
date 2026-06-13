@@ -24,7 +24,7 @@ track_post_views(get_the_ID());
         ?>
     </section>
     <section class="container px-3 lg:px-0 my-5 flex max-xl:flex-col items-start gap-5">
-        <div class="xl:w-3/4 flex flex-col">
+        <div class="xl:w-3/4 flex flex-col gap-5">
             <?php
             $args = array(
                     'class' => 'lg:py-0',

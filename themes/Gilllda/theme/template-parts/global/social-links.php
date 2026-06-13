@@ -3,7 +3,7 @@ $socials = get_field('social', 'option');
 if ($socials):
     foreach ($socials as $social):?>
         <a aria-label="<?= $social['name']; ?>" title="<?= $social['name']; ?>"
-           class="p-4 text-white hover:bg-white/5 transition-all rounded-full border border-white/10"
+           class="p-4 text-white hover:bg-white/5 hover:-translate-y-1 transition-all rounded-full border border-white/10"
            target="_blank"
            href="<?= $social['link']['url'] ?? ''; ?>">
             <?php

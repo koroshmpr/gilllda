@@ -35,7 +35,7 @@ if (post_password_required()) {
                     پاسخ به: <strong id="reply-to-name" class="font-black"></strong>
                 </div>
                 <button type="button" id="cancel-reply-btn"
-                        class="text-primary/70 hover:text-white transition-colors bg-primary/10 hover:bg-white/20 rounded-full p-1"
+                        class="text-primary/70 hover:text-white transition-colors bg-primary/10 hover:bg-primary rounded-full p-1"
                         aria-label="لغو پاسخ">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
@@ -52,7 +52,7 @@ if (post_password_required()) {
                 'label_submit' => __('ثبت دیدگاه', 'bluebox'),
                 'class_submit' => 'w-full bg-primary text-white hover:bg-primary/90 font-bold py-3 px-4 rounded-xl transition-all cursor-pointer mt-4',
                 'class_form' => 'flex flex-col gap-4',
-                'comment_field' => '<div class="flex flex-col gap-2"><label for="comment" class="text-sm font-bold text-primary/50">دیدگاه شما</label><textarea id="comment" name="comment" cols="45" rows="5" aria-required="true" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 focus:border-gray-500 focus:ring-2 focus:ring-gray-500 outline-none transition-all resize-none"></textarea></div>',
+                'comment_field' => '<div class="flex flex-col gap-2"><label for="comment" class="text-sm font-bold text-primary/50">دیدگاه شما</label><textarea id="comment" name="comment" cols="45" rows="3" aria-required="true" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 focus:border-gray-500 focus:ring-2 focus:ring-gray-500 outline-none transition-all resize-none"></textarea></div>',
                 'must_log_in' => '<p class="must-log-in text-sm text-red-400">' . sprintf(__('شما باید <a href="%s" class="font-bold underline text-primary">وارد سیستم</a> شوید.', 'bluebox'), wp_login_url(apply_filters('the_permalink', get_permalink()))) . '</p>',
                 'logged_in_as' => '<p class="logged-in-as text-sm text-primary/50 mb-4">' . sprintf(__('وارد شده به عنوان <a href="%1$s" class="text-primary font-bold">%2$s</a>. <a href="%3$s" class="text-red-300">خروج؟</a>', 'bluebox'), admin_url('profile.php'), $user_identity, wp_logout_url(apply_filters('the_permalink', get_permalink()))) . '</p>',
                 'comment_notes_before' => '',
@@ -68,14 +68,26 @@ if (post_password_required()) {
                     <ol class="lg:space-y-4 max-lg:mt-6 pl-4 max-lg:flex max-lg:max-w-[100vw] max-lg:gap-4 max-lg:overflow-x-auto max-lg:snap-x max-lg:snap-mandatory pb-4"
                         id="bluebox-comments-list">
                         <?php
+                        // فیلتر کردن کامنت‌ها: فقط کامنت‌های لایه اول (بدون والد) را نگه می‌داریم
+                        global $wp_query;
+                        $top_level_comments = array();
+
+                        if ( isset($wp_query->comments) && is_array($wp_query->comments) ) {
+                            foreach ( $wp_query->comments as $comment ) {
+                                if ( $comment->comment_parent == 0 ) {
+                                    $top_level_comments[] = $comment;
+                                }
+                            }
+                        }
+
+                        // پاس دادن آرایه فیلتر شده به تابع وردپرس
                         wp_list_comments(array(
-                            'style' => 'ol',
-                            'callback' => 'bluebox_html5_comment',
-                            'short_ping' => true,
-                            'per_page' => 10,
-                            'max_depth' => 1, // جلوگیری از لود پاسخ‌ها
+                            'style'       => 'ol',
+                            'callback'    => 'bluebox_html5_comment',
+                            'short_ping'  => true,
+                            'per_page'    => 10,
                             'avatar_size' => 48,
-                        ));
+                        ), $top_level_comments); // 🔴 آرایه فیلتر شده اینجا پاس داده شد
                         ?>
                     </ol>
                 </div>
