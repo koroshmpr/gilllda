@@ -49,9 +49,9 @@ if ( ! wp_doing_ajax() ) {
 		<?php wc_get_template( 'checkout/terms.php' ); ?>
 
 		<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
-        <div class="max-lg:fixed bg-white max-lg:inset-x-0 p-1 max-lg:z-[6] bottom-11 ">
+        <div class="max-lg:fixed bg-white max-lg:inset-x-3 p-0.5 max-lg:z-[6] bottom-17 rounded-2xl ">
             <?php echo apply_filters( 'woocommerce_order_button_html', '
-            <button type="submit" class=" alt bg-primary border border-white/20 lg:mt-3 py-5 text-xl cursor-pointer hover:brightness-125 transition-all lg:w-full rounded-lg text-white' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '" 
+            <button type="submit" class=" alt bg-primary border border-white/20 lg:mt-3 py-5 text-xl cursor-pointer hover:brightness-125 transition-all !mb-0 lg:w-full rounded-2xl text-white' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '" 
             name="woocommerce_checkout_place_order" 
             id="place_order" 
             value="' . esc_attr( $order_button_text ) . '" 

@@ -13,7 +13,7 @@ if ($isSale && $regular_price > 0) {
 }
 ?>
 <nav :class="intro ? '!translate-y-0' : ''"
-     class="fixed md:px-24 translate-y-full border-t border-black/10 xl:hidden px-3 py-1.5 transition-all z-[3] bg-gray-50 duration-500 flex justify-between items-center shadow bottom-14 lg:bottom-0 inset-x-0 w-full">
+     class="fixed md:px-24 translate-y-full border-t border-black/10 xl:hidden px-2 py-1.5 transition-all z-[3] bg-gray-50 duration-500 flex justify-between items-center shadow bottom-16 lg:bottom-0 inset-x-2 rounded-2xl">
 
 
     <div class="flex flex-col flex-1 relative">

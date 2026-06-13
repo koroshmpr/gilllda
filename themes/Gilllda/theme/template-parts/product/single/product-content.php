@@ -13,7 +13,7 @@ $has_portfolio = $related_portfolio->have_posts();
 <div x-data="{ active: 'details' }"
 	 class="lg:col-span-12 xl:col-span-9 z-0 bg-white flex flex-col lg:py-8 max-lg:px-3 lg:pe-8 rtl" dir="rtl">
 
-	<nav class="sticky w-full <?= current_user_can('administrator') ? 'lg:top-22' : 'lg:top-14 '; ?> top-0 gap-x-2 flex border-b z-[2] bg-white border-black/10">
+	<nav class="sticky w-full <?= current_user_can('administrator') ? 'lg:top-22' : 'lg:top-14 '; ?> top-12 gap-x-2 flex border-b z-[2] bg-white border-black/10">
 		<?php
 		$btnClass = 'py-3 pl-2 text-sm cursor-pointer transition-all duration-300 font-bold text-nowrap';
 		$titleClass = 'border-b-2 w-fit font-bold py-2 my-4 border-primary/70';

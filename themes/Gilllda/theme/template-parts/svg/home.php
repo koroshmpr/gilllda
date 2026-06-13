@@ -1,7 +1,7 @@
 <svg
 	width="<?= $args['size'] ?? '20' ?>" height="<?= $args['size'] ?? '20' ?>"
 	class="shrink-0 <?= $args['class'] ?? '' ?>"
-	viewBox="0 0 <?= $args['size'] ?? '20' ?> <?= $args['size'] ?? '20' ?>"
+	viewBox="0 0 22 22"
 	 fill="none"
 	 stroke="currentColor"
 	 stroke-width="2"

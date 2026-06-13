@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<div class="lg:hidden fixed bottom-14 divide-x divide-gray-200 inset-x-0 bg-white z-40 py-2 flex items-center rtl"
+<div class="lg:hidden fixed bottom-16 divide-x divide-gray-200 inset-x-2 bg-white/90 backdrop-blur-[2px] rounded-3xl z-40 py-1 overflow-hidden flex items-center rtl"
      dir="rtl">
     <?php
     $btnCLass = 'flex-1 flex items-center justify-center gap-2 py-3 bg-gray-50 text-sm font-bold active:scale-95 transition-transform'

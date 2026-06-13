@@ -18,15 +18,6 @@ endif;
 
 get_template_part('template-parts/global/backToTop');
 
-if (!is_search()):
-    $args = array(
-        'class' => $is_woo_account ? 'hidden' : '',
-        // Fixed nested quotation marks so it renders valid HTML
-        'attr' => ':class="scrolled ? \'right-4\' : \'-right-full\'"'
-    );
-    get_template_part('template-parts/layout/header/search-button', null, $args);
-endif;
-
 // Mobile Menu Modal
 get_template_part('template-parts/layout/header/menu-modal');
 

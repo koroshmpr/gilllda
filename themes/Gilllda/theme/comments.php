@@ -58,7 +58,7 @@ if (post_password_required()) {
                     'title_reply_to' => '',
                     'cancel_reply_link' => '',
                     'label_submit' => __('ثبت دیدگاه', 'bluebox'),
-                    'class_submit' => 'w-full bg-primary text-white hover:bg-primary/90 font-bold py-3 px-4 rounded-xl transition-all cursor-pointer mt-4',
+                    'class_submit' => 'w-full bg-primary text-white hover:bg-primary/90 font-bold py-5 px-4 rounded-xl transition-all cursor-pointer',
                     'class_form' => 'flex flex-col gap-4',
                     'comment_field' => '<div class="flex flex-col gap-2"><label for="comment" class="text-sm font-bold text-primary/50">دیدگاه شما</label><textarea id="comment" name="comment" cols="45" rows="3" aria-required="true" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 focus:border-gray-500 focus:ring-2 focus:ring-gray-500 outline-none transition-all resize-none"></textarea></div>',
                     'must_log_in' => '<p class="must-log-in text-sm text-red-400">' . sprintf(__('شما باید <a href="%s" class="font-bold underline text-primary">وارد سیستم</a> شوید.', 'bluebox'), wp_login_url(apply_filters('the_permalink', get_permalink()))) . '</p>',

@@ -104,7 +104,7 @@ defined( 'ABSPATH' ) || exit;
 
     </table>
 
-    <div class="max-lg:fixed bottom-8 inset-x-0 max-lg:!p-2 max-lg:z-[6] max-lg:bg-white wc-proceed-to-checkout">
+    <div class="max-lg:fixed bottom-17 inset-x-3 max-lg:!p-0.5 rounded-2xl max-lg:z-[6] max-lg:bg-white wc-proceed-to-checkout">
         <?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
     </div>
 

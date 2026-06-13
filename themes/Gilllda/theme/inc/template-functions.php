@@ -132,7 +132,36 @@ add_filter('the_content_more_link', 'bluebox_continue_reading_link');
 // 🔴 ۱. قالب کامنت اصلی (تغییر یافته برای دکمه مدال)
 function bluebox_html5_comment($comment, $args, $depth) {
     $tag = ('div' === $args['style']) ? 'div' : 'li';
+
+    // ۱. بررسی نقش و تعیین متن/رنگ برچسب کاربر
     $is_author = $comment->user_id === get_post_field('post_author', $comment->comment_post_ID);
+    $badge_text = '';
+    $badge_class = 'text-[10px] font-bold px-2 py-0.5 rounded-full'; // استایل پایه برچسب
+
+    if ($is_author) {
+        $badge_text = 'نویسنده';
+        $badge_class .= ' bg-white/20 text-white';
+    } elseif ($comment->user_id == 0) {
+        $badge_text = 'مهمان';
+        $badge_class .= ' bg-gray-500/20 text-gray-300';
+    } else {
+        $user = get_userdata($comment->user_id);
+        if ($user) {
+            if (in_array('administrator', $user->roles)) {
+                $badge_text = 'مدیر سایت';
+                $badge_class .= ' bg-red-500/20 text-red-300';
+            } elseif (in_array('customer', $user->roles)) {
+                $badge_text = 'مشتری';
+                $badge_class .= ' bg-green-500/20 text-green-300';
+            } else {
+                $badge_text = 'کاربر سایت';
+                $badge_class .= ' bg-blue-500/20 text-blue-300';
+            }
+        } else {
+            $badge_text = 'مهمان';
+            $badge_class .= ' bg-gray-500/20 text-gray-300';
+        }
+    }
 
     $li_classes = 'max-lg:w-[70vw] max-lg:shrink-0';
 
@@ -163,7 +192,13 @@ function bluebox_html5_comment($comment, $args, $depth) {
                 <div class="flex flex-col">
                     <div class="flex items-center gap-2">
                         <b class="text-sm font-bold text-white"><?= get_comment_author($comment); ?></b>
-                        <?php if ($is_author) : ?><span class="bg-white/10 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">نویسنده</span><?php endif; ?>
+
+                        <?php if ($badge_text) : ?>
+                            <span class="<?= esc_attr($badge_class); ?>">
+                                <?= esc_html($badge_text); ?>
+                            </span>
+                        <?php endif; ?>
+
                     </div>
                     <time datetime="<?= get_comment_time('U'); ?>" class="text-xs text-gray-300 mt-0.5 flex items-center gap-1">
                         <?php get_template_part('template-parts/blog/single/date', null, ['time' => get_comment_time('U')]); ?>

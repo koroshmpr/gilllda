@@ -6,7 +6,8 @@ $args = array(
 );
 ?>
 <button @click="stickyMenu = !stickyMenu" aria-label="show more detail"
-        class="w-10 h-10 lg:hidden fixed left-4 bottom-28 bg-gray-700 hover:bg-gray-900 cursor-pointer justify-center border border-white/20 transition-all duration-700 items-center flex text-white rounded-sm z-[5]">
+        :class="stickyMenu ? 'bottom-30' : 'bottom-17'"
+        class="size-11 lg:hidden fixed left-5 bg-gray-50 justify-center border border-gray-200 transition-all duration-700 items-center flex text-primary rounded-full z-[5]">
         <span class="absolute transition-all duration-500" :class="stickyMenu ? 'opacity-0 rotate-90' : ''">
             <?php get_template_part('template-parts/svg/menu-dot', null, $args); ?>
         </span>
@@ -17,8 +18,8 @@ $args = array(
 <?php
 //nav bar single
 ?>
-<div :class="stickyMenu ? 'bottom-14' : '-bottom-14'"
-     class="lg:hidden duration-500 transition-all fixed shadow-sm  divide-x divide-gray-200 inset-x-0 bg-white z-40 py-2 flex items-center rtl">
+<div :class="stickyMenu ? 'bottom-17' : '-bottom-14'"
+     class="lg:hidden duration-500 transition-all fixed shadow-sm overflow-hidden rounded-3xl  divide-x divide-gray-200 inset-x-2 bg-white/90 backdrop-blur-[2px] z-40 py-2 flex items-center rtl">
     <button @click="share = true"
             aria-label="open share links" class="<?= $buttonCLass; ?> cursor-pointer">
         <?php get_template_part('template-parts/svg/share', null, ['size' => '15']); ?>
@@ -37,6 +38,20 @@ $args = array(
             <span class="<?= $textCLass; ?>">نظر</span>
        </span>
     </button>
+    <div :class="share ? 'translate-y-0' : 'translate-y-12'"
+         class="lg:hidden duration-500 transition-all border-t border-gray-100 fixed shadow-sm inset-x-0 bg-white/90 backdrop-blur-2xl z-40 py-2 px-4 flex justify-between items-center rtl">
+        <?php
+        $args = array(
+            'class' => 'lg:hidden text-black !mx-0',
+            'linkClass' => 'bg-gray-700 p-2 text-white rounded-sm hover:bg-black/10 transition-all'
+        );
+        get_template_part('template-parts/blog/single/share-button', null, $args);
+        ?>
+        <button @click="share = false"
+                class=" px-3 py-1 bg-gray-700 text-sm hover:bg-gray-900 cursor-pointer justify-center border border-white/20 transition-all duration-700 items-center flex text-white rounded-sm z-[5]">
+            انصراف
+        </button>
+    </div>
 </div>
 <?php
 //toc modal
@@ -60,18 +75,4 @@ $args = array(
             <?= do_shortcode('[TOC levels="2,3"]'); ?>
         </div>
     </div>
-</div>
-<div :class="share ? 'bottom-14' : '-bottom-14'"
-     class="lg:hidden duration-500 transition-all border-t border-gray-100 fixed shadow-sm inset-x-0 bg-white z-40 py-2 px-4 flex justify-between items-center rtl">
-    <?php
-    $args = array(
-        'class' => 'lg:hidden text-black !mx-0',
-        'linkClass' => 'bg-gray-700 p-2 text-white rounded-sm hover:bg-black/10 transition-all'
-    );
-    get_template_part('template-parts/blog/single/share-button', null, $args);
-    ?>
-    <button @click="share = false"
-            class=" px-3 py-1 bg-gray-700 text-sm hover:bg-gray-900 cursor-pointer justify-center border border-white/20 transition-all duration-700 items-center flex text-white rounded-sm z-[5]">
-        انصراف
-    </button>
 </div>

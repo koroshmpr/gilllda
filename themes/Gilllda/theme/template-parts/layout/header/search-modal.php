@@ -9,35 +9,37 @@
             :class="searchOpen ? 'delay-100 !translate-y-0' : 'translate-y-5'"
     >
         <div class="container max-w-content max-lg:px-3 relative">
-            <button @click="searchOpen = false" aria-label="close search modal" class="flex items-center justify-center absolute top-4 start-4 py-2 px-2 bg-gray-200 hover:bg-gray-300 cursor-pointer transition-all rounded-md text-black z-10">
-                <?php
-                $args = array(
-                    'size' => '18',
-                    'class' => '',
-                );
-                get_template_part('template-parts/svg/close', null, $args);
-                ?>
-            </button>
+         <div class="flex gap-2 my-8">
+             <button @click="searchOpen = false" aria-label="close search modal" class="flex items-center aspect-square justify-center p-2 px-4 bg-gray-100 border border-gray-200 hover:bg-gray-200 cursor-pointer transition-all rounded-md text-black z-10">
+                 <?php
+                 $args = array(
+                     'size' => '20',
+                     'class' => '',
+                 );
+                 get_template_part('template-parts/svg/close', null, $args);
+                 ?>
+             </button>
 
-            <div class="w-full max-w-3xl mx-auto shrink-0 mt-16 mb-8 relative z-10">
-                <form role="search" method="get" action="<?= home_url() ?>">
-                    <fieldset class="relative overflow-hidden rounded-lg shadow-sm">
-                        <label for="search-input" class="sr-only screen-reader-text">Search:</label>
-                        <input type="text" id="search-input"
-                               class="w-full p-4 border bg-gray-50 border-gray-200 rounded-lg text-lg focus:border-gray-500"
-                               name="s"
-                               autocomplete="off"
-                               value="<?= get_search_query() ?>"
-                               placeholder="جستجو برای..."
-                               oninput="handleAjaxSearch(this.value)">
+             <div class="w-full mx-auto lg:shrink-0 relative">
+                 <form role="search" method="get" action="<?= home_url() ?>">
+                     <fieldset class="relative overflow-hidden rounded-lg shadow-sm">
+                         <label for="search-input" class="sr-only screen-reader-text">Search:</label>
+                         <input type="text" id="search-input"
+                                class="w-full p-3 border bg-gray-50 border-gray-200 rounded-lg text-lg focus:border-gray-500"
+                                name="s"
+                                autocomplete="off"
+                                value="<?= get_search_query() ?>"
+                                placeholder="جستجو برای..."
+                                oninput="handleAjaxSearch(this.value)">
 
-                        <input type="submit"
-                               onclick="saveSearchToCookie()"
-                               class="absolute rounded-l-md text-white cursor-pointer transition-all hover:bg-primary/90 px-8 left-0 inset-y-0 bg-primary/70"
-                               value="جستجو">
-                    </fieldset>
-                </form>
-            </div>
+                         <input type="submit"
+                                onclick="saveSearchToCookie()"
+                                class="absolute rounded-l-md text-white cursor-pointer transition-all hover:bg-primary/90 px-4 lg:px-8 left-0 inset-y-0 bg-primary/70"
+                                value="جستجو">
+                     </fieldset>
+                 </form>
+             </div>
+         </div>
 
             <div id="search-loading" class="hidden text-sm text-gray-500 shrink-0">
                 <div class="flex flex-col items-center justify-center py-16">
