@@ -202,8 +202,16 @@ function bluebox_html5_reply_comment($comment, $args, $depth) {
     ?>
     <div class="bg-gray-50 border border-gray-200 rounded-xl p-4">
         <div class="flex items-center gap-2 mb-2">
-            <div class="w-8 h-8 rounded-full overflow-hidden shrink-0">
-                <?php echo get_avatar($comment, 32, '', '', array('class' => 'w-full h-full object-cover')); ?>
+            <div class="w-8 h-8 bg-primary text-white flex items-center justify-center rounded-full overflow-hidden shrink-0">
+                <?php
+                // Try to get avatar, fallback to SVG
+                $avatar = get_avatar($comment, 40, '', '', array('class' => 'w-full h-full object-cover'));
+                if ($avatar) {
+                    echo $avatar;
+                } else {
+                    get_template_part('template-parts/svg/person', null, ['size' => 20]);
+                }
+                ?>
             </div>
             <div>
                 <b class="text-xs font-bold text-gray-800"><?= get_comment_author($comment); ?></b>
