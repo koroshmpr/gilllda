@@ -2,11 +2,11 @@
 /*
 Plugin Name: Custom Table of Contents
 Description: Automatically add semantic IDs to headings and generate a customizable table of contents shortcode.
-Version: 1.1
+Version: 1.3
 Author: korosh mpr
 */
-// Automatically add semantic IDs to headings
 
+// Automatically add semantic IDs to headings
 function auto_id_headings($content)
 {
     // Match only h2 and h3 tags
@@ -45,7 +45,6 @@ function get_headings($content, $levels = [2])
 
     return $headings;
 }
-
 // Generate the TOC
 function get_toc($content, $levels = [2])
 {
@@ -55,19 +54,59 @@ function get_toc($content, $levels = [2])
     if (empty($headings)) return '';
 
     ob_start();
-    echo '<ul class="list-none space-y-1 border-s-2 border-black/5">';
-    foreach ($headings as $heading) : ?>
-        <li class="border-s-2 transition-all duration-300 border-transparent ps-4 -ms-0.5" :class="active === '<?= esc_attr($heading['id']); ?>' ? '!border-primary' : 'border-transparent'">
-            <button aria-label="link to <?= esc_attr($heading['name']); ?>"
-                    class="<?= $textColor; ?> w-full text-start flex justify-start py-0.5 max-w-[90%] lg:text-sm text-xs cursor-pointer transition-all duration-300"
-                    :class="active === '<?= esc_attr($heading['id']); ?>' ? 'text-primary font-bold' : 'text-gray-400 hover:text-gray-600'"
-                    @click.prevent="document.getElementById('<?= esc_attr($heading['id']); ?>').scrollIntoView({ behavior: 'smooth' }); toc = false">
-                <?= esc_html($heading['name']); ?>
-            </button>
-        </li>
-    <?php endforeach;
-    echo "</ul>";
+    ?>
+    <ul class="list-none space-y-1 border-s-2 border-black/5"
+        x-effect="
+            if (active) {
+                $nextTick(() => {
+                    // 1. Use $el to only search inside THIS specific <ul> instance
+                    let activeLi = null;
+                    const items = $el.querySelectorAll('li[data-toc-target]');
 
+                    // 2. Loop through items to safely match URL-encoded Persian characters
+                    for (let i = 0; i < items.length; i++) {
+                        if (items[i].getAttribute('data-toc-target') === active) {
+                            activeLi = items[i];
+                            break;
+                        }
+                    }
+
+                    if (activeLi) {
+                        // Find the wrapper div that actually has the scrollbar
+                        const scrollContainer = activeLi.closest('.overflow-y-scroll') || activeLi.closest('div');
+
+                        if (scrollContainer) {
+                            // Calculate precise positions regardless of DOM structure
+                            const containerRect = scrollContainer.getBoundingClientRect();
+                            const liRect = activeLi.getBoundingClientRect();
+
+                            // Math to find the exact center offset
+                            const scrollAmount = (liRect.top - containerRect.top) - (scrollContainer.clientHeight / 2) + (liRect.height / 2);
+
+                            // Scroll the parent container smoothly
+                            scrollContainer.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                        }
+                    }
+                });
+            }
+        ">
+
+        <?php foreach ($headings as $heading) : ?>
+            <!-- 🔴 CHANGED: Replaced id="..." with data-toc-target="..." to avoid ID duplication bugs -->
+            <li data-toc-target="<?= esc_attr($heading['id']); ?>"
+                class="border-s-2 transition-all duration-300 ps-4 -ms-0.5"
+                :class="active === '<?= esc_attr($heading['id']); ?>' ? '!border-primary' : 'border-transparent'">
+
+                <button aria-label="link to <?= esc_attr($heading['name']); ?>"
+                        class="<?= $textColor; ?> w-full text-start flex justify-start py-0.5 max-w-[90%] lg:text-sm text-xs cursor-pointer transition-all duration-300"
+                        :class="active === '<?= esc_attr($heading['id']); ?>' ? 'text-primary font-bold' : 'text-gray-400 hover:text-gray-600'"
+                        @click.prevent="document.getElementById('<?= esc_attr($heading['id']); ?>').scrollIntoView({ behavior: 'smooth' }); toc = false">
+                    <?= esc_html($heading['name']); ?>
+                </button>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <?php
     return ob_get_clean();
 }
 

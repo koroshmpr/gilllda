@@ -149,7 +149,7 @@ $short_desc = $product->get_short_description();
                                       style="background-color: <?= esc_attr($acf_color); ?>;"></span>
                             <?php endif; ?>
 
-                            <span class="<?= esc_attr($valueClass) ?>  <?= $acf_color ? 'rounded-s-none' : '' ; ?>"><?= esc_html($term_name); ?></span>
+                            <span class="<?= esc_attr($valueClass) ?>  <?= $acf_color ? 'rounded-s-none' : ''; ?>"><?= esc_html($term_name); ?></span>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -158,10 +158,33 @@ $short_desc = $product->get_short_description();
     </div>
 
     <?php if ($short_desc) : ?>
-        <div class="bg-primary/5 p-4 rounded-lg border border-primary/10 leading-7 text-sm text-gray-600 mb-3">
+        <div class="bg-primary/5 p-4 rounded-lg border border-primary/10 leading-7 text-sm text-gray-600">
             <?= wp_kses_post($short_desc); ?>
         </div>
     <?php endif; ?>
+    <?php
+    // Get product categories
+    $categories = get_the_terms($post_id, 'product_cat');
 
-    <?php get_template_part('template-parts/shop/property', null, ['class' => 'lg:hidden !mt-0 border-b pb-3 border-gray-200']); ?>
+    if ($categories && !is_wp_error($categories)) : ?>
+        <div class="<?= $boxClass; ?> mb-3">
+            <div class="text-[11px] text-gray-500 flex items-center gap-1 font-bold ps-1">
+                <?php get_template_part('template-parts/svg/tag', null, ['size' => 17]); ?>
+                <span>دسته‌بندی:</span>
+            </div>
+            <div class="flex flex-wrap gap-2 flex-1 max-w-full overflow-x-scroll">
+                <?php foreach ($categories as $category) : ?>
+                    <a href="<?= esc_url(get_term_link($category)); ?>"
+                       class="flex items-center text-nowrap bg-white hover:bg-primary hover:text-white transition-colors duration-300 text-gray-600 text-xs font-bold px-3 py-1.5 rounded-md border border-gray-200 hover:border-primary">
+                        <?= esc_html($category->name); ?>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php
+    if (wp_is_mobile()):
+        get_template_part('template-parts/shop/property', null, ['class' => 'lg:hidden !mt-0 border-b pb-3 border-gray-200']);
+    endif;
+    ?>
 </div>

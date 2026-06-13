@@ -23,21 +23,25 @@ track_post_views(get_the_ID());
         get_template_part('template-parts/blog/single/sticky-navbar');
         ?>
     </section>
-    <section class="container px-3 lg:px-0 my-5 flex flex-col gap-y-5">
-        <?php
-        $args = array(
-            'class' => 'xl:w-3/4',
-            'title' => 'سوالات متداول'
-        );
-        get_template_part('template-parts/global/faq-list', null, $args);
-        get_template_part('template-parts/blog/single/author-box');
-        get_template_part('template-parts/blog/single/rating', null, ['class' => 'xl:w-3/4 ']);
+    <section class="container px-3 lg:px-0 my-5 flex max-xl:flex-col items-start gap-5">
+        <div class="xl:w-3/4 flex flex-col">
+            <?php
+            $args = array(
+                    'class' => 'lg:py-0',
+                'title' => 'سوالات متداول'
+            );
+            get_template_part('template-parts/global/faq-list', null, $args);
+            get_template_part('template-parts/blog/single/author-box');
 
+            ?>
+        </div>
+        <?php get_template_part('template-parts/blog/single/rating', null, ['class' => 'xl:sticky top-24 w-full flex-1 border-b-4 border-b-amber-400 rounded-lg flex flex-col border-amber-400/30 ']);?>
+    </section>
+        <?php
         if (comments_open() || get_comments_number()) {
             comments_template();
         }
         ?>
-    </section>
 <?php
 get_template_part('template-parts/blog/single/related-posts');
 get_template_part('template-parts/blog/single/related-product', null, ['class' => 'lg:hidden p-2']);

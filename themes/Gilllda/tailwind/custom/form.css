@@ -45,13 +45,19 @@ body:not(.page-template-form) {
 	}
 }
 
-#respond, #wp-temp-form-div {
-	@apply bg-gray-50 p-5 xl:sticky top-28 border border-black/5 xl:row-span-4 xl:order-2 !block;
-}
 .comment #respond {
 	@apply xl:static
+
 }
 #comments {
+	.comment-form-author , .comment-form-email {
+		label {
+			@apply text-sm font-bold text-primary/50;
+		}
+		input {
+			@apply w-full bg-gray-50 border border-gray-200 rounded-xl p-3 focus:border-gray-500 focus:ring-2 focus:ring-gray-500 outline-none transition-all resize-none;
+		}
+	}
 	#reply-title {
 		@apply mb-5
 	}

@@ -47,7 +47,7 @@ $args = array(
         class="fixed inset-0 flex justify-center z-[-1] opacity-0 bg-black/10 items-end lg:hidden backdrop-blur-sm transition-all duration-300"
         @click.self="toc = false"
 >
-    <div class="bg-gray-100 text-black w-full py-4 px-6 h-[40vh] rounded-t-2xl flex flex-col gap-y-3 translate-y-full transition-all duration-300"
+    <div class="bg-gray-100 text-black w-full py-4 px-6 rounded-t-2xl flex flex-col gap-y-3 translate-y-full transition-all duration-300"
          :class="toc ? 'delay-200 !translate-y-0' : 'translate-y-full'">
         <div class="flex justify-between items-center">
             <button @click="toc = false" aria-label="close toc modal"
@@ -56,7 +56,7 @@ $args = array(
             </button>
             <p>فهرست مطالب</p>
         </div>
-        <div class="bg-white rounded-xl border border-gray-200 h-full overflow-y-scroll p-5">
+        <div class="bg-white rounded-xl max-h-[30vh] border border-gray-200 overflow-y-scroll p-5">
             <?= do_shortcode('[TOC levels="2,3"]'); ?>
         </div>
     </div>

@@ -65,8 +65,9 @@ add_filter( 'rank_math/json_ld', function( $data, $jsonld ) {
                 // RankMath sometimes outputs @type as a string, sometimes as an array
                 $type = is_array( $schema['@type'] ) ? $schema['@type'][0] : $schema['@type'];
 
-                // If it's a Product, Article, or Portfolio item, inject the ratings!
-                $valid_types = ['Product', 'Article', 'NewsArticle', 'BlogPosting', 'CreativeWork'];
+                // 🔴 تغییر مهم: فقط اسکیماهای مجاز گوگل را در این لیست قرار دهید
+                // اگر سایت شما دوره‌های آموزشی هم دارد، می‌توانید 'Course' را هم اضافه کنید
+                $valid_types = ['Product', 'SoftwareApplication', 'Book', 'Course'];
 
                 if ( in_array( $type, $valid_types ) ) {
                     $data[$key]['aggregateRating'] = [

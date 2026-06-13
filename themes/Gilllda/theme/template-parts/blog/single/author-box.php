@@ -1,7 +1,7 @@
 <?php
 $author_id = get_post_field('post_author', get_the_ID());
 ?>
-<section class="xl:w-3/4 border bg-primary text-white flex gap-x-5 gap-y-2 max-lg:flex-col max-lg:items-center  border-black/30 rounded-lg min-h-40 p-6">
+<section class="border bg-primary text-white flex gap-x-5 gap-y-2 max-lg:flex-col max-lg:items-center  border-black/30 rounded-lg min-h-40 p-6">
         <?php $user_array_img = get_field('profile_image', 'user_' . $post->post_author);
         if ($user_array_img) : ?>
             <img width="70" class="bg-white aspect-square border rounded-full p-2 border-gray-400" src="<?php echo $user_array_img['url'] ?>"

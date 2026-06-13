@@ -3,7 +3,7 @@ $post_id = get_the_ID();
 $total = get_post_meta($post_id, 'total_ratings', true);
 ?>
 <section
-        class="border bg-amber-400/5 max-lg:border-b-4 lg:border-s-4 max-lg:border-b-amber-400 lg:border-s-amber-400 rounded-lg flex max-lg:flex-col justify-between items-center p-5 border-amber-400/30 set custom-post-rating <?= $args['class'] ?? ''; ?>"
+        class="border bg-amber-400/5 justify-between items-center p-5 set custom-post-rating <?= $args['class'] ?? ''; ?>"
         id="<?= get_post_type();?>-rating">
     <div class="flex flex-col gap-y-1 justify-center">
         <span class="text-xl">چه امتیاری می‌دهید؟</span>

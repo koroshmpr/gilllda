@@ -103,15 +103,6 @@ $has_portfolio = $related_portfolio->have_posts();
         );
         get_template_part('template-parts/global/faq-list', null, $args);?>
     <div class="bg-white relative">
-        <?php get_template_part('template-parts/blog/single/rating', null, ['class' => 'w-full']); ?>
+        <?php get_template_part('template-parts/blog/single/rating', null, ['class' => 'w-full max-lg:border-b-4 lg:border-s-4 max-lg:border-b-amber-400 lg:border-s-amber-400 rounded-lg flex max-lg:flex-col border-amber-400/30 ']); ?>
     </div>
-	<div id="comments-section"
-		 class="pt-8 bg-white relative"
-		 x-intersect:enter.margin.-15%.0px.-70%.0px="active = 'comments'">
-		<?php
-		if (comments_open() || get_comments_number()) {
-			comments_template();
-		}
-		?>
-	</div>
 </div>
