@@ -6,9 +6,9 @@ $args = array(
 );
 ?>
 <button @click="stickyMenu = !stickyMenu" aria-label="show more detail"
-        :class="stickyMenu ? 'bottom-30' : 'bottom-17'"
+        :class="[stickyMenu ? 'bottom-30' : 'bottom-17',scrollingDown ? 'scale-90 translate-y-4' : '']"
         class="size-11 lg:hidden fixed left-5 bg-gray-50 justify-center border border-gray-200 transition-all duration-700 items-center flex text-primary rounded-full z-[5]">
-        <span class="absolute transition-all duration-500" :class="stickyMenu ? 'opacity-0 rotate-90' : ''">
+        <span class="absolute transition-all duration-500" :class="stickyMenu ? 'opacity-0 rotate-90 translate-y-2' : ''">
             <?php get_template_part('template-parts/svg/menu-dot', null, $args); ?>
         </span>
         <span class="absolute transition-all duration-500 opacity-0" :class="stickyMenu ? 'opacity-100' : 'opacity-0 -rotate-90'">
@@ -18,8 +18,8 @@ $args = array(
 <?php
 //nav bar single
 ?>
-<div :class="stickyMenu ? 'bottom-17' : '-bottom-14'"
-     class="lg:hidden duration-500 transition-all fixed shadow-sm overflow-hidden rounded-3xl  divide-x divide-gray-200 inset-x-2 bg-white/90 backdrop-blur-[2px] z-40 py-2 flex items-center rtl">
+<div :class="[stickyMenu ? 'bottom-17' : '-bottom-14',scrollingDown ? 'max-lg:scale-90 translate-y-2' : '' ]"
+     class="lg:hidden duration-500 transition-all fixed overflow-hidden rounded-2xl  divide-x divide-gray-200 inset-x-5 bg-white/90 border border-gray-300 backdrop-blur-[2px] z-10 py-1 flex items-center rtl">
     <button @click="share = true"
             aria-label="open share links" class="<?= $buttonCLass; ?> cursor-pointer">
         <?php get_template_part('template-parts/svg/share', null, ['size' => '15']); ?>

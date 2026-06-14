@@ -20,10 +20,10 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<div class="lg:hidden fixed bottom-17 divide-x divide-gray-300 border border-gray-300 inset-x-4 rounded-3xl z-40 overflow-hidden flex items-center rtl"
+<div :class="scrollingDown ? 'scale-90 translate-y-1' : ''" class="lg:hidden fixed transition-all duration-500 bottom-17 divide-x divide-gray-300 border border-gray-300 inset-x-5 rounded-2xl z-40 overflow-hidden flex items-center rtl"
      dir="rtl">
     <?php
-    $btnCLass = 'flex-1 flex items-center justify-center gap-2 py-3 bg-white/90 backdrop-blur-[2px] text-sm font-bold active:scale-95 transition-transform'
+    $btnCLass = 'flex-1 flex items-center justify-center gap-2 py-2.5 bg-white/90 backdrop-blur-sm text-sm font-bold active:scale-95 transition-transform'
     ?>
     <button @click="$dispatch('open-filter')" type="button"
             class="<?= $btnCLass; ?>">

@@ -49,7 +49,7 @@ if ( ! wp_doing_ajax() ) {
 		<?php wc_get_template( 'checkout/terms.php' ); ?>
 
 		<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
-        <div class="max-lg:fixed bg-white max-lg:inset-x-4 p-0.5 max-lg:z-[6] bottom-17 rounded-2xl ">
+        <div :class="scrollingDown ? 'scale-85 translate-y-2' : ''" class="max-lg:fixed transition-all duration-500 bg-white/50 max-lg:inset-x-4 p-[2px] max-lg:z-[6] bottom-17 rounded-2xl ">
             <?php echo apply_filters( 'woocommerce_order_button_html', '
             <button type="submit" class=" alt bg-primary border border-white/20 lg:mt-3 py-4 text-xl cursor-pointer hover:brightness-125 transition-all !mb-0 lg:w-full rounded-2xl text-white' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '" 
             name="woocommerce_checkout_place_order" 

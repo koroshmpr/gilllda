@@ -42,7 +42,7 @@ if (function_exists('wc_get_attribute_taxonomies')) {
  */
 ob_start(); ?>
 <div class="mb-2">
-    <h4 class="text-sm lg:text-md font-black text-gray-700 mt-0 mb-4">دسته‌بندی‌ها</h4>
+    <p class="text-sm lg:text-md font-black text-gray-700 mt-0 mb-4">دسته‌بندی‌ها</p>
     <div class="flex flex-wrap gap-2">
         <?php foreach($categories as $cat): ?>
             <button
@@ -61,7 +61,7 @@ ob_start(); ?>
     <!-- Dynamic WooCommerce Attributes (Color, Size, etc.) -->
     <?php foreach ($available_attributes as $attr): ?>
         <div class="border-t border-gray-200 pt-4">
-            <h4 class="text-sm font-black text-gray-700 m-0 mb-3"><?= esc_html($attr['name']) ?></h4>
+            <p class="text-sm font-black text-gray-700 m-0 mb-3"><?= esc_html($attr['name']) ?></p>
             <div class="flex flex-wrap gap-2">
                 <?php foreach($attr['terms'] as $term): ?>
                     <button
@@ -78,7 +78,7 @@ ob_start(); ?>
 
     <!-- In Stock Toggle -->
     <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
-        <h4 class="text-sm font-black text-gray-700 m-0">فقط کالاهای موجود</h4>
+        <p class="text-sm font-black text-gray-700 m-0">فقط کالاهای موجود</p>
         <button type="button"
                 aria-label="add filter to show in stock products"
                 @click="filters.in_stock = !filters.in_stock"
@@ -91,7 +91,7 @@ ob_start(); ?>
 
     <!-- On Sale Toggle -->
     <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
-        <h4 class="text-sm font-black text-gray-700 m-0">فقط کالاهای تخفیف‌دار</h4>
+        <p class="text-sm font-black text-gray-700 m-0">فقط کالاهای تخفیف‌دار</p>
         <button type="button"
                 aria-label="add filter to show on sale products"
                 @click="filters.on_sale = !filters.on_sale"
@@ -105,7 +105,7 @@ ob_start(); ?>
     <!-- Minimum Weight -->
     <div class="border-t border-gray-200 pt-4">
         <div class="flex justify-between items-center mb-3">
-            <h4 class="text-sm font-black my-0 text-gray-700">حداقل وزن</h4>
+            <p class="text-sm font-black my-0 text-gray-700">حداقل وزن</p>
             <span class="text-[10px] font-black px-2 py-1 bg-primary/5 rounded-lg text-primary" x-text="filters.min_weight + ' <?= esc_js($weight_unit) ?>'"></span>
         </div>
         <input aria-label="change the weight filter" type="range" min="0" max="50" step="0.5" x-model="filters.min_weight" class="w-full h-1.5 bg-gray-200 hover:bg-gray-300 transition-all rounded-lg appearance-none cursor-pointer accent-primary">
@@ -114,7 +114,7 @@ ob_start(); ?>
     <!-- Maximum Price -->
     <div class="border-t border-gray-200 pt-4">
         <div class="flex justify-between items-center mb-3">
-            <h4 class="text-sm font-black text-gray-700 m-0">حداکثر قیمت</h4>
+            <p class="text-sm font-black text-gray-700 m-0">حداکثر قیمت</p>
             <span class="text-[10px] font-black text-primary bg-primary/5 px-2 py-1 rounded-lg" x-text="formatPrice(filters.max_price)"></span>
         </div>
         <input aria-label="change the price filter" type="range" min="0" max="10000000" step="100000" x-model="filters.max_price" class="w-full h-1.5 bg-gray-200 hover:bg-gray-300 transition-all rounded-lg appearance-none cursor-pointer accent-primary">

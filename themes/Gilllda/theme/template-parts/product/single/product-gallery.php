@@ -51,7 +51,7 @@ $total_grid_items = count($grid_images);
         }
     }"
      @slide-changed.window="activeTab = $event.detail.index >= $event.detail.portfolioStart ? 'customer' : 'product'"
-     class="lg:col-span-5 xl:col-span-4 max-lg:sticky duration-500 transition-all top-2 lg:top-16 flex flex-col max-lg:p-2 cursor-pointer"
+     class="lg:col-span-5 xl:col-span-4 max-lg:sticky duration-500 transition-all top-12 flex flex-col max-lg:p-2 cursor-pointer"
      :class="scrolled ? 'max-md:scale-95 max-md:blur-[1px] max-md:grayscale-25': ''"
      dir="rtl">
 

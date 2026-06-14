@@ -1,12 +1,12 @@
 <?php
 global $woo_active;
-$activeClass = 'max-lg:!bg-gray-300 border border-gray-300 max-lg:rounded-[20px] max-lg:!text-primary [&>svg]:fill-primary';
+$activeClass = 'max-lg:!bg-primary/15 border !border-primary/20 max-lg:rounded-[20px] max-lg:!text-primary [&>svg]:fill-primary';
 ?>
 
     <header id="header"
-            :class="[scrolled ? 'lg:shadow-sm <?= current_user_can('administrator') ? '!lg:top-0' : ''; ?>' : '', scrollingDown ? 'max-lg:scale-90' : '']"
-            class="fixed <?= current_user_can('administrator') ? 'lg:top-8' : 'lg:top-0'; ?> shadow-[0_-5px_10px_-3px_rgba(0,0,0,0.1)] max-lg:bottom-2 max-lg:inset-x-2 left-0 lg:w-full max-lg:rounded-3xl bg-white/90 backdrop-blur-[2px] max-lg:border border-gray-300 lg:bg-white transition-all duration-300 z-50">
-        <nav class="container <?= is_admin() ? 'lg:pt-12' : '' ?> flex items-center lg:h-14 max-lg:p-0.5 lg:py-4 justify-between">
+            :class="[scrolled ? 'lg:shadow-sm <?= current_user_can('administrator') ? '!lg:top-0' : ''; ?>' : '', scrollingDown ? 'max-lg:scale-85' : '']"
+            class="fixed <?= current_user_can('administrator') ? 'lg:top-8' : 'lg:top-0'; ?> shadow-[0_-5px_5px_-3px_rgba(0,0,0,0.1)] max-lg:bottom-2 max-lg:inset-x-4 left-0 lg:w-full max-lg:rounded-3xl bg-white/90 backdrop-blur-sm max-lg:border border-gray-300 lg:bg-white transition-all duration-300 z-50">
+        <nav class="container <?= is_admin() ? 'lg:pt-12' : '' ?> flex items-center lg:h-14 max-lg:p-[3px] lg:py-4 justify-between">
             <div class="flex items-center gap-5 max-lg:hidden">
                 <?php get_template_part('template-parts/global/logo', null, ['logoSize' => 'max-h-12 w-auto']);
                 wp_nav_menu(
@@ -24,8 +24,8 @@ $activeClass = 'max-lg:!bg-gray-300 border border-gray-300 max-lg:rounded-[20px]
             <div class="flex items-center max-lg:justify-between max-lg:w-full lg:gap-3">
                 <?php
                 $baseClass = 'relative lg:bg-primary/5 justify-center lg:border border-primary/10 p-2 max-lg:py-3.5 max-lg:px-6 hover:bg-primary/10 flex items-center gap-3 cursor-pointer hover:scale-105 transition-all';
-                $baseSvgClass = 'text-black/50 lg:text-black/70 transition-colors';
-                $svgSize = '20';
+                $baseSvgClass = 'max-lg:size-5 text-primary lg:text-black/70 transition-colors';
+                $svgSize = '18';
 
                 if ($woo_active) :
                     // --- My Account Button ---

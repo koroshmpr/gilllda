@@ -18,7 +18,7 @@ $short_desc = $product->get_short_description();
 
 <div id="product-attribute"
      style="scroll-margin-top: 0;"
-     class="lg:col-span-7 xl:col-span-5 bg-gray-100 lg:bg-white p-5 max-lg:pb-2 pt-3 lg:py-0 lg:px-5 z-[1] relative flex flex-col gap-3 lg:gap-2 rounded-t-4xl max-lg:border-t border-gray-200 rtl"
+     class="lg:col-span-7 xl:col-span-5 bg-gray-50 lg:bg-white p-5 max-lg:pb-2 pt-3 lg:py-0 lg:px-5 z-[1] relative flex flex-col gap-3 lg:gap-2 rounded-t-4xl max-lg:border-t border-gray-200 rtl"
      dir="rtl">
     <div @click.prevent="document.getElementById('product-attribute').scrollIntoView({behavior: 'smooth'})"
          class="w-28 h-1.5 mb-3 lg:hidden bg-gray-200 rounded-full mx-auto"></div>
@@ -60,29 +60,31 @@ $short_desc = $product->get_short_description();
                 <?php endif; ?>
             </div>
         </div>
-        <div class="flex flex-col gap-2 items-end self-end md:self-start">
+        <div class="flex flex-col gap-1 lg:gap-2 items-end self-end md:self-start">
             <div class="flex items-center gap-1">
                 <?php
-                $args = ['id' => get_the_ID(), 'class' => 'mr-auto hover:bg-gray-50 p-1.5 ', 'textClass' => 'hidden'];
+                $args = ['id' => get_the_ID(), 'class' => 'mr-auto border-primary/30 hover:bg-gray-50 p-1.5 ', 'textClass' => 'hidden'];
                 get_template_part('template-parts/product/compare-button', null, $args);
                 get_template_part('template-parts/product/single/share-button');
                 ?>
             </div>
             <div class="flex items-center gap-1">
-                <?php if ($average_rating > 0) : ?>
+                <?php
+                $svgSize = 16;
+                if ($average_rating > 0) : ?>
                     <button @click.prevent="document.getElementById('product-rating').scrollIntoView({ behavior: 'smooth' })"
-                            class="flex items-center gap-1.5 bg-yellow-50 hover:bg-yellow-100 transition-all px-3 py-1.5 rounded-xl border border-yellow-200 font-black text-yellow-700 text-sm cursor-pointer leading-none">
+                            class="flex items-center gap-1.5 bg-yellow-100 hover:bg-yellow-100 transition-all px-2 py-1.5 rounded-lg border border-yellow-300 font-black text-yellow-700 text-sm cursor-pointer leading-none">
                         <?php
                         // Pass the class key explicitly in the array
-                        get_template_part('template-parts/svg/star-fill', null, ['class' => 'w-4 h-4 fill-yellow-400']);
+                        get_template_part('template-parts/svg/star-fill', null, ['size' => $svgSize,'class' => 'fill-yellow-400']);
                         ?>
                         <?= number_format($average_rating, 1); ?>
 
                     </button>
                 <?php endif; ?>
                 <button @click.prevent="document.getElementById('comments').scrollIntoView({ behavior: 'smooth' })"
-                        class="bg-primary/5 border border-primary/10 hover:bg-primary/10 rounded-xl gap-1.5 flex items-center py-1 px-3 text-gray-400 text-sm cursor-pointer transition-colors">
-                    <?php get_template_part('template-parts/svg/message', null, ['class' => 'w-4 h-4 text-primary/70']); ?>
+                        class="bg-gray-100 border border-gray-300 hover:bg-gray-200 rounded-lg gap-1.5 flex items-center py-1 px-2 text-gray-400 text-sm cursor-pointer transition-colors">
+                    <?php get_template_part('template-parts/svg/message', null, ['size' => $svgSize,'class' => 'text-primary/70']); ?>
                     <?= $review_count; ?>
                 </button>
 
