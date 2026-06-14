@@ -103,6 +103,10 @@ $has_portfolio = $related_portfolio->have_posts();
         );
         get_template_part('template-parts/global/faq-list', null, $args);?>
     <div class="bg-white relative">
-        <?php get_template_part('template-parts/blog/single/rating', null, ['class' => 'w-full max-lg:border-b-4 lg:border-s-4 max-lg:border-b-amber-400 lg:border-s-amber-400 rounded-lg flex max-lg:flex-col border-amber-400/30 ']); ?>
+        <?php get_template_part('template-parts/blog/single/rating', null, ['class' => 'w-full max-lg:border-b-4 lg:border-s-4 max-lg:border-b-amber-400 lg:border-s-amber-400 rounded-lg flex max-lg:flex-col border-amber-400/30 ']);
+        if (wp_is_mobile()):
+            get_template_part('template-parts/shop/property', null, ['class' => 'lg:hidden  border-b pb-3 border-gray-200']);
+        endif;
+        ?>
     </div>
 </div>

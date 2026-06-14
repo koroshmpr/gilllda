@@ -14,7 +14,7 @@ $textClass = $args['textClass'] ?? '';
         @click="toggleCompare()">
     <?php
     $args = array(
-        'size' => '15',
+        'size' => '16',
         'class' => ''
     );
     get_template_part('template-parts/svg/compare', null, $args);

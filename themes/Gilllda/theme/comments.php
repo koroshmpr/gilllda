@@ -11,7 +11,7 @@ if (post_password_required()) {
 <div x-data="commentsSystem()" @click="handleClicks($event)">
 
     <section id="comments" class="bg-primary">
-        <div class="container grid relative pb-5 h-fit lg:grid-cols-12 gap-4 items-start my-8 py-10 p-5">
+        <div class="container grid relative h-fit lg:grid-cols-12 gap-4 items-start max-lg:mt-0 my-8 py-10 p-5">
 
             <?php $bluebox_comment_count = get_comments_number(); ?>
 

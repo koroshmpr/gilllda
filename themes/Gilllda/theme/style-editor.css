@@ -38,6 +38,7 @@ Underscores and Varia are distributed under the terms of the GNU GPL v2 or later
   --color-yellow-200: oklch(0.945 0.129 101.54);
   --color-yellow-400: oklch(0.852 0.199 91.936);
   --color-yellow-700: oklch(0.554 0.135 66.442);
+  --color-green-50: oklch(0.982 0.018 155.826);
   --color-green-100: oklch(0.962 0.044 156.743);
   --color-green-200: oklch(0.925 0.084 155.995);
   --color-green-300: oklch(0.871 0.15 154.449);
@@ -45,6 +46,7 @@ Underscores and Varia are distributed under the terms of the GNU GPL v2 or later
   --color-green-500: oklch(0.723 0.219 149.579);
   --color-green-600: oklch(0.627 0.194 149.214);
   --color-green-700: oklch(0.527 0.154 150.069);
+  --color-blue-50: oklch(0.97 0.014 254.604);
   --color-blue-300: oklch(0.809 0.105 251.813);
   --color-blue-400: oklch(0.707 0.165 254.624);
   --color-blue-500: oklch(0.623 0.214 259.815);
@@ -1236,6 +1238,9 @@ blockquote {
 .inset-x-3 {
   inset-inline: calc(var(--spacing) * 3);
 }
+.inset-x-4 {
+  inset-inline: calc(var(--spacing) * 4);
+}
 .inset-y-0 {
   inset-block: calc(var(--spacing) * 0);
 }
@@ -1263,8 +1268,8 @@ blockquote {
 .end-0 {
   inset-inline-end: calc(var(--spacing) * 0);
 }
-.end-1\.5 {
-  inset-inline-end: calc(var(--spacing) * 1.5);
+.end-1 {
+  inset-inline-end: calc(var(--spacing) * 1);
 }
 .end-2 {
   inset-inline-end: calc(var(--spacing) * 2);
@@ -1289,9 +1294,6 @@ blockquote {
 }
 .top-0 {
   top: calc(var(--spacing) * 0);
-}
-.top-1\.5 {
-  top: calc(var(--spacing) * 1.5);
 }
 .top-1\/2 {
   top: calc(1/2 * 100%);
@@ -1454,6 +1456,9 @@ blockquote {
 }
 .z-\[50\] {
   z-index: 50;
+}
+.z-\[60\] {
+  z-index: 60;
 }
 .z-\[100\] {
   z-index: 100;
@@ -2638,6 +2643,9 @@ blockquote {
 .w-44 {
   width: calc(var(--spacing) * 44);
 }
+.w-48 {
+  width: calc(var(--spacing) * 48);
+}
 .w-52 {
   width: calc(var(--spacing) * 52);
 }
@@ -3646,9 +3654,6 @@ blockquote {
 .bg-secondary {
   background-color: var(--color-secondary);
 }
-.bg-secondary\/30 {
-  background-color: color-mix(in oklab, var(--color-secondary) 30%, transparent);
-}
 .bg-secondary\/80 {
   background-color: color-mix(in oklab, var(--color-secondary) 80%, transparent);
 }
@@ -3884,6 +3889,9 @@ blockquote {
 }
 .p-2 {
   padding: calc(var(--spacing) * 2);
+}
+.p-2\.5 {
+  padding: calc(var(--spacing) * 2.5);
 }
 .p-3 {
   padding: calc(var(--spacing) * 3);
@@ -4312,6 +4320,9 @@ blockquote {
 }
 .text-green-300 {
   color: var(--color-green-300);
+}
+.text-green-500 {
+  color: var(--color-green-500);
 }
 .text-green-600 {
   color: var(--color-green-600);
@@ -5350,6 +5361,11 @@ blockquote {
   }
 }
 @media (hover: hover) {
+  .hover\:bg-blue-50:hover {
+    background-color: var(--color-blue-50);
+  }
+}
+@media (hover: hover) {
   .hover\:bg-gray-50:hover {
     background-color: var(--color-gray-50);
   }
@@ -5377,6 +5393,11 @@ blockquote {
 @media (hover: hover) {
   .hover\:bg-gray-900:hover {
     background-color: var(--color-gray-900);
+  }
+}
+@media (hover: hover) {
+  .hover\:bg-green-50:hover {
+    background-color: var(--color-green-50);
   }
 }
 @media (hover: hover) {
@@ -5486,6 +5507,11 @@ blockquote {
   }
 }
 @media (hover: hover) {
+  .hover\:text-blue-500:hover {
+    color: var(--color-blue-500);
+  }
+}
+@media (hover: hover) {
   .hover\:text-gray-600:hover {
     color: var(--color-gray-600);
   }
@@ -5493,6 +5519,11 @@ blockquote {
 @media (hover: hover) {
   .hover\:text-gray-700:hover {
     color: var(--color-gray-700);
+  }
+}
+@media (hover: hover) {
+  .hover\:text-green-500:hover {
+    color: var(--color-green-500);
   }
 }
 @media (hover: hover) {
@@ -5692,8 +5723,8 @@ blockquote {
   }
 }
 @media (width < 64rem) {
-  .max-lg\:inset-x-3 {
-    inset-inline: calc(var(--spacing) * 3);
+  .max-lg\:inset-x-4 {
+    inset-inline: calc(var(--spacing) * 4);
   }
 }
 @media (width < 64rem) {
@@ -5864,6 +5895,14 @@ blockquote {
   }
 }
 @media (width < 64rem) {
+  .max-lg\:scale-90 {
+    --tw-scale-x: 90%;
+    --tw-scale-y: 90%;
+    --tw-scale-z: 90%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+}
+@media (width < 64rem) {
   .max-lg\:snap-x {
     scroll-snap-type: x var(--tw-scroll-snap-strictness);
   }
@@ -5921,6 +5960,11 @@ blockquote {
 @media (width < 64rem) {
   .max-lg\:rounded-3xl {
     border-radius: var(--radius-3xl);
+  }
+}
+@media (width < 64rem) {
+  .max-lg\:rounded-\[20px\] {
+    border-radius: 20px;
   }
 }
 @media (width < 64rem) {
@@ -5990,6 +6034,11 @@ blockquote {
 @media (width < 64rem) {
   .max-lg\:border-b-amber-400 {
     border-bottom-color: var(--color-amber-400);
+  }
+}
+@media (width < 64rem) {
+  .max-lg\:\!bg-gray-300 {
+    background-color: var(--color-gray-300) !important;
   }
 }
 @media (width < 64rem) {
@@ -6075,6 +6124,11 @@ blockquote {
 @media (width < 64rem) {
   .max-lg\:px-8 {
     padding-inline: calc(var(--spacing) * 8);
+  }
+}
+@media (width < 64rem) {
+  .max-lg\:\!py-4 {
+    padding-block: calc(var(--spacing) * 4) !important;
   }
 }
 @media (width < 64rem) {
@@ -6178,11 +6232,6 @@ blockquote {
   .max-lg\:brightness-50 {
     --tw-brightness: brightness(50%);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
-  }
-}
-@media (width < 64rem) {
-  .group-\[\.is-active\]\:max-lg\:\!text-primary:is(:where(.group):is(.is-active) *) {
-    color: var(--color-primary) !important;
   }
 }
 @media (width < 48rem) {
@@ -6302,6 +6351,11 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
+  .lg\:start-0 {
+    inset-inline-start: calc(var(--spacing) * 0);
+  }
+}
+@media (width >= 64rem) {
   .lg\:start-1\/2 {
     inset-inline-start: calc(1/2 * 100%);
   }
@@ -6367,6 +6421,11 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
+  .lg\:right-0 {
+    right: calc(var(--spacing) * 0);
+  }
+}
+@media (width >= 64rem) {
   .lg\:right-1\/5 {
     right: calc(1/5 * 100%);
   }
@@ -6389,6 +6448,11 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:bottom-8 {
     bottom: calc(var(--spacing) * 8);
+  }
+}
+@media (width >= 64rem) {
+  .lg\:left-auto {
+    left: auto;
   }
 }
 @media (width >= 64rem) {
@@ -7203,11 +7267,6 @@ blockquote {
   }
 }
 @media (width >= 64rem) {
-  .lg\:px-2 {
-    padding-inline: calc(var(--spacing) * 2);
-  }
-}
-@media (width >= 64rem) {
   .lg\:px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
@@ -7863,6 +7922,9 @@ blockquote {
 }
 .\[\&\>p\]\:\!mb-0 > p {
   margin-bottom: calc(var(--spacing) * 0) !important;
+}
+.\[\&\>svg\]\:fill-primary > svg {
+  fill: var(--color-primary);
 }
 .swiper-slide-thumb-active.\[\.swiper-slide-thumb-active\&\]\:scale-100 {
   --tw-scale-x: 100%;

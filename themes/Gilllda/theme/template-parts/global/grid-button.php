@@ -1,4 +1,4 @@
-<div class="flex items-center rounded-md p-1 max-lg:hidden bg-white/30 border border-gray-200">
+<div class="flex items-center rounded-md p-1 gap-1 max-lg:hidden bg-white/30 border border-gray-200">
     <button @click="gridView = 'small'" aria-label="change to small grid"
             :class="gridView === 'small' ? 'bg-primary text-white shadow-md' : 'text-gray-400 hover:text-gray-600'"
             class="p-2 rounded-md transition-all duration-300 cursor-pointer">

@@ -13,10 +13,10 @@ if ($isSale && $regular_price > 0) {
 }
 ?>
 <nav :class="intro ? '!translate-y-0' : ''"
-     class="fixed md:px-24 translate-y-full border-t border-black/10 xl:hidden px-2 py-1.5 transition-all z-[3] bg-gray-50 duration-500 flex justify-between items-center shadow bottom-16 lg:bottom-0 inset-x-2 rounded-2xl">
+     class="fixed md:px-24 translate-y-full border-t border-black/10 xl:hidden p-1 transition-all z-[3] bg-gray-50 duration-500 flex justify-between items-center shadow bottom-16 lg:bottom-0 inset-x-3 rounded-xl">
 
 
-    <div class="flex flex-col flex-1 relative">
+    <div class="flex flex-col ps-2 flex-1 relative">
         <?php if ($percentage > 0) : ?>
             <div class="absolute top-0 -translate-y-1/2 end-3 z-0 flex items-center justify-center">
                 <div class="bg-red-400 text-white px-2 py-1  rounded-tr-2xl rounded-bl-2xl rounded-tl-sm rounded-br-sm shadow-lg">

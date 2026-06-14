@@ -41,7 +41,7 @@ $args_svg = array(
     <?php
     $args_compare = [
         'id' => get_the_ID(),
-        'class' => 'mr-auto rounded-full lg:opacity-0 bg-secondary/30 group-hover:opacity-100 lg:translate-y-2 group-hover:translate-y-0 !absolute z-1 block top-1.5 end-1.5 p-3 bg-black/5 shadow-sm backdrop-blur-sm border-white text-white hover:bg-gray-800 hover:text-white',
+        'class' => 'mr-auto rounded-full lg:opacity-0 group-hover:opacity-100 lg:translate-y-2 group-hover:translate-y-0 !absolute z-1 block top-2 end-2 p-2.5 backdrop-blur-sm border-primary/20 text-primary hover:bg-gray-800 hover:text-white',
         'textClass' => 'hidden'
     ];
     get_template_part('template-parts/product/compare-button', null, $args_compare);
@@ -116,7 +116,7 @@ $args_svg = array(
         <?php if (!$catMode && $stock_status === 'instock' && wp_is_mobile() && $isArchive ): ?>
             <button aria-label="add to cart the <?= esc_attr($product_slug); ?>"
                     @click.stop.prevent="window.location.href = '<?= $product->is_type('variable') ? get_the_permalink() : esc_url(add_query_arg('add-to-cart', $product_id)); ?>'"
-                    class="absolute bottom-2 lg:hidden group/add overflow-hidden end-2 duration-300 shadow-sm z-1 flex items-center cursor-pointer justify-center gap-2 w-fit p-3 rounded-lg bg-primary text-white transition-all"
+                    class="absolute bottom-2 lg:hidden group/add overflow-hidden end-1 duration-300 shadow-sm z-1 flex items-center cursor-pointer justify-center gap-2 w-fit p-2 rounded-lg border border-primary text-primary transition-all"
             >
                 <?php get_template_part('template-parts/svg/shop', null, $args_svg); ?>
                 <span class="group-hover/add:-translate-x-0 text-xs transition-all duration-300 translate-x-3">افزودن به سبد</span>

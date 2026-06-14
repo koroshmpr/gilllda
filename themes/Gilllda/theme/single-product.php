@@ -12,7 +12,7 @@ wp_reset_postdata();
 	</section>
 
 <div id="comments-section"
-		 class="pt-8 bg-white relative"
+		 class="bg-white relative"
 		 x-intersect:enter.margin.-15%.0px.-70%.0px="active = 'comments'">
 		<?php
 		if (comments_open() || get_comments_number()) {
