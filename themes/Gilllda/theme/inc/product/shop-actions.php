@@ -8,7 +8,7 @@ add_filter( 'woocommerce_localisation_address_formats', 'wc_single_line_address_
 
 function wc_single_line_address_format( $formats ) {
     // تغییر فرمت برای کشور ایران (IR)
-    $formats['IR'] = "{name}<br>{country} {city} ,{address_1}, {address_2},<br/> {postcode}";
+    $formats['IR'] = "{name} {country} {city} ,{address_1}, {address_2}, {postcode}";
     return $formats;
 }
 //{company}<br>

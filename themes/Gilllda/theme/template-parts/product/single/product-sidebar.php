@@ -8,7 +8,7 @@ $stock_status = $product->get_stock_status();
 $is_purchasable = $product->is_purchasable();
 ?>
 
-<aside class="lg:col-span-3 duration-500 sticky bg-primary/5 border border-primary/20 rounded-sm max-xl:hidden <?= current_user_can('administrator') ? 'top-28' : 'top-20'; ?> p-3 flex flex-col justify-center transition-all">
+<aside :class="scrollingDown ? 'shadow scale-95' :''" class="lg:col-span-3 origin-top duration-500 sticky bg-gray-100/50 border border-gray-200 rounded-xl max-xl:hidden <?= current_user_can('administrator') ? 'top-28' : 'top-20'; ?> p-3 flex flex-col justify-center transition-all">
 
     <!-- Header: Image and Price -->
     <?php if ($stock_status === 'instock'): ?>

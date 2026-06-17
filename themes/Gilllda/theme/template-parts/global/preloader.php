@@ -62,7 +62,6 @@
     <div class="dots"></div>
 
 </div>
-
 <script>
     document.addEventListener('alpine:init', () => {
         Alpine.data('pageTransition', () => ({
@@ -87,8 +86,10 @@
                 document.addEventListener('click', (e) => {
                     const link = e.target.closest('a');
 
-                    // Ignore if it's not a valid link
-                    if (!link || !link.href) return;
+                    // Ignore if it's not a valid link, or if the href is exactly "#"
+                    // We use getAttribute to check exactly what is in the HTML
+                    if (!link || !link.href || link.getAttribute('href') === '#' || link.getAttribute('role') === 'button') return;
+
                     if (link.target === '_blank') return;
 
                     // Ignore external links

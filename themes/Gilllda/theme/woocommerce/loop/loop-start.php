@@ -130,13 +130,17 @@ if (!defined('ABSPATH')) {
             );
         }
 
+        // --- CORRECTED ON SALE FILTER ---
         if (isset($_GET['on_sale']) && $_GET['on_sale'] === 'true') {
-            $meta_query[] = array(
-                'key'     => '_sale_price',
-                'value'   => 0,
-                'compare' => '>',
-                'type'    => 'NUMERIC'
-            );
+            $on_sale_ids = wc_get_product_ids_on_sale();
+            $on_sale_ids = empty($on_sale_ids) ? array(0) : $on_sale_ids;
+
+            // Safely merge with any existing post__in arguments
+            if (isset($args['post__in']) && !empty($args['post__in'])) {
+                $args['post__in'] = array_intersect($args['post__in'], $on_sale_ids);
+            } else {
+                $args['post__in'] = $on_sale_ids;
+            }
         }
 
         if (!empty($meta_query)) {

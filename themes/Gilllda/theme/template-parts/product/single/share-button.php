@@ -4,10 +4,10 @@ $share_url = rawurlencode(get_permalink());
 $share_title = rawurlencode(get_the_title());
 $svgSize = '16';
 ?>
-<div class="relative mt-auto" x-data="{ shareOpen: false, copySuccess: false }">
+<div class="relative mt-auto w-8 h-8 flex justify-center items-center" x-data="{ shareOpen: false, copySuccess: false }">
 
     <button title="اشتراک‌گذاری" @click.prevent="shareOpen = !shareOpen" @click.outside="shareOpen = false"
-            class="border border-gray-300 hover:bg-gray-100 rounded-lg gap-1.5 flex items-center p-1.5 text-gray-500 hover:text-gray-700 text-sm cursor-pointer transition-colors">
+            class="hover:bg-gray-100 w-full aspect-square justify-center rounded-lg gap-1.5 flex items-center text-gray-500 hover:text-gray-700 text-sm cursor-pointer transition-colors">
         <?php get_template_part('template-parts/svg/share', null, ['size' => $svgSize]); ?>
         <span class="max-lg:hidden sr-only">اشتراک‌گذاری</span>
     </button>

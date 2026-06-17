@@ -24,7 +24,7 @@ if ($loop->have_posts()) :?>
                 get_template_part('template-parts/svg/chevron-right', null, $args); ?>
             </a>
         </div>
-        <div class="flex max-w-full flex-nowrap overflow-x-scroll md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 lg:gap-4">
+        <div class="flex max-w-full flex-nowrap overflow-x-scroll md:grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4">
             <?php
             // Load posts loop.
             while ($loop->have_posts()) :
