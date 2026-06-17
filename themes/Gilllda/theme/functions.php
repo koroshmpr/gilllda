@@ -232,6 +232,7 @@ require get_template_directory() . '/inc/product/product-filters.php';
 require get_template_directory() . '/inc/product/out-stock-product.php';
 require get_template_directory() . '/inc/product/filter-search-query.php';
 require get_template_directory() . '/inc/product/return-policy-schema.php';
+require get_template_directory() . '/inc/product/shop-actions.php';
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
 
@@ -241,11 +242,7 @@ require get_template_directory() . '/inc/walker.php';
 require get_template_directory() . '/inc/custom-post-type.php';
 require get_template_directory() . '/inc/gravity-form.php';
 require get_template_directory() . '/inc/optimize.php';
+require get_template_directory() . '/inc/otp-login-form.php';
 include_once get_template_directory() . '/inc/search-route.php';
 include_once get_template_directory() . '/inc/ajax-search.php';
 
-add_action( 'wp_enqueue_scripts', function() {
-    if ( is_product() ) {
-        wp_enqueue_script( 'wc-add-to-cart-variation' );
-    }
-});

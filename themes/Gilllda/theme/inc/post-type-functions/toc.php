@@ -12,11 +12,20 @@ function auto_id_headings($content)
     // Match only h2 and h3 tags
     $content = preg_replace_callback('/(<h[2-3](.*?))>(.*?)(<\/h[2-3]>)/i', function ($matches) {
         $heading_text = strip_tags($matches[3]);
-        $semantic_id = sanitize_title_with_dashes($heading_text); // Creates a URL-friendly ID
+
+        // 1. Sanitize the title (removes bad punctuation, replaces spaces with dashes)
+        // 2. Urldecode it (converts %d8%a2 back to readable Persian characters)
+        $semantic_id = urldecode(sanitize_title_with_dashes($heading_text));
+
+        // Fallback: If for some reason the ID becomes empty, create a random one
+        if (empty($semantic_id)) {
+            $semantic_id = 'heading-' . wp_generate_password(6, false);
+        }
+
         $q = "'";
 
         if (!stripos($matches[0], 'id=')) {
-            return $matches[1] . $matches[2] . ' x-intersect:enter.margin.-15%.0px.-70%.0px="active = '. $q . $semantic_id . $q. '"  id="' . $semantic_id . '">' . $matches[3] . $matches[4];
+            return $matches[1] . $matches[2] . ' x-intersect:enter.margin.-15%.0px.-70%.0px="active = '. $q . esc_js($semantic_id) . $q. '"  id="' . esc_attr($semantic_id) . '">' . $matches[3] . $matches[4];
         }
         return $matches[0];
     }, $content);
@@ -56,13 +65,9 @@ function get_toc($content, $levels = [2])
     ob_start();
     ?>
     <ul class="list-none space-y-1 border-s-2 border-black/5"
-        x-effect="
-            if (active) {
-                $nextTick(() => {
+        x-effect="if (active) {$nextTick(() => {
                     // 1. Use $el to only search inside THIS specific <ul> instance
-                    let activeLi = null;
-                    const items = $el.querySelectorAll('li[data-toc-target]');
-
+                    let activeLi = null;const items = $el.querySelectorAll('li[data-toc-target]');
                     // 2. Loop through items to safely match URL-encoded Persian characters
                     for (let i = 0; i < items.length; i++) {
                         if (items[i].getAttribute('data-toc-target') === active) {
@@ -70,19 +75,15 @@ function get_toc($content, $levels = [2])
                             break;
                         }
                     }
-
                     if (activeLi) {
                         // Find the wrapper div that actually has the scrollbar
                         const scrollContainer = activeLi.closest('.overflow-y-scroll') || activeLi.closest('div');
-
                         if (scrollContainer) {
                             // Calculate precise positions regardless of DOM structure
                             const containerRect = scrollContainer.getBoundingClientRect();
                             const liRect = activeLi.getBoundingClientRect();
-
                             // Math to find the exact center offset
                             const scrollAmount = (liRect.top - containerRect.top) - (scrollContainer.clientHeight / 2) + (liRect.height / 2);
-
                             // Scroll the parent container smoothly
                             scrollContainer.scrollBy({ top: scrollAmount, behavior: 'smooth' });
                         }
@@ -92,7 +93,6 @@ function get_toc($content, $levels = [2])
         ">
 
         <?php foreach ($headings as $heading) : ?>
-            <!-- 🔴 CHANGED: Replaced id="..." with data-toc-target="..." to avoid ID duplication bugs -->
             <li data-toc-target="<?= esc_attr($heading['id']); ?>"
                 class="border-s-2 transition-all duration-300 ps-4 -ms-0.5"
                 :class="active === '<?= esc_attr($heading['id']); ?>' ? '!border-primary' : 'border-transparent'">

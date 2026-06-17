@@ -82,7 +82,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                             } else {
                                 $action_aria_label = $action['aria-label'];
                             }
-                            echo '<a href="' . esc_url( $action['url'] ) . '" class="woocommerce-button' . esc_attr( $wp_button_class ) . ' button ' . sanitize_html_class( $key ) . '" aria-label="' . esc_attr( $action_aria_label ) . '">' . esc_html( $action['name'] ) . '</a>';
+                            echo '<a href="' . esc_url( $action['url'] ) . '" class="woocommerce-button bg-primary ml-2 inline-flex hover:bg-primary/90 text-white px-3 py-1.5 rounded-md' . esc_attr( $wp_button_class ) . '  ' . sanitize_html_class( $key ) . '" aria-label="' . esc_attr( $action_aria_label ) . '">' . esc_html( $action['name'] ) . '</a>';
                             unset( $action_aria_label );
                         }
                     }

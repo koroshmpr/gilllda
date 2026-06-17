@@ -29,6 +29,7 @@
 </head>
 
 <body   <?php body_class('font-peyda'); ?>
+        :class="searchOpen || categoryOpen || shopContact || openForm || menuOpen ? 'overflow-hidden' : ''"
         x-data="{atBottom: false, scrolled: false, lastScroll: 0, scrollingDown: false, openForm: false, scrollingUp: false, menuOpen: false, searchOpen: false, shopContact: false, categoryOpen: false, intro : false ,
         gridView: (document.cookie.match(/gridView=([^;]+)/) || [])[1] || 'large'}"
         x-init="

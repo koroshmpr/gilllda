@@ -66,18 +66,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						<div class="space-y-2">
 							<label class="text-sm font-bold text-gray-700 pr-1" for="username">نام کاربری یا ایمیل</label>
-							<input type="text" class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all placeholder:text-gray-300" name="username" id="username" placeholder="example@mail.com" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" />
+							<input type="text" class="w-full bg-white px-5 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all placeholder:text-gray-300" name="username" id="username" placeholder="example@mail.com" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" />
 						</div>
 
 						<div class="space-y-2">
 							<label class="text-sm font-bold text-gray-700 pr-1" for="password">رمز عبور</label>
-							<input class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all placeholder:text-gray-300" type="password" name="password" id="password" placeholder="••••••••" />
+							<input class="w-full bg-white px-5 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all placeholder:text-gray-300" type="password" name="password" id="password" placeholder="••••••••" />
 						</div>
 
 						<div class="flex items-center justify-between">
 							<label class="flex items-center gap-2 cursor-pointer group">
 								<input class="w-5 h-5 rounded-lg border-gray-300 text-primary focus:ring-primary transition-all" name="rememberme" type="checkbox" id="rememberme" value="forever" />
-								<span class="text-xs text-gray-500 font-medium">مرا به خاطر بسپار</span>
+								<span class="text-xs text-nowrap text-gray-500 font-medium">مرا به خاطر بسپار</span>
 							</label>
 							<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" class="text-xs text-primary hover:text-pink-700 font-bold transition-colors">فراموشی رمز؟</a>
 						</div>
@@ -110,19 +110,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php if ( 'no' === get_option( 'woocommerce_registration_generate_username' ) ) : ?>
 								<div class="space-y-2">
 									<label class="text-sm font-bold text-gray-700 pr-1" for="reg_username">نام کاربری انتخابی</label>
-									<input type="text" class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all" name="username" id="reg_username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" />
+									<input type="text" class="w-full bg-white px-5 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all" name="username" id="reg_username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" />
 								</div>
 							<?php endif; ?>
 
 							<div class="space-y-2">
 								<label class="text-sm font-bold text-gray-700 pr-1" for="reg_email">ایمیل شما</label>
-								<input type="email" class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all" name="email" id="reg_email" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( wp_unslash( $_POST['email'] ) ) : ''; ?>" />
+								<input type="email" class="w-full bg-white px-5 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all" name="email" id="reg_email" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( wp_unslash( $_POST['email'] ) ) : ''; ?>" />
 							</div>
 
 							<?php if ( 'no' === get_option( 'woocommerce_registration_generate_password' ) ) : ?>
 								<div class="space-y-2">
 									<label class="text-sm font-bold text-gray-700 pr-1" for="reg_password">رمز عبور</label>
-									<input type="password" class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all" name="password" id="reg_password" autocomplete="new-password" />
+									<input type="password" class="w-full bg-white px-5 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all" name="password" id="reg_password" autocomplete="new-password" />
 								</div>
 							<?php endif; ?>
 

@@ -5,7 +5,7 @@ global $woo_active;
 
 $is_woo_account = $woo_active && function_exists('is_account_page') && is_account_page();
 
-if ( ! $is_woo_account ) :
+if ( ! $is_woo_account && !is_page('login') ) :
     get_template_part('template-parts/layout/footer-content');
 endif;
 

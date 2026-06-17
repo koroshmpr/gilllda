@@ -1,0 +1,107 @@
+body {
+    direction: rtl;
+    background: #fff;
+    color: #111;
+    margin: 0cm;
+    font-family: Tahoma, 'DejaVu Sans', sans-serif;
+    font-size: 8.5pt;
+    line-height: 1.6;
+}
+
+.digikala-invoice {
+    width: 100%;
+}
+
+.header-table {
+    width: 100%;
+    border: 1px solid #000;
+    border-bottom: none;
+    border-collapse: collapse;
+}
+.header-table td {
+    padding: 5px 15px;
+    vertical-align: middle;
+    width: 33.33%;
+}
+.header-right {
+    text-align: right;
+    line-height: 1.6;
+}
+.header-center {
+    text-align: center;
+}
+.header-left {
+    text-align: left;
+    line-height: 1.6;
+    direction: rtl;
+}
+
+.shop-address-bar {
+    background-color: #e8e8e8;
+    border: 1px solid #000;
+    border-bottom: none;
+    padding: 6px 15px;
+    font-size: 8.5pt;
+    text-align: right;
+    line-height: 1.8;
+}
+.customer-info-bar {
+    background-color: #fff;
+    border: 1px solid #000;
+    padding: 6px 15px;
+    font-size: 8.5pt;
+    text-align: right;
+    margin-bottom: 15px;
+    line-height: 1.8;
+}
+
+table.order-details {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+table.order-details th {
+    background-color: #e8e8e8;
+    border: 1px solid #000;
+    padding: 8px 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 8.5pt;
+}
+table.order-details td {
+    border: 1px solid #000;
+    padding: 8px 5px;
+    vertical-align: middle;
+    font-size: 8.5pt;
+}
+.text-center {
+    text-align: center !important;
+}
+
+table.order-details .table-footer-row td {
+    background-color: #e8e8e8;
+    border: 1px solid #000;
+    padding: 8px 5px;
+}
+
+table.totals-table tr td {
+    font-size: 9pt;
+}
+table.totals-table tr.order_total td {
+    background-color: #e8e8e8 !important;
+    font-size: 10pt;
+}
+
+dl.meta {
+    margin: 0;
+    padding: 0;
+}
+dl.meta dt {
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 5px;
+}
+dl.meta dd {
+    display: inline-block;
+    margin: 0;
+}
