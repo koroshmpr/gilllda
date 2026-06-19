@@ -71,7 +71,8 @@ if ($category):
                         <?php
                         while ($amazing_query->have_posts()) : $amazing_query->the_post();
                             $args = array(
-                                'class' => 'swiper-slide h-auto w-7/12 lg:w-1/4'
+                                'class' => 'swiper-slide h-auto w-7/12 lg:w-1/4',
+                                'eager' => $amazing_query->current_post < 4
                             );
                             get_template_part('template-parts/product/card/product-card', null, $args);
                         endwhile;

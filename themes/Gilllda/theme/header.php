@@ -50,5 +50,5 @@ global $woo_active;
 get_template_part('template-parts/layout/header-content');
 
 ?>
-<main :class="menuOpen ? 'mt-8' : ''" class="relative lg:pt-16 <?= !is_single() ? 'pt-2' : ''; ?> <?= $woo_active && (is_shop() || is_cart() || is_checkout() || is_product_category() || is_account_page()) ? 'container max-lg:px-2' : ''; ?> duration-300 transition-all"
+<main :class="menuOpen ? 'mt-8' : ''" class="relative lg:pt-16 <?= $woo_active && (is_shop() || is_cart() || is_checkout() || is_product_category() || is_account_page()) ? 'container max-lg:px-2' : ''; ?> duration-300 transition-all"
       id="<?= get_post_type() ?? ''; ?>-<?= the_ID(); ?>">

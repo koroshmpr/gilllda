@@ -29,14 +29,16 @@ if ($loop->have_posts()) :?>
             // Load posts loop.
             while ($loop->have_posts()) :
                 $loop->the_post();
+
                 $args = array(
-                    'class' => 'max-lg:min-w-[250px] block'
+                    'class' => 'max-lg:min-w-[250px] block',
+                    'eager' => $loop->current_post < 4 // Eager load the first 4 blog posts
                 );
+
                 get_template_part('template-parts/blog/archive-card', null, $args);
             endwhile;
             // Reset query
             wp_reset_postdata();
-
             ?>
         </div>
     </section>

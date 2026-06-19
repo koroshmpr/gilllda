@@ -42,7 +42,6 @@ if ($available) :
                 $label = wc_attribute_label($taxonomy);
                 ?>
 
-                <!-- Hidden empty input for this attribute (required for WC) -->
                 <input type="hidden" name="attribute_<?php echo esc_attr($taxonomy); ?>" value=""/>
 
                 <div class="w-full relative z-1 flex gap-3 bg-white border border-primary/30 rounded-lg overflow-hidden">
@@ -76,11 +75,12 @@ if ($available) :
                                            required/>
 
                                     <?php if ($acf_color) : ?>
+                                        <span class="sr-only"><?php echo esc_html($term->name); ?></span>
                                         <span
                                                 class="color-swatch rounded-full size-6 border border-gray-300"
                                                 title="<?php echo esc_attr($term->name); ?>"
                                                 style="background-color: <?php echo esc_attr($acf_color); ?>;">
-                                    </span>
+                                        </span>
                                     <?php else : ?>
                                         <span class="text-sm py-1 px-3 border rounded-full border-primary/10"><?php echo esc_html($term->name); ?></span>
                                     <?php endif; ?>
@@ -100,7 +100,6 @@ if ($available) :
 
 
 
-        <!-- Quantity input -->
         <?php if ($product->is_in_stock() && !$product->get_sold_individually()) : ?>
             <div class="flex items-center justify-between mt-2 bg-primary/5 border border-primary/20 rounded-t-lg p-2 pb-4">
                 <label for="quantity-input" class="text-sm text-gray-800 ps-4">تعداد:</label>

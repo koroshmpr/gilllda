@@ -8,7 +8,11 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
             class="fixed <?= current_user_can('administrator') ? 'lg:top-8' : 'lg:top-0'; ?> shadow-[0_-5px_5px_-3px_rgba(0,0,0,0.1)] max-lg:bottom-2 max-lg:inset-x-4 left-0 lg:w-full max-lg:rounded-3xl bg-white/90 backdrop-blur-sm max-lg:border border-gray-300 lg:bg-white transition-all duration-300 z-50">
         <nav class="container <?= is_admin() ? 'lg:pt-12' : '' ?> flex items-center lg:h-14 max-lg:p-[3px] lg:py-4 justify-between">
             <div class="flex items-center gap-5 max-lg:hidden">
-                <?php get_template_part('template-parts/global/logo', null, ['logoSize' => 'max-h-12 w-auto']);
+                <?php get_template_part('template-parts/global/logo', null, [
+                        'logoSize' => 'max-h-12 w-auto',
+                            'width' => '80',
+                            'height' => '47'
+                ]);
                 wp_nav_menu(
                     array(
                         'theme_location' => 'menu-1',

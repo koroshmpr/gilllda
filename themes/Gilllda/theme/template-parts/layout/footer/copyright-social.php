@@ -4,7 +4,7 @@
     <div class="py-[0.5px] bg-gradient-to-r from-white/20 to-white/5 flex-1 max-lg:hidden ms-1 border-white/20"></div>
     <nav aria-label="social network links" class="flex items-center justify-between lg:justify-end">
         <div class="py-[0.5px] bg-gradient-to-r from-white/20 to-white/5 flex w-12 lg:hidden"></div>
-        <?php get_template_part('template-parts/global/social-links'); ?>
+        <?php get_template_part('template-parts/global/social-links', null , ['class' => 'border-white/10 text-white hover:bg-white/5']); ?>
         <div class="py-[0.5px] bg-gradient-to-l from-white/20 to-white/5 flex-1 w-12 lg:hidden"></div>
     </nav>
 </div>

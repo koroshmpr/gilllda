@@ -26,7 +26,7 @@ if ($show && !empty($propertiesList)) :
                         <?= esc_html($item['title'] ?? '') ?>
                     </span>
 					<?php if (!empty($item['content'])): ?>
-						<span class="text-xs text-gray-400 font-medium leading-tight">
+						<span class="text-xs text-gray-500 font-medium leading-tight">
                             <?= esc_html($item['content']); ?>
                         </span>
 					<?php endif; ?>

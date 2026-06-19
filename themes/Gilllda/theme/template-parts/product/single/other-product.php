@@ -50,9 +50,12 @@ if ( $product ) :
                 <?php
                 while ($other_products->have_posts()) :
                     $other_products->the_post();
+
                     $template_args = array(
-                        'class' => 'max-lg:min-w-[250px] block'
+                        'class' => 'max-lg:min-w-[250px] block',
+                        'eager' => $other_products->current_post < 4 // Eager load the first 4 items
                     );
+
                     get_template_part('template-parts/product/card/product-card', null, $template_args);
                 endwhile;
                 wp_reset_postdata();

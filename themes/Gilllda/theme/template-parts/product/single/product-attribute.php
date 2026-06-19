@@ -51,7 +51,7 @@ $short_desc = $product->get_short_description();
         <div class="flex flex-col flex-1">
             <!-- Stock Status -->
             <?php if ($product->is_in_stock()) : ?>
-                <div class="flex items-center mb-2 gap-1.5 text-emerald-600 text-[11px] font-bold">
+                <div class="flex items-center mb-2 gap-1.5 text-emerald-700 text-[11px] font-bold">
                     <span class="relative flex h-2 w-2">
                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -115,9 +115,9 @@ $short_desc = $product->get_short_description();
 
     <!-- Attributes Section (Digikala Style Features List) -->
     <div class="mt-8 mb-4 border-s-2 ps-5 relative border-gray-100 before:absolute before:rounded-lg before:-start-0.5 before:h-7 before:w-0.5 before:bg-primary">
-        <h3 class="text-sm font-black text-gray-800 mb-4 flex items-center gap-2">
+        <p class="text-sm font-black text-gray-800 mb-4 flex items-center gap-2">
             ویژگی‌های محصول
-        </h3>
+        </p>
 
         <ul class="flex flex-col gap-3 text-sm">
 

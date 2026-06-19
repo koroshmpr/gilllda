@@ -41,14 +41,14 @@ $percentage = ($is_on_sale && $regular_price > 0) ? round((($regular_price - $pr
             <!-- Old Price Row (Strikethrough) -->
             <div class="h-5 w-full flex items-center gap-1 justify-start">
                 <?php if ($is_on_sale && $regular_price > 0) : ?>
-                    <del class="text-[13px] text-gray-400 font-medium decoration-gray-400">
+                    <del class="text-[13px] text-gray-500 font-medium decoration-red-600">
                         <?= number_format($regular_price); ?>
                     </del>
                 <?php endif; ?>
                 <!-- Right Side (Start): Discount Badge -->
                 <div class="w-12 shrink-0 text-right">
                     <?php if ($is_on_sale && $percentage > 0) : ?>
-                        <div class="bg-[#ef394e] text-white text-[13px] font-bold px-2 py-0.5 rounded-lg inline-flex items-center justify-center">
+                        <div class="bg-secondary text-white text-[13px] font-bold px-2 py-0.5 rounded-lg inline-flex items-center justify-center">
                             <?= $percentage; ?>٪
                         </div>
                     <?php endif; ?>

@@ -7,7 +7,6 @@ if (post_password_required()) {
 }
 ?>
 
-<!-- 🔴 تعریف کامپوننت Alpine.js روی بالاترین تگ و استفاده از Event Delegation -->
 <div x-data="commentsSystem()" @click="handleClicks($event)">
 
     <section id="comments" class="bg-primary">
@@ -16,7 +15,7 @@ if (post_password_required()) {
             <?php $bluebox_comment_count = get_comments_number(); ?>
 
             <div id="comment-form-wrapper"
-                 class="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24 max-lg:order-1 p-8 bg-white border border-white/25 rounded-2xl">
+                 class="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24 max-lg:order-1 p-5 lg:p-8 bg-white border border-white/25 rounded-2xl">
                 <header class="mb-5">
                     <h2 class="text-xl font-black text-primary flex items-center gap-2">
                         دیدگاه کاربران
@@ -27,7 +26,6 @@ if (post_password_required()) {
                     <p class="text-sm text-gray-700 mt-2">شما هم می‌توانید دیدگاه خود را درباره این مطلب ثبت کنید.</p>
                 </header>
 
-                <!-- 🔴 نوار وضعیت پاسخ دادن با Alpine -->
                 <div x-show="isReplying"
                      x-transition:enter="transition ease-out duration-300"
                      x-transition:enter-start="opacity-0 -translate-y-4"
@@ -111,12 +109,10 @@ if (post_password_required()) {
         </div>
     </section>
 
-    <!-- 🔴 مدال پاسخ‌ها با انیمیشن‌های یکپارچه Alpine.js -->
     <div x-show="isModalOpen"
          style="display: none;"
          class="fixed inset-0 z-[999] flex items-end lg:items-center justify-center">
 
-        <!-- بک‌گراند تاریک شونده -->
         <div x-show="isModalOpen"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0"
@@ -127,7 +123,6 @@ if (post_password_required()) {
              @click="closeModal()"
              class="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"></div>
 
-        <!-- باکس اصلی مدال -->
         <div x-show="isModalOpen"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 translate-y-full lg:translate-y-10 lg:scale-95"
@@ -149,7 +144,6 @@ if (post_password_required()) {
             </header>
 
             <div class="p-5 overflow-y-auto flex-grow flex flex-col gap-4">
-                <!-- لودینگ -->
                 <div x-show="isLoading" class="flex flex-col items-center justify-center py-10">
                     <svg class="animate-spin h-8 w-8 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -158,7 +152,6 @@ if (post_password_required()) {
                     <span class="text-sm text-gray-500 mt-3 font-bold">در حال دریافت پاسخ‌ها...</span>
                 </div>
 
-                <!-- کانتینر چاپ پاسخ‌ها با x-html -->
                 <div x-show="!isLoading" class="flex flex-col gap-4" x-html="repliesHtml"></div>
             </div>
         </div>
@@ -166,14 +159,12 @@ if (post_password_required()) {
 </div>
 
 <style>
-    /* مخفی کردن کامل ساختار درختی پیش‌فرض وردپرس */
     #bluebox-comments-list .children {
         display: none !important;
     }
 </style>
 
 <script>
-    // 🔴 منطق Alpine.js برای کنترل کامنت‌ها
     document.addEventListener('alpine:init', () => {
         Alpine.data('commentsSystem', () => ({
             isModalOpen: false,
@@ -183,7 +174,6 @@ if (post_password_required()) {
             replyToName: '',
             repliesHtml: '',
 
-            // مدیریت کلیک‌ها روی دکمه‌هایی که با PHP چاپ شده‌اند
             handleClicks(e) {
                 const viewRepliesBtn = e.target.closest('.view-replies-btn');
                 if (viewRepliesBtn) {
@@ -236,7 +226,6 @@ if (post_password_required()) {
             closeModal() {
                 this.isModalOpen = false;
                 document.body.style.overflow = '';
-                // پاک کردن محتوا بعد از پایان انیمیشن
                 setTimeout(() => { this.repliesHtml = ''; }, 300);
             },
 

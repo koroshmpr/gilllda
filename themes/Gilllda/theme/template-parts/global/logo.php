@@ -3,8 +3,8 @@
 	$logoLink = $args['logoLink'] ?? 'site_logo';
     $logoImg = get_field( $logoLink , 'option');
     ?>
-    <img width="<?= $args['size'] ?? $logoImg['width']; ?>" height="<?= $args['height'] ?? $logoImg['height']; ?>" class="<?= $args['logoSize'] ?? 'w-20' ?> object-cover"
-		 src="<?= esc_url($logoImg['url']) ?>"
+    <img width="<?= $args['width'] ?? $logoImg['width']; ?>" height="<?= $args['height'] ?? $logoImg['height']; ?>" class="<?= $args['logoSize'] ?? 'w-20' ?> object-cover"
+		 src="<?= esc_url($logoImg['sizes']['medium']) ?>"
 		 alt="<?= esc_attr($logoImg['title']) ?>">
 	<?php ?>
 </a>

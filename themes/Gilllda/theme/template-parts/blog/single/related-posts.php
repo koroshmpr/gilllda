@@ -26,9 +26,12 @@ if ($related->have_posts()) : ?>
             <?php
             while ($related->have_posts()) :
                 $related->the_post();
+
                 $args = array(
-                    'class' => 'max-lg:min-w-[250px] block'
+                    'class' => 'max-lg:min-w-[250px] block',
+                    'eager' => $related->current_post < 4 // Eager load the first 4 items
                 );
+
                 get_template_part('template-parts/blog/archive-card', null, $args);
             endwhile;
             wp_reset_postdata();

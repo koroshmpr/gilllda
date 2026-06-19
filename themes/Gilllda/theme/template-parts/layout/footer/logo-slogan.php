@@ -4,6 +4,8 @@
         'logoSize' => 'max-h-15 w-auto',
         'class' => 'xl:justify-start ',
         'logoLink' => 'footer_logo',
+        'width' => '98',
+        'height' => '59'
     );
     get_template_part('template-parts/global/logo', null, $args);
     ?>

@@ -59,13 +59,21 @@ if (!empty($recent_searches)):
         if (have_posts()) :
         get_template_part('template-parts/global/grid-button');
         ?>
-        <div class="grid  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
-            :class="gridView === 'large' ? 'md:grid-cols-1 lg:!grid-cols-2 xl:!grid-cols-3' : 'md:grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4'">
-            <?php while (have_posts()) :
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
+             :class="gridView === 'large' ? 'md:grid-cols-1 lg:!grid-cols-2 xl:!grid-cols-3' : 'md:grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4'">
+            <?php
+            global $wp_query; // Bring the main query object into scope
+
+            while (have_posts()) :
                 the_post();
                 $current_post_type = get_post_type();
+
                 if ($current_post_type == 'product') :
-                    get_template_part('template-parts/product/card/product-card', null, ['isArchive' => true]);
+                    $args = [
+                        'isArchive' => true,
+                        'eager'     => $wp_query->current_post < 4 // Eager load the first 4 items in the grid
+                    ];
+                    get_template_part('template-parts/product/card/product-card', null, $args);
                 endif;
             endwhile;
             ?>

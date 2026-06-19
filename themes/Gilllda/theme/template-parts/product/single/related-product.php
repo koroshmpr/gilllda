@@ -37,9 +37,12 @@ if ($related->have_posts()) :
             <?php
             while ($related->have_posts()) :
                 $related->the_post();
+
                 $template_args = array(
-                    'class' => 'max-lg:min-w-[250px] block'
+                    'class' => 'max-lg:min-w-[250px] block',
+                    'eager' => $related->current_post < 4 // Eager load the first 4 items
                 );
+
                 // I renamed $args to $template_args here so it doesn't overwrite your WP_Query $args above, just in case!
                 get_template_part('template-parts/product/card/product-card', null, $template_args);
             endwhile;

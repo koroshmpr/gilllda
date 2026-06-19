@@ -34,14 +34,21 @@ if (have_posts()) :?>
     <section class="container border my-10 border-gray-300 rounded-lg">
         <h2 class="w-fit mx-auto px-2 text-lg -translate-y-1/2 bg-white">
             مقالات
-            <span >(<?= count_user_posts($author_id);?>)</span>
+            <span>(<?= count_user_posts($author_id); ?>)</span>
         </h2>
         <div class="grid md:grid-cols-3 lg:grid-cols-4 pb-4 xl:grid-cols-5 gap-4">
             <?php
-            // Load posts loop.
+            global $wp_query; // Bring the main query object into scope
+
             while (have_posts()) :
                 the_post();
-                get_template_part('template-parts/blog/archive-card');
+
+                // Create the args array to pass the eager flag
+                $args = array(
+                    'eager' => $wp_query->current_post < 4 // Eager load the first 4 blog posts
+                );
+
+                get_template_part('template-parts/blog/archive-card', null, $args);
             endwhile;
             get_template_part('template-parts/global/pagination');
 

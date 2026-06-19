@@ -115,7 +115,13 @@ if ($woo_active && $show):
 
                 <div class="swiper-wrapper items-center lg:bg-primary ">
                     <?php while ($amazing_query->have_posts()) : $amazing_query->the_post(); ?>
-                        <?php get_template_part('template-parts/product/card/product-card', null, ['class' => 'swiper-slide h-auto w-7/12 lg:w-1/4']); ?>
+                        <?php
+                        $args = [
+                            'class' => 'swiper-slide h-auto w-7/12 lg:w-1/4',
+                            'eager' => $amazing_query->current_post < 4 // Eager load the first 4 slides
+                        ];
+                        get_template_part('template-parts/product/card/product-card', null, $args);
+                        ?>
                     <?php endwhile; wp_reset_postdata(); ?>
 
                     <?php if ($amazing_query->post_count > 4 && !wp_is_mobile()): ?>

@@ -215,16 +215,22 @@ if (!defined('ABSPATH')) {
                 </div>
             </template>
 
-            <?php
-            // --- 3. LOOP THROUGH THE ALREADY RUN QUERY ---
-            if ($random_query->have_posts()) :
-                while ($random_query->have_posts()) {
-                    $random_query->the_post();
-                    get_template_part('template-parts/product/card/product-card',null , ['isArchive' => true]);
-                }
-                wp_reset_postdata(); // Safely resets the loop
-            else : ?>
-                <h2 class="text-2xl opacity-25 text-center w-full py-4 col-span-full">
-                    هیچ محصولی یافت نشد
-                </h2>
-            <?php endif; ?>
+           <?php
+// --- 3. LOOP THROUGH THE ALREADY RUN QUERY ---
+if ($random_query->have_posts()) :
+    while ($random_query->have_posts()) {
+        $random_query->the_post();
+
+        $args = [
+            'isArchive' => true,
+            'eager'     => $random_query->current_post < 4 // Eager load the first 4 items
+        ];
+
+        get_template_part('template-parts/product/card/product-card', null, $args);
+    }
+    wp_reset_postdata(); // Safely resets the loop
+else : ?>
+    <h2 class="text-2xl opacity-25 text-center w-full py-4 col-span-full">
+        هیچ محصولی یافت نشد
+    </h2>
+<?php endif; ?>

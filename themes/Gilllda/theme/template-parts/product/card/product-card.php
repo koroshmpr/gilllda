@@ -50,10 +50,16 @@ $args_svg = array(
     'class' => 'group-hover/add:delay-100 text-white duration-300 rotate-45 group-hover/add:rotate-0 translate-x-2 opacity-0 transition-all group-hover/add:opacity-100 group-hover/add:translate-x-0'
 );
 
+// FIX: Optimized image sizes
 $image_id = $product->get_image_id();
-$image_url = wp_get_attachment_image_url($image_id, 'large');
+$image_url = wp_get_attachment_image_url($image_id, 'woocommerce_thumbnail');
 $gallery_ids = $product->get_gallery_image_ids();
-$hover_image_url = !empty($gallery_ids) ? wp_get_attachment_image_url($gallery_ids[0], 'large') : '';
+$hover_image_url = !empty($gallery_ids) ? wp_get_attachment_image_url($gallery_ids[0], 'woocommerce_thumbnail') : '';
+
+// FIX: Dynamic loading attributes based on loop position
+$is_eager = $args['eager'] ?? false;
+$loading_attr = $is_eager ? 'eager' : 'lazy';
+$fetch_priority = $is_eager ? 'fetchpriority="high"' : '';
 ?>
 
 <div
@@ -118,7 +124,9 @@ $hover_image_url = !empty($gallery_ids) ? wp_get_attachment_image_url($gallery_i
                  x-ref="mainImg"
                  x-init="if ($refs.mainImg.complete) imgLoaded = true"
                  @load="imgLoaded = true"
-                 loading="lazy"
+                 loading="<?= esc_attr($loading_attr); ?>"
+                <?= $fetch_priority; ?>
+                 src="<?= esc_url($image_url); ?>"
                  :src="mainImageUrl"
                  alt="<?= esc_attr($product_slug); ?>"
                  class="object-contain size-full !my-0 transition-all duration-700 transform group-hover:scale-105"
@@ -126,7 +134,9 @@ $hover_image_url = !empty($gallery_ids) ? wp_get_attachment_image_url($gallery_i
             >
 
             <?php if ($hover_image_url) : ?>
-                <img width="300" height="300" loading="lazy" alt="<?= esc_attr($product_slug . '-hover'); ?>"
+                <img width="300" height="300"
+                     loading="<?= esc_attr($loading_attr); ?>"
+                     alt="<?= esc_attr($product_slug . '-hover'); ?>"
                      src="<?= esc_url($hover_image_url); ?>"
                      class="absolute inset-0 size-full aspect-square object-contain transition-all duration-700 opacity-0"
                      :class="hover ? 'opacity-100 scale-105 duration-500' : 'opacity-0'">
@@ -146,21 +156,21 @@ $hover_image_url = !empty($gallery_ids) ? wp_get_attachment_image_url($gallery_i
         <div class="flex relative <?= $isArchive ? 'max-lg:w-2/3' : 'items-center max-lg:gap-1'; ?> max-lg:flex-col justify-between p-3 lg:px-4 gap-3">
             <div class="flex flex-col <?= $isArchive ? '' : 'max-lg:flex-row max-lg:justify-between w-full'; ?> gap-1">
 
-                <h3 class="text-sm lg:text-base font-semibold text-gray-800 line-clamp-1 w-full text-right leading-relaxed">
+                <p class="text-sm lg:text-base font-semibold text-gray-800 line-clamp-1 w-full text-right leading-relaxed">
                     <?php the_title(); ?>
-                </h3>
+                </p>
 
                 <?php
                 $colors = wc_get_product_terms($product_id, 'pa_color', array('fields' => 'all'));
                 if (!empty($colors) && !is_wp_error($colors)) : ?>
-                    <div class="flex items-center gap-1.5" @click.stop.prevent>
+                    <div class="flex items-center gap-1" @click.stop.prevent>
                         <?php foreach ($colors as $color) :
                             $acf_color = get_field('color', $color->taxonomy . '_' . $color->term_id);
                             if ($acf_color) : ?>
                                 <button
                                         @click="selectColor('<?= esc_js($color->slug); ?>')"
-                                        class="rounded-full size-5 lg:size-4 cursor-pointer border border-gray-300 shadow-sm transition-all focus:outline-none hover:scale-110"
-                                        :class="selectedVar && variations.find(v => v.id === selectedVar)?.attributes['attribute_pa_color'] === '<?= esc_js($color->slug); ?>' ? 'ring-2 ring-offset-1 ring-red-500' : ''"
+                                        class="rounded-sm size-6 cursor-pointer border border-gray-300 shadow-sm transition-all focus:outline-none hover:scale-110"
+                                        :class="selectedVar && variations.find(v => v.id === selectedVar)?.attributes['attribute_pa_color'] === '<?= esc_js($color->slug); ?>' ? 'ring-2 ring-offset-1 ring-gray-400' : ''"
                                         title="<?php echo esc_attr($color->name); ?>"
                                         style="background-color: <?php echo esc_attr($acf_color); ?>;"
                                         aria-label="Select <?= esc_attr($color->name); ?>">
@@ -187,17 +197,16 @@ $hover_image_url = !empty($gallery_ids) ? wp_get_attachment_image_url($gallery_i
                         </div>
                         <div class="h-4 pe-1 flex gap-1 items-center">
                             <template x-if="isOnSale && currentDiscount > 0">
-                                <div class="bg-[#ef394e] text-white text-[12px] font-bold px-2 py-0.5 rounded-md inline-flex items-center justify-center">
+                                <div class="bg-secondary text-white text-[12px] font-bold px-2 py-0.5 rounded-md inline-flex items-center justify-center">
                                     <span x-text="currentDiscount"></span>٪
                                 </div>
                             </template>
                             <template x-if="isOnSale && currentDiscount > 0">
-                                <del class="text-[12px] text-gray-400 font-medium decoration-gray-400"
+                                <del class="text-[12px] text-gray-500 font-medium decoration-red-600"
                                      x-text="currentRegularPrice"></del>
                             </template>
                         </div>
                     </div>
-                    <!-- MOBILE ADD TO CART BUTTON -->
                     <?php if (!$catMode && wp_is_mobile()): ?>
                         <button aria-label="add to cart"
                                 @click.stop.prevent="window.location.href = addToCartUrl"

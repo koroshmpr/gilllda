@@ -35,14 +35,14 @@ get_header();
         <h1 class="text-black text-3xl border-b-2 border-primary w-fit">
             <?php
             // نمایش داینامیک و اصولی عنوان بر اساس نوع صفحه
-            if ( is_home() ) {
-                echo single_post_title( '', false ); // عنوان برگه بلاگ
-            } elseif ( is_category() || is_tag() || is_tax() ) {
-                echo single_term_title( '', false ); // عنوان دسته‌بندی یا برچسب
-            } elseif ( is_search() ) {
+            if (is_home()) {
+                echo single_post_title('', false); // عنوان برگه بلاگ
+            } elseif (is_category() || is_tag() || is_tax()) {
+                echo single_term_title('', false); // عنوان دسته‌بندی یا برچسب
+            } elseif (is_search()) {
                 echo 'نتایج جستجو برای: ' . get_search_query(); // عنوان صفحه جستجو
             } else {
-                echo get_the_title( $id ); // عنوان برگه‌های عادی
+                echo get_the_title($id); // عنوان برگه‌های عادی
             }
             ?>
         </h1>
@@ -75,9 +75,12 @@ if ($posts->have_posts()) :
                 <?php
                 while ($posts->have_posts()) :
                     $posts->the_post();
+
                     $args = array(
                         'class' => 'transition-all duration-500',
+                        'eager' => $posts->current_post < 4 // Eager load the first 4 blog posts
                     );
+
                     get_template_part('template-parts/blog/archive-card', null, $args);
                 endwhile;
                 ?>
@@ -92,7 +95,7 @@ if ($posts->have_posts()) :
     </article>
 <?php else : ?>
     <article class="container min-h-[30vh] flex flex-col justify-center items-center gap-4">
-        <?php get_template_part('template-parts/svg/message', null, ['size'=> 150 , 'class' => 'opacity-10']); ?>
+        <?php get_template_part('template-parts/svg/message', null, ['size' => 150, 'class' => 'opacity-10']); ?>
         <p class="text-4xl text-black/50">مقاله‌ای یافت نشد!</p>
     </article>
 <?php endif;

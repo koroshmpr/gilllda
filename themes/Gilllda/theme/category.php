@@ -30,11 +30,16 @@ $content = get_field('content', $acf_term_id);
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
                      :class="gridView === 'large' ? 'md:grid-cols-1 lg:!grid-cols-2 xl:!grid-cols-3' : 'grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4'">
                     <?php
+                    global $wp_query; // Bring the main query object into scope
+
                     while (have_posts()) :
                         the_post();
+
                         $args = array(
                             'class' => 'transition-all duration-500',
+                            'eager' => $wp_query->current_post < 4 // Eager load the first 4 blog posts
                         );
+
                         get_template_part('template-parts/blog/archive-card', null, $args);
                     endwhile;
                     ?>
