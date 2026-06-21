@@ -6,12 +6,12 @@ $image = $hero['image'];
 	<div class="absolute bottom-0 inset-x-0 h-1/3 lg:h-2/3 bg-gradient-to-t from-white from-20% via-white/30 via-40% z-1"></div>
 	<div class="container max-lg:w-full h-full relative">
         <picture>
-            <source media="(min-width: 961px)" srcset="<?= $image['desktop']['url'] ?? ''; ?>">
-            <source media="(max-width: 960px)" srcset="<?= $image['mobile']['url'] ?? $image['desktop']['url'] ?? ''; ?>">
+            <source media="(min-width: 961px)" srcset="<?= $image['desktop']['sizes']['1536x1536'] ?? $image['desktop']['sizes']['large'] ?? $image['desktop']['url'] ?? ''; ?>">
+            <source media="(max-width: 960px)" srcset="<?= $image['mobile']['sizes']['large'] ?? $image['mobile']['url'] ?? $image['desktop']['sizes']['large'] ?? $image['desktop']['url'] ?? ''; ?>">
             <img width="390" height="374" fetchpriority="high" loading="eager" decoding="sync"
                  :class="scrollingDown ? 'scale-95' : (scrollingUp ? 'lg:scale-105 lg:mt-5' : '')"
                  class="absolute inset-0 w-full lg:h-[80vh] select-none h-[55vh] transition-transform border border-y-0 border-black/5 lg:px-5 pb-0 duration-700 object-cover"
-                 src="<?= $image['desktop']['url'] ?? ''; ?>" alt="<?= $image['desktop']['title'] ?? ''; ?>">
+                 src="<?= $image['desktop']['sizes']['1536x1536'] ?? $image['desktop']['sizes']['large'] ?? $image['desktop']['url'] ?? ''; ?>" alt="<?= $image['desktop']['title'] ?? ''; ?>">
         </picture>
 		<div :class="scrollingDown ? 'lg:-translate-y-24 -translate-y-8 scale-85' : (scrollingUp ? 'scale-105' : '')"
 			 class="absolute duration-700 text-white transition-all bottom-20 lg:bottom-0 z-[2] w-full inset-x-0 flex flex-col items-center">

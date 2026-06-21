@@ -60,7 +60,7 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
                         <?php $logo = get_field('footer_logo', 'option') ?? ''; ?>
                         <img fetchpriority="high" decoding="sync" width="<?= esc_attr($logo['width'] ?? '98') ?>"
                              height="<?= esc_attr($logo['height'] ?? '59') ?>" class="w-12 h-12 object-contain"
-                             src="<?= esc_url($logo['url'] ?? '') ?>"
+                             src="<?= esc_url($logo['sizes']['thumbnail'] ?? $logo['sizes']['medium'] ?? $logo['url'] ?? '') ?>"
                              alt="<?= esc_attr($logo['title'] ?? get_bloginfo('name')) ?>">
                     </a>
                 <?php else :

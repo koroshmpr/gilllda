@@ -102,3 +102,11 @@ function disable_woo_css_on_single_product() {
         wp_dequeue_style( 'photoswipe-default-skin' );
     }
 }
+
+// 8. NEW: Defer jQuery to prevent render-blocking
+add_filter('script_loader_tag', function($tag, $handle) {
+    if (in_array($handle, ['jquery-core', 'jquery-migrate'])) {
+        return str_replace(' src', ' defer="defer" src', $tag);
+    }
+    return $tag;
+}, 10, 2);

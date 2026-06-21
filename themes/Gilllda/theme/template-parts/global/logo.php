@@ -4,7 +4,7 @@
     $logoImg = get_field( $logoLink , 'option');
     ?>
     <img width="<?= $args['width'] ?? $logoImg['width']; ?>" height="<?= $args['height'] ?? $logoImg['height']; ?>" class="<?= $args['logoSize'] ?? 'w-20' ?> object-cover"
-		 src="<?= esc_url($logoImg['sizes']['medium']) ?>"
+		 src="<?= esc_url($logoImg['sizes']['small'] ?? $logoImg['sizes']['medium'] ?? $logoImg['url'] ?? '') ?>"
 		 alt="<?= esc_attr($logoImg['title']) ?>">
 	<?php ?>
 </a>

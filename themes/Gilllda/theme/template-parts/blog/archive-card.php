@@ -35,12 +35,12 @@ $fetch_priority = $is_eager ? 'fetchpriority="high"' : '';
             <p class="text-white/80 text-[11px] leading-[1.7] lg:text-xs text-justify line-clamp-2 transition-all"><?= wp_trim_words(get_the_content(), 25); ?></p>
         </div>
         <picture>
-            <source media="(min-width: 961px)" srcset="<?php the_post_thumbnail_url('large'); ?>">
-            <source media="(max-width: 960px)" srcset="<?php the_post_thumbnail_url('medium-large'); ?>">
+            <source media="(min-width: 961px)" srcset="<?php the_post_thumbnail_url('medium_large'); ?>">
+            <source media="(max-width: 960px)" srcset="<?php the_post_thumbnail_url('medium'); ?>">
             <img class="w-full object-cover aspect-3/4 group-hover:scale-110 transition-all duration-500" height="250"
                  loading="<?= esc_attr($loading_attr); ?>"
                 <?= $fetch_priority; ?>
-                 src="<?= get_the_post_thumbnail_url(get_the_ID(), 'large'); ?>"
+                 src="<?= get_the_post_thumbnail_url(get_the_ID(), 'medium'); ?>"
                  alt="<?= esc_attr(get_post_field('post_name', get_the_ID())); ?>">
         </picture>
     </a>
