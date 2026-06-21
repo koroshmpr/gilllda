@@ -24,10 +24,17 @@
     <?php wp_head();
     if (is_front_page() || is_page_template('theme/homepage.php')) {
         $hero = get_field('hero', get_the_ID());
-        if ($hero && !empty($hero['image']['desktop']['url'])) {
-            echo '<link rel="preload" as="image" href="' . esc_url($hero['image']['desktop']['url']) . '" media="(min-width: 961px)" fetchpriority="high">' . "\n";
-            $mobile_url = !empty($hero['image']['mobile']['url']) ? $hero['image']['mobile']['url'] : $hero['image']['desktop']['url'];
-            echo '<link rel="preload" as="image" href="' . esc_url($mobile_url) . '" media="(max-width: 960px)" fetchpriority="high">' . "\n";
+        if ($hero && !empty($hero['image'])) {
+            $image = $hero['image'];
+            $desktop_url = $image['desktop']['sizes']['1536x1536'] ?? $image['desktop']['sizes']['large'] ?? $image['desktop']['url'] ?? '';
+            $mobile_url = $image['mobile']['sizes']['large'] ?? $image['mobile']['url'] ?? $image['desktop']['sizes']['large'] ?? $image['desktop']['url'] ?? '';
+            
+            if ($desktop_url) {
+                echo '<link rel="preload" as="image" href="' . esc_url($desktop_url) . '" media="(min-width: 961px)" fetchpriority="high">' . "\n";
+            }
+            if ($mobile_url) {
+                echo '<link rel="preload" as="image" href="' . esc_url($mobile_url) . '" media="(max-width: 960px)" fetchpriority="high">' . "\n";
+            }
         }
     }
     $scripts = get_field('header-scripts', 'option');

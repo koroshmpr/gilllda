@@ -103,9 +103,9 @@ function disable_woo_css_on_single_product() {
     }
 }
 
-// 8. NEW: Defer jQuery to prevent render-blocking
+// 8. NEW: Defer WooCommerce non-critical scripts to fix critical request chain
 add_filter('script_loader_tag', function($tag, $handle) {
-    if (in_array($handle, ['jquery-core', 'jquery-migrate'])) {
+    if (strpos($tag, 'sourcebuster.min.js') !== false || strpos($tag, 'order-attribution.min.js') !== false) {
         return str_replace(' src', ' defer="defer" src', $tag);
     }
     return $tag;

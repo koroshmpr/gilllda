@@ -118,7 +118,7 @@ $fetch_priority = $is_eager ? 'fetchpriority="high"' : '';
 
         <div class="block bg-white relative <?= $isArchive ? 'max-lg:w-1/3' : ''; ?> size-full aspect-square overflow-hidden p-4">
             <div x-show="!imgLoaded" x-transition.opacity.duration.500ms
-                 class="absolute inset-0 z-[1] bg-gray-100 animate-pulse flex items-center justify-center"></div>
+                 class="absolute inset-0 z-[1] bg-gray-200 animate-pulse flex items-center justify-center"></div>
 
             <img width="300" height="300"
                  x-ref="mainImg"

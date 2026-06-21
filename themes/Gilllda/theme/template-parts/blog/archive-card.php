@@ -4,7 +4,14 @@ $is_eager = $args['eager'] ?? false;
 $loading_attr = $is_eager ? 'eager' : 'lazy';
 $fetch_priority = $is_eager ? 'fetchpriority="high"' : '';
 ?>
-    <a href="<?php the_permalink(); ?>" class="relative group overflow-hidden <?= esc_attr($args['class'] ?? ''); ?>">
+    <a href="<?php the_permalink(); ?>" 
+       x-data="{ imgLoaded: false }"
+       class="relative group overflow-hidden flex aspect-3/4 <?= esc_attr($args['class'] ?? ''); ?>">
+        
+        <!-- Skeleton Loader -->
+        <div x-show="!imgLoaded" x-transition.opacity.duration.500ms
+             class="absolute inset-0 z-0 bg-gray-200 animate-pulse"></div>
+
         <div class="text-xs flex z-1 flex-col text-center text-white absolute left-2 p-2  rounded-b-sm pt-3 pb-5 bg-primary/75 group-hover:bg-primary/90 transition-all duration-500 backdrop-blur-sm lg:text-sm">
             <span class="text-lg leading-4"><?= shamsi_date('d', get_the_time('U')); ?></span>
             <span class="text-[10px]"><?= shamsi_date('F', get_the_time('U')); ?></span>
@@ -34,10 +41,13 @@ $fetch_priority = $is_eager ? 'fetchpriority="high"' : '';
             </div>
             <p class="text-white/80 text-[11px] leading-[1.7] lg:text-xs text-justify line-clamp-2 transition-all"><?= wp_trim_words(get_the_content(), 25); ?></p>
         </div>
-        <picture>
+        <picture class="w-full h-full relative z-0">
             <source media="(min-width: 961px)" srcset="<?php the_post_thumbnail_url('medium_large'); ?>">
             <source media="(max-width: 960px)" srcset="<?php the_post_thumbnail_url('medium'); ?>">
-            <img class="w-full object-cover aspect-3/4 group-hover:scale-110 transition-all duration-500" height="250"
+            <img class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500" height="250"
+                 x-ref="blogImg"
+                 x-init="if ($refs.blogImg.complete) imgLoaded = true"
+                 @load="imgLoaded = true"
                  loading="<?= esc_attr($loading_attr); ?>"
                 <?= $fetch_priority; ?>
                  src="<?= get_the_post_thumbnail_url(get_the_ID(), 'medium'); ?>"

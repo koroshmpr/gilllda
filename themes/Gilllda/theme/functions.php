@@ -177,7 +177,10 @@ add_action( 'wp_enqueue_scripts', 'bluebox_scripts' );
 
 // 5. Programmatically preload your main font to break the CSS chain
 function bluebox_preload_fonts() {
-    echo '<link rel="preload" href="' . get_template_directory_uri() . '/fonts/Peyda/fonts/woff2/PeydaWebFaNum-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">';
+    $font_dir = get_template_directory_uri() . '/fonts/Peyda/fonts/woff2/';
+    echo '<link rel="preload" href="' . $font_dir . 'PeydaWebFaNum-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
+    echo '<link rel="preload" href="' . $font_dir . 'PeydaWebFaNum-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
+    echo '<link rel="preload" href="' . $font_dir . 'PeydaWebFaNum-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
 }
 // Using priority 5 to ensure it loads high up in the <head>
 add_action( 'wp_head', 'bluebox_preload_fonts', 5 );
