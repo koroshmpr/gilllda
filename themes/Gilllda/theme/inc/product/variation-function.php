@@ -21,19 +21,32 @@ function custom_price_display( $price, $product ) {
 function update_button_action() {
     ?>
     <script type="text/javascript">
-        jQuery('form.selector').on('submit', function(e) {
-            e.preventDefault(); // prevent the default form submit action
+        document.addEventListener('DOMContentLoaded', function () {
+            var run = function () {
+                jQuery('form.selector').on('submit', function(e) {
+                    e.preventDefault(); // prevent the default form submit action
 
-            jQuery('input[type="hidden"]').each(function() {
-                var $this = jQuery(this);
+                    jQuery('input[type="hidden"]').each(function() {
+                        var $this = jQuery(this);
 
-                $this.val($this.siblings(':selected').val());
-            });
+                        $this.val($this.siblings(':selected').val());
+                    });
 
-            // now submit the form using AJAX to WooCommerce's add_to_cart function
-            jQuery.post( wc_add_to_cart_params.ajax_url, jQuery(this).serialize() );
+                    // now submit the form using AJAX to WooCommerce's add_to_cart function
+                    jQuery.post( wc_add_to_cart_params.ajax_url, jQuery(this).serialize() );
+                });
+            };
+            if (window.jQuery) {
+                run();
+            } else {
+                var checkJQuery = setInterval(function () {
+                    if (window.jQuery) {
+                        clearInterval(checkJQuery);
+                        run();
+                    }
+                }, 50);
+            }
         });
-
     </script>
     <?php
 }

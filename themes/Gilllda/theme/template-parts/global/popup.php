@@ -54,7 +54,7 @@ if ($show) :
                     };
 
                     // Listen for scroll
-                    window.addEventListener('scroll', scrollHandler);
+                    window.addEventListener('scroll', scrollHandler, { passive: true });
 
                     // Timeout for 30 seconds
                     const timeoutId = setTimeout(() => {

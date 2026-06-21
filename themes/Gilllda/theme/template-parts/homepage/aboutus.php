@@ -3,22 +3,27 @@
     <section x-data="{
                  about: false,
                  progress: 0,
+                 ticking: false,
                  calculateScroll() {
-                     let rect = this.$el.getBoundingClientRect();
-                     let windowHeight = window.innerHeight;
+                     if (this.ticking) return;
+                     this.ticking = true;
+                     window.requestAnimationFrame(() => {
+                         let rect = this.$el.getBoundingClientRect();
+                         let windowHeight = window.innerHeight;
+                         let totalTravel = windowHeight;
 
-                     let totalTravel = windowHeight;
+                         // How far it has traveled so far
+                         let scrolled = windowHeight - rect.top;
 
-                     // How far it has traveled so far
-                     let scrolled = windowHeight - rect.top;
+                         // Calculate base percentage
+                         let percent = (scrolled / totalTravel) * 100;
 
-                     // Calculate base percentage
-                     let percent = (scrolled / totalTravel) * 100;
+                         // Multiply by 1.11 so it hits 100% when scroll is at 90%
+                         let acceleratedPercent = percent * 0.8;
 
-                     // Multiply by 1.11 so it hits 100% when scroll is at 90%
-                     let acceleratedPercent = percent * 0.8;
-
-                     this.progress = Math.max(0, Math.min(100, acceleratedPercent));
+                         this.progress = Math.max(0, Math.min(100, acceleratedPercent));
+                         this.ticking = false;
+                     });
                  }
              }"
              x-init="calculateScroll()"

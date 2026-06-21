@@ -60,9 +60,23 @@ function flatten_notice( $notice ) {
 wc_clear_notices();
 ?>
 <script>
-    jQuery(function($){
-        $('form.variations_form').on('change', 'input[type=radio]', function() {
-            $(this).trigger('check_variations');
-        });
+    document.addEventListener('DOMContentLoaded', function () {
+        var initNoticeJQuery = function () {
+            jQuery(function ($) {
+                $('form.variations_form').on('change', 'input[type=radio]', function () {
+                    $(this).trigger('check_variations');
+                });
+            });
+        };
+        if (window.jQuery) {
+            initNoticeJQuery();
+        } else {
+            var checkJQuery = setInterval(function () {
+                if (window.jQuery) {
+                    clearInterval(checkJQuery);
+                    initNoticeJQuery();
+                }
+            }, 50);
+        }
     });
 </script>

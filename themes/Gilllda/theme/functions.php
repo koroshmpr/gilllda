@@ -151,7 +151,7 @@ function bluebox_scripts() {
     wp_enqueue_style( 'bluebox-style', get_stylesheet_uri(), array(), BLUEBOX_VERSION );
 
     // 2. Load script with the modern 'defer' strategy
-    wp_enqueue_script( 'bluebox-script', get_template_directory_uri() . '/js/script.min.js', array('jquery'), BLUEBOX_VERSION, array(
+    wp_enqueue_script( 'bluebox-script', get_template_directory_uri() . '/js/script.min.js', array(), BLUEBOX_VERSION, array(
         'in_footer' => true,
         'strategy'  => 'defer'
     ));

@@ -21,15 +21,24 @@ function optimize_site() {
         return $urls;
     }, 10, 2 );
 
-    // 2. Remove jQuery Migrate (Perfect as is)
-    add_filter( 'wp_default_scripts', function ( $scripts ) {
-        if ( ! is_admin() && isset( $scripts->registered['jquery'] ) ) {
-            $scripts->registered['jquery']->deps = array_diff(
-                $scripts->registered['jquery']->deps,
-                [ 'jquery-migrate' ]
-            );
+    // 2. Remove jQuery Migrate completely on frontend
+    add_action( 'wp_default_scripts', function ( $scripts ) {
+        if ( ! is_admin() ) {
+            if ( isset( $scripts->registered['jquery'] ) ) {
+                $scripts->registered['jquery']->deps = array_diff(
+                    $scripts->registered['jquery']->deps,
+                    [ 'jquery-migrate' ]
+                );
+            }
         }
     } );
+    add_action( 'wp_enqueue_scripts', function () {
+        if ( ! is_admin() ) {
+            wp_dequeue_script( 'jquery-migrate' );
+            wp_deregister_script( 'jquery-migrate' );
+            wp_register_script( 'jquery-migrate', false, array(), false, true );
+        }
+    }, 999 );
 
     // 3. Disable Embeds & Head Junk (Perfect as is)
     remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
@@ -103,9 +112,12 @@ function disable_woo_css_on_single_product() {
     }
 }
 
-// 8. NEW: Defer WooCommerce non-critical scripts to fix critical request chain
+// 8. NEW: Defer WooCommerce non-critical scripts and jQuery core
 add_filter('script_loader_tag', function($tag, $handle) {
     if (strpos($tag, 'sourcebuster.min.js') !== false || strpos($tag, 'order-attribution.min.js') !== false) {
+        return str_replace(' src', ' defer="defer" src', $tag);
+    }
+    if (!is_admin() && ($handle === 'jquery-core' || $handle === 'jquery')) {
         return str_replace(' src', ' defer="defer" src', $tag);
     }
     return $tag;
