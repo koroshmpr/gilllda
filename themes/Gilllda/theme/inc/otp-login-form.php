@@ -8,16 +8,40 @@
 add_action('wp_ajax_nopriv_kavenegar_send_otp', 'handle_kavenegar_send_otp');
 add_action('wp_ajax_kavenegar_send_otp', 'handle_kavenegar_send_otp');
 function handle_kavenegar_send_otp() {
-    $phone = sanitize_text_field($_POST['phone']);
+    check_ajax_referer('my-nonce', 'security');
+
+    $phone = sanitize_text_field($_POST['phone'] ?? '');
     if (!preg_match('/^09\d{9}$/', $phone)) {
         wp_send_json_error(['message' => 'شماره معتبر نیست']);
+    }
+
+    // 1. IP Rate Limiting (Max 5 attempts per 10 minutes)
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    $ip_attempts = get_transient('otp_ip_attempts_' . $ip) ?: 0;
+    if ($ip_attempts >= 5) {
+        wp_send_json_error(['message' => 'تعداد درخواست‌های شما از این آی‌پی بیش از حد مجاز است. لطفا ۱۰ دقیقه دیگر دوباره تلاش کنید.']);
+    }
+
+    // 2. Phone Number Rate Limiting (Max 1 attempt per 60 seconds)
+    $last_sent = get_transient('otp_sent_time_' . $phone);
+    if ($last_sent) {
+        wp_send_json_error(['message' => 'لطفا پس از اتمام زمان تایمر (یک دقیقه) دوباره تلاش کنید.']);
     }
 
     $otp = wp_rand(10000, 99999);
     set_transient('otp_' . $phone, $otp, 3 * MINUTE_IN_SECONDS);
 
-    $api_key = 'YOUR_KAVENEGAR_API_KEY';
-    $template = 'YOUR_TEMPLATE_NAME';
+    // Get Kavenegar credentials securely from constants or ACF Option page
+    $api_key = defined('KAVENEGAR_API_KEY') ? KAVENEGAR_API_KEY : get_field('kavenegar_api_key', 'option');
+    $template = defined('KAVENEGAR_TEMPLATE') ? KAVENEGAR_TEMPLATE : get_field('kavenegar_template_name', 'option');
+
+    if (empty($api_key) || $api_key === 'YOUR_KAVENEGAR_API_KEY') {
+        $api_key = 'YOUR_KAVENEGAR_API_KEY'; // fallback placeholder
+    }
+    if (empty($template) || $template === 'YOUR_TEMPLATE_NAME') {
+        $template = 'YOUR_TEMPLATE_NAME'; // fallback placeholder
+    }
+
     $url = "https://api.kavenegar.com/v1/{$api_key}/verify/lookup.json?receptor={$phone}&token={$otp}&template={$template}";
 
     $response = wp_remote_get($url);
@@ -25,12 +49,18 @@ function handle_kavenegar_send_otp() {
         wp_send_json_error(['message' => 'خطا در ارتباط با کاوه‌نگار']);
     }
 
+    // Set rate-limiting transients
+    set_transient('otp_sent_time_' . $phone, true, 60);
+    set_transient('otp_ip_attempts_' . $ip, $ip_attempts + 1, 10 * MINUTE_IN_SECONDS);
+
     wp_send_json_success(['message' => 'کد ارسال شد', 'timer' => 60]);
 }
 
 // ۲. بررسی OTP و وضعیت کاربر
 add_action('wp_ajax_nopriv_kavenegar_verify_otp', 'handle_kavenegar_verify_otp');
 function handle_kavenegar_verify_otp() {
+    check_ajax_referer('my-nonce', 'security');
+
     $phone = sanitize_text_field($_POST['phone']);
     $otp = sanitize_text_field($_POST['otp']);
 
@@ -67,6 +97,8 @@ function handle_kavenegar_verify_otp() {
 // ۳. تکمیل ثبت‌نام کاربر جدید با پیامک
 add_action('wp_ajax_nopriv_kavenegar_register_user', 'handle_kavenegar_register_user');
 function handle_kavenegar_register_user() {
+    check_ajax_referer('my-nonce', 'security');
+
     $phone = sanitize_text_field($_POST['phone']);
     $otp = sanitize_text_field($_POST['otp']);
 
@@ -118,6 +150,8 @@ function handle_kavenegar_register_user() {
 // ۴. ورود با ایمیل/نام کاربری
 add_action('wp_ajax_nopriv_classic_login', 'handle_classic_login');
 function handle_classic_login() {
+    check_ajax_referer('my-nonce', 'security');
+
     $username = sanitize_text_field($_POST['username']);
     $password = $_POST['password'];
 
@@ -133,6 +167,8 @@ function handle_classic_login() {
 // ۵. ثبت نام با رمز عبور
 add_action('wp_ajax_nopriv_classic_register', 'handle_classic_register');
 function handle_classic_register() {
+    check_ajax_referer('my-nonce', 'security');
+
     $name = sanitize_text_field($_POST['name']);
     $username = sanitize_user($_POST['username']);
     $email = sanitize_email($_POST['email']);
@@ -211,6 +247,8 @@ function show_phone_data_in_users_table($val, $column_name, $user_id) {
 
 add_action('wp_ajax_update_user_phone_with_otp', 'handle_update_user_phone_with_otp');
 function handle_update_user_phone_with_otp() {
+    check_ajax_referer('my-nonce', 'security');
+
     if (!is_user_logged_in()) {
         wp_send_json_error(['message' => 'لطفا ابتدا وارد حساب خود شوید.']);
     }
@@ -348,6 +386,9 @@ function render_otp_phone_updater_in_my_account() {
                     let formData = new FormData();
                     formData.append('action', 'kavenegar_send_otp');
                     formData.append('phone', this.newPhone);
+                    if (typeof jsData !== 'undefined' && jsData.nonce) {
+                        formData.append('security', jsData.nonce);
+                    }
 
                     try {
                         let response = await fetch(this.ajaxUrl, { method: 'POST', body: formData });
@@ -378,6 +419,9 @@ function render_otp_phone_updater_in_my_account() {
                     formData.append('action', 'update_user_phone_with_otp');
                     formData.append('phone', this.newPhone);
                     formData.append('otp', this.otp);
+                    if (typeof jsData !== 'undefined' && jsData.nonce) {
+                        formData.append('security', jsData.nonce);
+                    }
 
                     try {
                         let response = await fetch(this.ajaxUrl, { method: 'POST', body: formData });

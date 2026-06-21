@@ -233,6 +233,7 @@ require get_template_directory() . '/inc/product/out-stock-product.php';
 require get_template_directory() . '/inc/product/filter-search-query.php';
 require get_template_directory() . '/inc/product/return-policy-schema.php';
 require get_template_directory() . '/inc/product/shop-actions.php';
+require get_template_directory() . '/inc/product/cart-fragments.php';
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
 

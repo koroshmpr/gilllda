@@ -46,7 +46,7 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
                     <button @click="cart = true" aria-label="open cart modal"
                             class="<?= $baseClass; ?> <?= is_cart() ? $activeClass : ''; ?> relative cursor-pointer">
                         <?php get_template_part('template-parts/svg/cart', null, ['size' => $svgSize, 'class' => $baseSvgClass]); ?>
-                        <span class="absolute top-0 start-2 lg:start-0 lg:translate-x-1/2 lg:-translate-y-1/2 translate-y-1 bg-secondary/80 text-white flex leading-auto justify-center items-center pt-1 p-0.5 rounded-sm text-xs size-4">
+                        <span class="header-cart-count absolute top-0 start-2 lg:start-0 lg:translate-x-1/2 lg:-translate-y-1/2 translate-y-1 bg-secondary/80 text-white flex leading-auto justify-center items-center pt-1 p-0.5 rounded-sm text-xs size-4">
                              <?= $cart_count; ?>
                         </span>
                     </button>

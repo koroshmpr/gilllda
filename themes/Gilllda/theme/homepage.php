@@ -13,9 +13,17 @@ $args = array(
     'perPage' => '4.5',
 );
 get_template_part('template-parts/product/colored-product-slider', null, $args);
+echo '<div class="[content-visibility:auto] [contain-intrinsic-size:auto_600px]">';
 get_template_part('template-parts/homepage/aboutus');
+echo '</div>';
+
+echo '<div class="[content-visibility:auto] [contain-intrinsic-size:auto_400px]">';
 get_template_part('template-parts/homepage/portfolios-slider');
+echo '</div>';
+
+echo '<div class="[content-visibility:auto] [contain-intrinsic-size:auto_500px]">';
 get_template_part('template-parts/blog/latest-blog');
+echo '</div>';
 
 $categories = get_field('product_category');
 if ($categories) :
@@ -27,7 +35,9 @@ if ($categories) :
             'lapTopPerPage' => '3.3',
             'perPage' => '4.2',
         );
+        echo '<div class="[content-visibility:auto] [contain-intrinsic-size:auto_400px]">';
         get_template_part('template-parts/product/category-product-slider', null, $args);
+        echo '</div>';
     endforeach;
 endif;
 

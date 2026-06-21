@@ -8,7 +8,7 @@ $image = $hero['image'];
         <picture>
             <source media="(min-width: 961px)" srcset="<?= $image['desktop']['url'] ?? ''; ?>">
             <source media="(max-width: 960px)" srcset="<?= $image['mobile']['url'] ?? $image['desktop']['url'] ?? ''; ?>">
-            <img width="390" height="374" fetchpriority="high" loading="eager"
+            <img width="390" height="374" fetchpriority="high" loading="eager" decoding="sync"
                  :class="scrollingDown ? 'scale-95' : (scrollingUp ? 'lg:scale-105 lg:mt-5' : '')"
                  class="absolute inset-0 w-full lg:h-[80vh] select-none h-[55vh] transition-transform border border-y-0 border-black/5 lg:px-5 pb-0 duration-700 object-cover"
                  src="<?= $image['desktop']['url'] ?? ''; ?>" alt="<?= $image['desktop']['title'] ?? ''; ?>">

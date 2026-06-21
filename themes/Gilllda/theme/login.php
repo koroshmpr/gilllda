@@ -247,11 +247,14 @@ get_header();
                     }
                 },
 
-                async sendRequest(action, data) {
+                 async sendRequest(action, data) {
                     this.isLoading = true;
                     this.errorMessage = '';
                     const formData = new FormData();
                     formData.append('action', action);
+                    if (typeof jsData !== 'undefined' && jsData.nonce) {
+                        formData.append('security', jsData.nonce);
+                    }
                     for (const key in data) formData.append(key, data[key]);
 
                     try {

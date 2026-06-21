@@ -22,6 +22,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <?php wp_head();
+    if (is_front_page() || is_page_template('theme/homepage.php')) {
+        $hero = get_field('hero', get_the_ID());
+        if ($hero && !empty($hero['image']['desktop']['url'])) {
+            echo '<link rel="preload" as="image" href="' . esc_url($hero['image']['desktop']['url']) . '" media="(min-width: 961px)" fetchpriority="high">' . "\n";
+            $mobile_url = !empty($hero['image']['mobile']['url']) ? $hero['image']['mobile']['url'] : $hero['image']['desktop']['url'];
+            echo '<link rel="preload" as="image" href="' . esc_url($mobile_url) . '" media="(max-width: 960px)" fetchpriority="high">' . "\n";
+        }
+    }
     $scripts = get_field('header-scripts', 'option');
     echo $scripts ?? '';
     ?>

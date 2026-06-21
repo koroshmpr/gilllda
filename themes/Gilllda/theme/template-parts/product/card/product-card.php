@@ -126,6 +126,7 @@ $fetch_priority = $is_eager ? 'fetchpriority="high"' : '';
                  @load="imgLoaded = true"
                  loading="<?= esc_attr($loading_attr); ?>"
                 <?= $fetch_priority; ?>
+                 decoding="<?= $is_eager ? 'sync' : 'async'; ?>"
                  src="<?= esc_url($image_url); ?>"
                  :src="mainImageUrl"
                  alt="<?= esc_attr($product_slug); ?>"
@@ -136,6 +137,7 @@ $fetch_priority = $is_eager ? 'fetchpriority="high"' : '';
             <?php if ($hover_image_url) : ?>
                 <img width="300" height="300"
                      loading="<?= esc_attr($loading_attr); ?>"
+                     decoding="<?= $is_eager ? 'sync' : 'async'; ?>"
                      alt="<?= esc_attr($product_slug . '-hover'); ?>"
                      src="<?= esc_url($hover_image_url); ?>"
                      class="absolute inset-0 size-full aspect-square object-contain transition-all duration-700 opacity-0"

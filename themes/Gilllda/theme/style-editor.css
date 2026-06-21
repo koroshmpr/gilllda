@@ -4977,6 +4977,9 @@ blockquote {
   --tw-ease: var(--ease-out);
   transition-timing-function: var(--ease-out);
 }
+.will-change-\[background-position\] {
+  will-change: background-position;
+}
 .prose-neutral {
   --tw-prose-body: oklch(0.371 0 0);
   --tw-prose-headings: oklch(0.205 0 0);
@@ -5030,6 +5033,18 @@ blockquote {
 .stroke-white {
   -webkit-text-stroke-color: #fff;
   -webkit-text-stroke-width: 1.2px;
+}
+.\[contain-intrinsic-size\:auto_400px\] {
+  contain-intrinsic-size: auto 400px;
+}
+.\[contain-intrinsic-size\:auto_500px\] {
+  contain-intrinsic-size: auto 500px;
+}
+.\[contain-intrinsic-size\:auto_600px\] {
+  contain-intrinsic-size: auto 600px;
+}
+.\[content-visibility\:auto\] {
+  content-visibility: auto;
 }
 .backface-hidden {
   backface-visibility: hidden;

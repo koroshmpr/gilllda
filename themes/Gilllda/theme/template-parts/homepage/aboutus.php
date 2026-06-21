@@ -26,7 +26,7 @@
              x-intersect:enter.margin.-15%.0px.-30%.0px="about = true"
              x-intersect:leave="about = false"
              :class="about ? 'max-lg:!bg-[20%]' : ''"
-             class="relative w-full flex flex-col items-start justify-center transition-all duration-100 ease-linear lg:justify-start lg:bg-fixed bg-right lg:bg-center bg-cover bg-no-repeat my-8"
+             class="relative w-full flex flex-col items-start justify-center transition-all duration-100 ease-linear lg:justify-start lg:bg-fixed bg-right lg:bg-center bg-cover bg-no-repeat my-8 will-change-[background-position]"
              style="background-image: url('<?= esc_url($about['image']['url'] ?? ''); ?>');"
              :style="`background-position: ${progress}%; background-image: url('<?= esc_url($about['image']['url'] ?? ''); ?>')`"
              dir="rtl">
