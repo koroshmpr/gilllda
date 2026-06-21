@@ -9,9 +9,9 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
         <nav class="container <?= is_admin() ? 'lg:pt-12' : '' ?> flex items-center lg:h-14 max-lg:p-[3px] lg:py-4 justify-between">
             <div class="flex items-center gap-5 max-lg:hidden">
                 <?php get_template_part('template-parts/global/logo', null, [
-                        'logoSize' => 'max-h-12 w-auto',
-                            'width' => '80',
-                            'height' => '47'
+                    'logoSize' => 'max-h-12 w-auto',
+                    'width' => '80',
+                    'height' => '47'
                 ]);
                 wp_nav_menu(
                     array(
@@ -32,6 +32,8 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
                 $svgSize = '18';
 
                 if ($woo_active) :
+                    $cart_count = WC()->cart->get_cart_contents_count() ?? 0;
+                    $is_empty = $cart_count == 0;
                     $accClass = $baseClass . (is_account_page() || is_page('login') ? " $activeClass" : "");
 
                     get_template_part('template-parts/layout/my-account-button', null, [
@@ -41,13 +43,13 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
                         'svgSize' => $svgSize,
                     ]);
                     ?>
-                    <a aria-label="go to cart" href="<?= wc_get_cart_url(); ?>"
-                       class="<?= $baseClass; ?> <?= is_cart() ? $activeClass : ''; ?>">
+                    <button @click="cart = true" aria-label="open cart modal"
+                            class="<?= $baseClass; ?> <?= is_cart() ? $activeClass : ''; ?> relative cursor-pointer">
                         <?php get_template_part('template-parts/svg/cart', null, ['size' => $svgSize, 'class' => $baseSvgClass]); ?>
                         <span class="absolute top-0 start-2 lg:start-0 lg:translate-x-1/2 lg:-translate-y-1/2 translate-y-1 bg-secondary/80 text-white flex leading-auto justify-center items-center pt-1 p-0.5 rounded-sm text-xs size-4">
-                        <?= WC()->cart->get_cart_contents_count() ?? '0'; ?>
-                    </span>
-                    </a>
+                             <?= $cart_count; ?>
+                        </span>
+                    </button>
                 <?php endif;
 
                 $showLogo = get_field('show_logo_in_navbar', 'option');

@@ -1,3 +1,7 @@
+
+<?php
+$svg_args = array('size' => $args['svgSize'] ?? '', 'class' => $args['svgClass'] ?? '');
+?>
 <div
         x-data="{ open: false }"
         @mouseenter="open = true"
@@ -11,7 +15,7 @@
         <?php else : ?>
             href="<?php echo esc_url(get_permalink(get_option('woocommerce_myaccount_page_id'))); ?>"
         <?php endif; ?>
-            class="<?= $args['class'] ?? ''; ?> flex items-center gap-1 text-sm transition-transform duration-200"
+            class="<?= $args['class'] ?? ''; ?> flex items-center gap-1 text-sm transition-transform duration-200 <?= is_user_logged_in()? 'lg:p-1': ''; ?>"
     >
         <?php if (is_user_logged_in()) :
             $current_user = wp_get_current_user();
@@ -19,8 +23,10 @@
             $first_letter = mb_substr($first_word, 0, 1, 'UTF-8');
             ?>
 
-            <p class="max-lg:hidden px-3 text-sm">
-                <?php echo esc_html($first_word); ?>
+            <p class="max-lg:hidden px-3 flex items-center gap-1 text-sm">
+                <?php
+                get_template_part('template-parts/svg/person', null, $svg_args);?>
+                <span class="mt-1"><?php echo esc_html($first_word); ?></span>
             </p>
 
             <p class="lg:hidden flex justify-center items-center leading-auto <?= !$args['active'] ? 'border border-gray-300 pt-2 p-1 text-sm size-8.5 bg-gray-50  absolute top-1/2 start-1/2 translate-x-1/2 -translate-y-1/2  rounded-full' : ''; ?>">
@@ -29,7 +35,6 @@
 
         <?php else : ?>
             <?php
-            $svg_args = array('size' => $args['svgSize'] ?? '', 'class' => $args['svgClass'] ?? '');
             get_template_part('template-parts/svg/person', null, $svg_args);
             ?>
         <?php endif; ?>

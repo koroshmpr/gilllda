@@ -18,6 +18,7 @@ Text Domain: Gilllda
   --font-serif: Payda, Georgia, Cambria, "Times New Roman", Times, serif;
   --color-red-50: oklch(0.971 0.013 17.38);
   --color-red-100: oklch(0.936 0.032 17.717);
+  --color-red-200: oklch(0.885 0.062 18.334);
   --color-red-300: oklch(0.808 0.114 19.571);
   --color-red-400: oklch(0.704 0.191 22.216);
   --color-red-500: oklch(0.637 0.237 25.331);
@@ -1580,6 +1581,9 @@ blockquote {
     max-width: 96rem;
   }
 }
+.-m-1\.5 {
+  margin: calc(var(--spacing) * -1.5);
+}
 .m-0 {
   margin: calc(var(--spacing) * 0);
 }
@@ -2741,6 +2745,9 @@ blockquote {
 .w-20 {
   width: calc(var(--spacing) * 20);
 }
+.w-24 {
+  width: calc(var(--spacing) * 24);
+}
 .w-44 {
   width: calc(var(--spacing) * 44);
 }
@@ -2752,6 +2759,9 @@ blockquote {
 }
 .w-56 {
   width: calc(var(--spacing) * 56);
+}
+.w-80 {
+  width: calc(var(--spacing) * 80);
 }
 .w-\[45px\] {
   width: 45px;
@@ -3175,6 +3185,11 @@ blockquote {
   margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
   margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
 }
+:where(.space-y-3 > :not(:last-child)) {
+  --tw-space-y-reverse: 0;
+  margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
+  margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
+}
 :where(.space-y-4 > :not(:last-child)) {
   --tw-space-y-reverse: 0;
   margin-block-start: calc(calc(var(--spacing) * 4) * var(--tw-space-y-reverse));
@@ -3502,6 +3517,9 @@ blockquote {
 }
 .border-current\/5 {
   border-color: color-mix(in oklab, currentColor 5%, transparent);
+}
+.border-gray-50 {
+  border-color: var(--color-gray-50);
 }
 .border-gray-100 {
   border-color: var(--color-gray-100);
@@ -4367,6 +4385,9 @@ blockquote {
 .text-\[13px\] {
   font-size: 13px;
 }
+.text-\[15px\] {
+  font-size: 15px;
+}
 .text-\[18rem\] {
   font-size: 18rem;
 }
@@ -4735,6 +4756,10 @@ blockquote {
   --tw-shadow: 0 -5px 5px -3px var(--tw-shadow-color, rgba(0,0,0,0.1));
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
 }
+.shadow-\[0_-10px_15px_-3px_rgba\(0\,0\,0\,0\.03\)\] {
+  --tw-shadow: 0 -10px 15px -3px var(--tw-shadow-color, rgba(0,0,0,0.03));
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
 .shadow-\[0_-10px_20px_rgba\(0\,0\,0\,0\.05\)\] {
   --tw-shadow: 0 -10px 20px var(--tw-shadow-color, rgba(0,0,0,0.05));
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -4779,6 +4804,9 @@ blockquote {
 }
 .shadow-primary\/20 {
   --tw-shadow-color: color-mix(in oklab, var(--color-primary) 20%, transparent);
+}
+.shadow-red-200 {
+  --tw-shadow-color: var(--color-red-200);
 }
 .ring-gray-400 {
   --tw-ring-color: var(--color-gray-400);
@@ -5643,6 +5671,11 @@ blockquote {
   }
 }
 @media (hover: hover) {
+  .hover\:border-gray-200:hover {
+    border-color: var(--color-gray-200);
+  }
+}
+@media (hover: hover) {
   .hover\:border-primary:hover {
     border-color: var(--color-primary);
   }
@@ -5760,6 +5793,11 @@ blockquote {
 @media (hover: hover) {
   .hover\:bg-red-50:hover {
     background-color: var(--color-red-50);
+  }
+}
+@media (hover: hover) {
+  .hover\:bg-red-600:hover {
+    background-color: var(--color-red-600);
   }
 }
 @media (hover: hover) {
@@ -5892,6 +5930,12 @@ blockquote {
 @media (hover: hover) {
   .hover\:shadow-md:hover {
     --tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+}
+@media (hover: hover) {
+  .hover\:shadow-sm:hover {
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
 }
@@ -6621,6 +6665,11 @@ blockquote {
 @media (width >= 40rem) {
   .sm\:aspect-\[4\/3\] {
     aspect-ratio: 4/3;
+  }
+}
+@media (width >= 40rem) {
+  .sm\:w-96 {
+    width: calc(var(--spacing) * 96);
   }
 }
 @media (width >= 40rem) {
@@ -7619,6 +7668,11 @@ blockquote {
 @media (width >= 64rem) {
   .lg\:p-0 {
     padding: calc(var(--spacing) * 0);
+  }
+}
+@media (width >= 64rem) {
+  .lg\:p-1 {
+    padding: calc(var(--spacing) * 1);
   }
 }
 @media (width >= 64rem) {

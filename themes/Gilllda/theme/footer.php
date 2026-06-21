@@ -26,6 +26,7 @@ get_template_part('template-parts/global/popup');
 
 if ( $woo_active ) :
     get_template_part('template-parts/product/category-modal');
+    get_template_part('template-parts/layout/cart-modal');
 endif;
 
 if ( function_exists('get_field') ) :
