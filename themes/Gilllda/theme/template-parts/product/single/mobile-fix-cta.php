@@ -13,7 +13,7 @@ if ($isSale && $regular_price > 0) {
 }
 ?>
 <nav :class="[intro ? '!translate-y-0' : '', scrollingDown ? 'max-lg:scale-85 !translate-y-2' : '']"
-     class="fixed md:px-24 translate-y-full border border-gray-300 xl:hidden p-1 transition-all z-[3] bg-gray-50 duration-500 flex justify-between items-center bottom-17 lg:bottom-0 inset-x-3 rounded-2xl">
+     class="fixed md:px-24 translate-y-full border border-gray-300 xl:hidden p-1 transition-all z-10 bg-gray-50 duration-500 flex justify-between items-center bottom-17 lg:bottom-0 inset-x-3 rounded-2xl">
 
 
     <div class="flex flex-col ps-2 flex-1 relative">

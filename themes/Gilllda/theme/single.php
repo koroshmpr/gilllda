@@ -10,7 +10,7 @@
 get_header();
 track_post_views(get_the_ID());
 ?>
-    <section x-data="{ active: null, toc:false, stickyMenu : false, share : false }"
+    <section x-data="{ active: null, toc:false, share : false }"
              class="grid lg:grid-cols-12 px-0 gap-x-5 gap-y-1 items-start container">
         <?php
         $args = array(

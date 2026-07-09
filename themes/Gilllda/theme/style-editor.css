@@ -6164,6 +6164,11 @@ blockquote {
   }
 }
 @media (width < 64rem) {
+  .max-lg\:bottom-30 {
+    bottom: calc(var(--spacing) * 30);
+  }
+}
+@media (width < 64rem) {
   .max-lg\:z-\[6\] {
     z-index: 6;
   }

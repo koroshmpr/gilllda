@@ -101,7 +101,7 @@ $fetch_priority = $is_eager ? 'fetchpriority="high"' : '';
     <?php
     $args_compare = [
         'id' => get_the_ID(),
-        'class' => 'mr-auto rounded-full lg:opacity-0 group-hover:opacity-100 lg:translate-y-2 group-hover:translate-y-0 !absolute z-10 block top-2 end-2 p-2 lg:p-2.5 backdrop-blur-sm !border-gray-300 text-primary hover:bg-gray-800 hover:text-white transition-all',
+        'class' => 'mr-auto rounded-full lg:opacity-0 group-hover:opacity-100 lg:translate-y-2 group-hover:translate-y-0 !absolute z-[3] block top-2 end-2 p-2 lg:p-2.5 backdrop-blur-sm !border-gray-300 text-primary hover:bg-gray-800 hover:text-white transition-all',
         'textClass' => 'hidden'
     ];
     get_template_part('template-parts/product/compare-button', null, $args_compare);

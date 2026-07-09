@@ -59,7 +59,7 @@ if (is_single()) {
 // 2. Output the Visual Button (Matching your image)
 if (!empty($btn_text) && !empty($btn_link)) :
     ?>
-    <nav class="<?= esc_attr($args['class'] ?? ''); ?> mb-4 flex items-center" aria-label="breadcrumb">
+    <nav class="<?= esc_attr($args['class'] ?? ''); ?> mb-2 flex items-center" aria-label="breadcrumb">
         <a href="<?= esc_url($btn_link); ?>"
            class="inline-flex items-center gap-x-2 px-4 py-1.5 bg-[#f8f9fa] border border-gray-200 rounded-2xl text-gray-700 hover:bg-gray-100 transition-colors text-sm font-medium">
             <?php get_template_part('template-parts/svg/chevron-right', null, ['size' => 20,]); ?>
