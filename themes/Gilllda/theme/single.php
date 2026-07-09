@@ -14,9 +14,9 @@ track_post_views(get_the_ID());
              class="grid lg:grid-cols-12 px-0 gap-x-5 gap-y-1 items-start container">
         <?php
         $args = array(
-            'class' => 'lg:col-span-12 order-0 px-4 bg-primary/5 border border-primary/15 lg:w-fit m-1.5 rounded-lg p-2'
+            'class' => 'lg:col-span-12 order-0'
         );
-        get_template_part('template-parts/global/breadcrumb', null, $args);
+        get_template_part('template-parts/blog/single/breadcrumb-arrow', null, $args);
         get_template_part('template-parts/blog/single/post-header');
         get_template_part('template-parts/blog/single/post-content');
         get_template_part('template-parts/blog/single/sidebar-post');

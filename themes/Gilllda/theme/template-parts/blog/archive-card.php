@@ -42,8 +42,8 @@ $fetch_priority = $is_eager ? 'fetchpriority="high"' : '';
             <p class="text-white/80 text-[11px] leading-[1.7] lg:text-xs text-justify line-clamp-2 transition-all"><?= wp_trim_words(get_the_content(), 25); ?></p>
         </div>
         <picture class="w-full h-full relative z-0">
-            <source media="(min-width: 961px)" srcset="<?php the_post_thumbnail_url('medium_large'); ?>">
-            <source media="(max-width: 960px)" srcset="<?php the_post_thumbnail_url('medium'); ?>">
+            <source media="(min-width: 961px)" srcset="<?php the_post_thumbnail_url('large'); ?>">
+            <source media="(max-width: 960px)" srcset="<?php the_post_thumbnail_url('large'); ?>">
             <img class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500" height="250"
                  x-ref="blogImg"
                  x-init="if ($refs.blogImg.complete) imgLoaded = true"

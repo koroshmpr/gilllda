@@ -1343,6 +1343,9 @@ blockquote {
 .end-7 {
   inset-inline-end: calc(var(--spacing) * 7);
 }
+.-top-0\.5 {
+  top: calc(var(--spacing) * -0.5);
+}
 .-top-2 {
   top: calc(var(--spacing) * -2);
 }
@@ -1381,6 +1384,9 @@ blockquote {
 }
 .top-full {
   top: 100%;
+}
+.-right-0\.5 {
+  right: calc(var(--spacing) * -0.5);
 }
 .-right-5 {
   right: calc(var(--spacing) * -5);
@@ -1586,9 +1592,6 @@ blockquote {
 }
 .m-0 {
   margin: calc(var(--spacing) * 0);
-}
-.m-1\.5 {
-  margin: calc(var(--spacing) * 1.5);
 }
 .container {
   margin-inline: auto;
@@ -3653,6 +3656,9 @@ blockquote {
 .\!bg-secondary {
   background-color: var(--color-secondary) !important;
 }
+.bg-\[\#f8f9fa\] {
+  background-color: #f8f9fa;
+}
 .bg-amber-400\/5 {
   background-color: color-mix(in oklab, var(--color-amber-400) 5%, transparent);
 }
@@ -4103,6 +4109,9 @@ blockquote {
 .p-10 {
   padding: calc(var(--spacing) * 10);
 }
+.p-\[1px\] {
+  padding: 1px;
+}
 .p-\[2px\] {
   padding: 2px;
 }
@@ -4255,6 +4264,9 @@ blockquote {
 }
 .pt-24 {
   padding-top: calc(var(--spacing) * 24);
+}
+.pt-\[2px\] {
+  padding-top: 2px;
 }
 .pr-1 {
   padding-right: calc(var(--spacing) * 1);
@@ -4515,6 +4527,9 @@ blockquote {
 }
 .\!text-white {
   color: var(--color-white) !important;
+}
+.text-\[\#0088cc\] {
+  color: #0088cc;
 }
 .text-amber-300 {
   color: var(--color-amber-300);

@@ -27,6 +27,20 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
 
             <div class="flex items-center max-lg:justify-between max-lg:w-full gap-1 lg:gap-3">
                 <?php
+                if (!wp_is_mobile()):
+                    // Get the current post type
+                    $post_type = get_post_type();
+
+                    if ('post' === $post_type) {
+                        // Shows on single blog posts and the blog archive
+                        get_template_part('template-parts/global/channel-btn', null, ['type' => 'blog']);
+
+                    } elseif ($woo_active && ('product' === $post_type || is_shop())) {
+                        // Shows on single products and the shop archive (assuming WooCommerce)
+                        get_template_part('template-parts/global/channel-btn', null, ['type' => 'shop']);
+                    }
+                endif;
+
                 $baseClass = 'relative lg:bg-gray-50 justify-center lg:border border-gray-300 p-2 max-lg:py-3 max-lg:flex-1 hover:bg-primary hover:text-white flex items-center gap-3 cursor-pointer lg:rounded-sm transition-all duration-300';
                 $baseSvgClass = 'max-lg:size-5.5 duration-300 transition-all';
                 $svgSize = '18';
@@ -110,20 +124,32 @@ if (wp_is_mobile()):
     $mobileBaseClass = 'justify-center flex items-center px-3 py-4 shrink-0 cursor-pointer transition-all group';
     ?>
     <nav class="flex sticky lg:hidden top-0 z-50 bg-white ps-4 pl-1 justify-between items-center">
-        <?php get_template_part('template-parts/global/logo', null, ['logoSize' => 'max-h-8 w-auto']); ?>
 
         <div class="flex items-center">
-            <button class="<?= $mobileBaseClass; ?>"
-                    :class="searchOpen ? 'max-lg:!bg-primary/10 max-lg:!text-primary is-active shadow-inner' : ''"
-                    @click="searchOpen = true" aria-label="open search modal">
-                <?php get_template_part('template-parts/svg/search', null, ['size' => 18, 'class' => $baseSvgClass]); ?>
-            </button>
-
             <button class="<?= $mobileBaseClass; ?>"
                     :class="menuOpen ? 'max-lg:!bg-primary/10 max-lg:!text-primary is-active shadow-inner' : ''"
                     aria-label="open mobileMenu" @click="menuOpen = true">
                 <?php get_template_part('template-parts/svg/menu', null, ['size' => 20, 'class' => $baseSvgClass]); ?>
             </button>
+            <button class="<?= $mobileBaseClass; ?>"
+                    :class="searchOpen ? 'max-lg:!bg-primary/10 max-lg:!text-primary is-active shadow-inner' : ''"
+                    @click="searchOpen = true" aria-label="open search modal">
+                <?php get_template_part('template-parts/svg/search', null, ['size' => 18, 'class' => $baseSvgClass]); ?>
+            </button>
+            <?php
+            // Get the current post type
+            $post_type = get_post_type();
+
+            if ('post' === $post_type) {
+                // Shows on single blog posts and the blog archive
+                get_template_part('template-parts/global/channel-btn', null, ['type' => 'blog']);
+
+            } elseif ($woo_active && ('product' === $post_type || is_shop())) {
+                // Shows on single products and the shop archive (assuming WooCommerce)
+                get_template_part('template-parts/global/channel-btn', null, ['type' => 'shop']);
+            }
+            ?>
         </div>
+        <?php get_template_part('template-parts/global/logo', null, ['logoSize' => 'max-h-8 w-auto']); ?>
     </nav>
 <?php endif; ?>
