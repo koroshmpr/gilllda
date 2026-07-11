@@ -2,9 +2,6 @@
 get_header();
 get_template_part('template-parts/homepage/hero');
 get_template_part('template-parts/homepage/banners');
-$productCategoryList = get_field('product_category_list');
-get_template_part('template-parts/product/category-list', null, ['productCategoryList' => $productCategoryList]);
-
 $args = array(
     'class' => 'px-0 container',
     'mobilePerPage' => '1.7',
@@ -13,6 +10,14 @@ $args = array(
     'perPage' => '4.5',
 );
 get_template_part('template-parts/product/colored-product-slider', null, $args);
+
+$args = array(
+    'post_type' => 'product',
+    'taxonomy' => 'product_cat',
+);
+get_template_part('template-parts/product/category-list', null, $args);
+
+
 echo '<div class="[content-visibility:auto] [contain-intrinsic-size:auto_600px]">';
 get_template_part('template-parts/homepage/aboutus');
 echo '</div>';
