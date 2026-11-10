@@ -262,6 +262,7 @@ require get_template_directory() . '/inc/seo.php';
 require get_template_directory() . '/inc/telegram.php';
 require get_template_directory() . '/inc/otp-login-form.php';
 require get_template_directory() . '/inc/account-rules.php';
+require get_template_directory() . '/inc/account/account.php';
 // Product landing pages (/l/{product-slug}/)
 require get_template_directory() . '/inc/landing/landing.php';
 if ( is_admin() ) {

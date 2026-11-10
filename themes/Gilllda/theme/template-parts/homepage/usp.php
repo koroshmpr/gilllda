@@ -9,16 +9,16 @@ $items = [
     ['مشاوره و پشتیبانی', 'کمک در انتخاب رنگ و مدل', '<path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/>'],
 ];
 ?>
-<section class="container px-4 py-8 lg:px-0 lg:py-12" aria-label="مزیت‌های خرید از گیلدا">
-    <ul class="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
+<section class="container px-4 py-5 lg:px-0 lg:py-12" aria-label="مزیت‌های خرید از گیلدا">
+    <ul class="grid grid-cols-2 gap-2 lg:grid-cols-4 lg:gap-5">
         <?php foreach ($items as $i => $it) : ?>
-            <li class="group flex flex-col items-start gap-3 rounded-3xl border border-gray-100 bg-gradient-to-br from-white to-gray-50 p-4 transition duration-500 hover:-translate-y-1 hover:border-secondary/20 hover:shadow-xl hover:shadow-primary/5 sm:flex-row sm:items-center lg:p-5" data-reveal style="--d:<?= (int) $i; ?>">
-                <span class="inline-flex size-12 shrink-0 items-center justify-center rounded-2xl bg-secondary/10 text-secondary transition duration-500 group-hover:rotate-[-8deg] group-hover:bg-secondary group-hover:text-white" aria-hidden="true">
+            <li class="group flex items-center gap-2.5 rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-gray-50 p-2.5 transition duration-500 hover:-translate-y-1 hover:border-secondary/20 hover:shadow-xl hover:shadow-primary/5 lg:gap-3 lg:rounded-3xl lg:p-5" data-reveal style="--d:<?= (int) $i; ?>">
+                <span class="inline-flex size-10 shrink-0 lg:size-12 items-center justify-center rounded-2xl bg-secondary/10 text-secondary transition duration-500 group-hover:rotate-[-8deg] group-hover:bg-secondary group-hover:text-white" aria-hidden="true">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><?= $it[2]; // phpcs:ignore -- static svg ?></svg>
                 </span>
                 <span>
-                    <span class="block text-sm font-black text-gray-900 lg:text-base"><?= esc_html($it[0]); ?></span>
-                    <span class="mt-0.5 block text-xs leading-5 text-gray-500"><?= esc_html($it[1]); ?></span>
+                    <span class="block text-[13px] font-black leading-5 text-gray-900 lg:text-base"><?= esc_html($it[0]); ?></span>
+                    <span class="mt-0.5 hidden text-xs leading-5 text-gray-500 lg:block"><?= esc_html($it[1]); ?></span>
                 </span>
             </li>
         <?php endforeach; ?>

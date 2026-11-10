@@ -2,6 +2,8 @@
 /**
  * My Account page
  *
+ * Gilllda: app-like shell — sticky profile/nav card on desktop, scrollable tab chips on mobile.
+ *
  * This template can be overridden by copying it to yourtheme/woocommerce/myaccount/my-account.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
@@ -16,21 +18,25 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+?>
+<div class="gl-acc grid min-w-0 items-start gap-4 pb-28 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-6 lg:pb-16 xl:grid-cols-[19rem_minmax(0,1fr)]">
+	<?php
+	/**
+	 * My Account navigation.
+	 *
+	 * @since 2.6.0
+	 */
+	do_action( 'woocommerce_account_navigation' );
+	?>
 
-/**
- * My Account navigation.
- *
- * @since 2.6.0
- */
-do_action( 'woocommerce_account_navigation' ); ?>
-
-<div class="woocommerce-MyAccount-content bg-gray-50 lg:p-5 p-3 max-lg:!w-[calc(85vw)] max-lg:ms-auto pt-5 border border-gray-200 rounded-lg max-lg:pb-20">
-    <?php
-    /**
-     * My Account content.
-     *
-     * @since 2.6.0
-     */
-    do_action( 'woocommerce_account_content' );
-    ?>
+	<div class="woocommerce-MyAccount-content gl-acc-content min-w-0">
+		<?php
+		/**
+		 * My Account content.
+		 *
+		 * @since 2.6.0
+		 */
+		do_action( 'woocommerce_account_content' );
+		?>
+	</div>
 </div>

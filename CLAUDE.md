@@ -26,8 +26,18 @@ Repo root = `wp-content/`; versioned/deployed: the theme and `plugins/gilllda-ai
 ## Live data / tools (`themes/Gilllda/tools/`, not deployed)
 - `python3 -I tools/mcp.py <tool> '<json>'` — WebSensePro MCP (posts, pages, Woo, ACF, Rank Math, media, menus, redirects). Key in `~/.gilllda-mcp-key`. `list` / `schema <tool>` to discover. Underscore meta keys are refused.
 - `node tools/shot.mjs <url> <prefix> mobile|desktop` — real-viewport screenshots (needs `npm i --no-save puppeteer-core@23.11.1` in `tools/`).
+- `node tools/overflow-bisect.mjs <url>` — finds the element that makes a page wider than 390px; `node tools/pageerrors.mjs <url> [mobile]` — JS errors with stack.
 - Public Store API for product data: `https://gilllda.ir/wp-json/wc/store/v1/products`.
 - Audit history & open items: `docs/STATUS.md`.
+
+## Design system (keep every template consistent)
+- Colours: primary `#102542` (navy, text/buttons/dark bands), secondary `#9d0617` (accent, CTAs, highlights), greys from Tailwind `gray-*`; white surfaces on `gray-50` sections.
+- Shapes: cards/panels `rounded-3xl border border-gray-100` + `shadow-sm` (hover: `-translate-y-1 shadow-xl shadow-primary/5`); buttons/inputs/steppers/thumbnails `rounded-2xl` (pill CTAs `rounded-full`); chips, swatches, badges `rounded-full`; images in cards `rounded-3xl`.
+- Type: Peyda; page H1 `text-3xl lg:text-5xl font-black`; section H2 `text-2xl lg:text-4xl font-black`; kicker `text-sm font-bold text-secondary` with a `h-0.5 w-6` line; body `leading-8 text-gray-600`.
+- Touch targets ≥ 44px (`min-h-11`), RTL first: "forward" chevrons point left, numbers/prices `dir="ltr"` only inside their own span.
+- Motion: entrance `.mag-in` (+`--d`), scroll reveal `[data-reveal]` (+`--d`), page transitions via View Transitions — transform/opacity only; reduced-motion handled in `tailwind/custom/components/motion.css`.
+- Never use `truncate`/`whitespace-nowrap` inside a flex/grid child without `min-w-0` (it widens the page on mobile — check with `tools/overflow-bisect.mjs`).
+- Persian text: no `::first-letter` drop caps (breaks letter joining).
 
 ## Conventions
 - Persian UI copy; Persian digits for display (`gl_fa_num()`); prices in Toman.

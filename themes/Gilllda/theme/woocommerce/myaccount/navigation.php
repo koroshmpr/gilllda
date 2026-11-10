@@ -1,80 +1,88 @@
-<div x-data="{ isMobileMenuOpen: false }"
-     x-effect="document.body.style.overflow = isMobileMenuOpen ? 'hidden' : ''">
+<?php
+/**
+ * My Account navigation
+ *
+ * Gilllda: profile card + nav. Desktop = sticky side card; mobile = compact profile row and
+ * horizontally scrollable tab chips (active chip scrolled into view).
+ *
+ * This template can be overridden by copying it to yourtheme/woocommerce/myaccount/navigation.php.
+ *
+ * HOWEVER, on occasion WooCommerce will need to update template files and you
+ * (the theme developer) will need to copy the new files to your theme to
+ * maintain compatibility. We try to do this as little as possible, but it does
+ * happen. When this occurs the version of the template file will be bumped and
+ * the readme will list any important changes.
+ *
+ * @see     https://woocommerce.com/document/template-structure/
+ * @package WooCommerce\Templates
+ * @version 9.3.0
+ */
 
-    <div x-show="isMobileMenuOpen"
-         @click="isMobileMenuOpen = false"
-         x-transition.opacity.duration.300ms
-         class="fixed inset-0 bg-black/40 z-40 lg:hidden transition-all"
-         style="display: none;"></div>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-    <nav :class="isMobileMenuOpen ? 'w-[65vw] max-w-[280px] z-40' : 'max-lg:!w-12'"
-         class="lg:w-[30%] float-right max-lg:fixed top-0 <?= is_admin_bar_showing() ? 'max-lg:pt-24' : 'max-lg:pt-12'; ?> right-0 h-full bg-white border-l border-gray-100 transition-all duration-300 ease-out flex flex-col overflow-hidden lg:shadow-none lg:border-none lg:bg-transparent lg:static lg:h-auto lg:p-0"
-         aria-label="<?php esc_html_e( 'Account pages', 'woocommerce' ); ?>">
+$gl_user  = wp_get_current_user();
+$gl_since = $gl_user->user_registered ? gl_acc_date( strtotime( $gl_user->user_registered ) + (int) ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ), false ) : '';
+$gl_items = wc_get_account_menu_items();
+$gl_out   = $gl_items['customer-logout'] ?? null;
+unset( $gl_items['customer-logout'] );
 
-        <div :class="isMobileMenuOpen ? 'p-1' : 'pt-1'" class="flex items-center gap-3 border-b transition-all duration-300 border-gray-200 bg-gray-50 lg:hidden relative shrink-0">
+do_action( 'woocommerce_before_account_navigation' );
+?>
 
-            <button @click="isMobileMenuOpen = !isMobileMenuOpen"
-                    :class="isMobileMenuOpen ? 'rounded-lg border' : 'border-t'"
-                    class="size-11 shrink-0 bg-white border-gray-200 flex items-center justify-center text-gray-600 transition-colors">
-                <svg x-show="!isMobileMenuOpen" class="h-5 w-5" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M2 2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zm12-1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2z"/>
-                    <path d="M13 4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/>
-                </svg>
-                <svg x-show="isMobileMenuOpen" style="display:none;" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-            </button>
+<nav class="woocommerce-MyAccount-navigation gl-acc-nav min-w-0 lg:sticky <?php echo is_admin_bar_showing() ? 'lg:top-28' : 'lg:top-20'; ?>" aria-label="<?php esc_attr_e( 'Account pages', 'woocommerce' ); ?>">
+	<div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-[0_8px_30px_-12px_rgba(16,37,66,0.15)] mag-in">
 
-            <span :class="isMobileMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'"
-                  class="font-black text-gray-800 text-sm whitespace-nowrap transition-all duration-300">
-                <?php esc_html_e( 'My Account', 'woocommerce' ); ?>
-            </span>
-        </div>
+		<!-- Profile -->
+		<div class="relative flex items-center gap-3 p-3 lg:flex-col lg:items-start lg:gap-4 lg:p-5">
+			<div class="pointer-events-none absolute inset-x-0 top-0 hidden h-20 bg-gradient-to-l from-primary to-[#1d3a63] lg:block" aria-hidden="true"></div>
+			<span class="relative grid size-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-primary to-secondary text-base font-black text-white ring-4 ring-white lg:mt-6 lg:size-16 lg:text-xl" aria-hidden="true">
+				<?php echo esc_html( gl_acc_initials( $gl_user ) ); ?>
+			</span>
+			<div class="relative min-w-0 flex-1">
+				<p class="truncate font-black text-primary lg:text-lg"><?php echo esc_html( $gl_user->display_name ); ?></p>
+				<?php if ( $gl_since ) : ?>
+					<p class="mt-0.5 truncate text-xs text-gray-500"><?php echo esc_html( 'عضو گیلدا از ' . $gl_since ); ?></p>
+				<?php endif; ?>
+			</div>
+			<?php if ( $gl_out ) : ?>
+				<a href="<?php echo esc_url( wc_logout_url() ); ?>" class="relative grid size-11 shrink-0 place-items-center rounded-full border border-gray-100 text-gray-500 transition hover:border-secondary/30 hover:text-secondary lg:hidden" aria-label="<?php echo esc_attr( $gl_out ); ?>" title="<?php echo esc_attr( $gl_out ); ?>">
+					<?php echo gl_acc_icon( 'logout', 'size-5' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</a>
+			<?php endif; ?>
+		</div>
 
-        <ul class="list-none flex flex-col lg:gap-2 lg:p-0 m-0 overflow-y-auto overflow-x-hidden flex-1 lg:overflow-visible">
-            <?php
-            // دریافت لیست آیتم‌های ووکامرس
-            $menu_items = wc_get_account_menu_items();
+		<!-- Tabs: chips on mobile, list on desktop -->
+		<ul class="gl-acc-tabs m-0 flex list-none gap-2 overflow-x-auto border-t border-gray-100 p-2 lg:flex-col lg:gap-1 lg:overflow-visible lg:p-3"
+			x-data x-init="$nextTick(() => { const a = $el.querySelector('[aria-current]'); if (a && window.innerWidth < 1024) { const r = a.getBoundingClientRect(), b = $el.getBoundingClientRect(); $el.scrollLeft += (r.left + r.width / 2) - (b.left + b.width / 2); } })">
+			<?php
+			foreach ( $gl_items as $endpoint => $label ) :
+				$gl_active = wc_is_current_account_menu_item( $endpoint );
+				?>
+				<li class="<?php echo esc_attr( wc_get_account_menu_item_classes( $endpoint ) ); ?> shrink-0">
+					<a href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>"
+						class="flex min-h-11 items-center gap-2 whitespace-nowrap rounded-full px-4 text-sm transition-colors lg:gap-3 lg:rounded-2xl lg:px-3 <?php echo $gl_active ? 'bg-primary font-bold text-white shadow-[0_6px_16px_-6px_rgba(16,37,66,0.6)]' : 'bg-gray-50 font-medium text-gray-600 hover:bg-gray-100 hover:text-primary lg:bg-transparent'; ?>"
+						<?php echo $gl_active ? 'aria-current="page"' : ''; ?>>
+						<?php echo gl_acc_menu_icon( $endpoint ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<span class="lg:flex-1"><?php echo esc_html( $label ); ?></span>
+						<?php if ( ! $gl_active ) : ?>
+							<span class="hidden text-gray-300 lg:inline"><?php echo gl_acc_icon( 'chevron', 'size-4' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						<?php endif; ?>
+					</a>
+				</li>
+			<?php endforeach; ?>
 
-            // ۱. 🔴 حذف کردن تب "دانلودها"
-            if (isset($menu_items['downloads'])) {
-                unset($menu_items['downloads']);
-            }
+			<?php if ( $gl_out ) : ?>
+				<li class="<?php echo esc_attr( wc_get_account_menu_item_classes( 'customer-logout' ) ); ?> hidden lg:mt-2 lg:block lg:border-t lg:border-gray-100 lg:pt-2">
+					<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'customer-logout' ) ); ?>" class="flex min-h-11 items-center gap-3 rounded-2xl px-3 text-sm font-medium text-gray-500 transition-colors hover:bg-red-50 hover:text-secondary">
+						<?php echo gl_acc_menu_icon( 'customer-logout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<span><?php echo esc_html( $gl_out ); ?></span>
+					</a>
+				</li>
+			<?php endif; ?>
+		</ul>
+	</div>
+</nav>
 
-            // ۲. 🔴 آرایه SVG های اختصاصی برای هر بخش (جایگزین Dashicons)
-            $svg_icons = array(
-                'dashboard'       => '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>',
-                'orders'          => '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>',
-                'edit-address'    => '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
-                'payment-methods' => '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>',
-                'edit-account'    => '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>',
-                'customer-logout' => '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>',
-            );
-
-            // آیکون پیش‌فرض در صورتی که افزونه‌ای تب جدیدی اضافه کند
-            $default_svg = '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
-
-            foreach ( $menu_items as $endpoint => $label ) :
-                $active = wc_is_current_account_menu_item( $endpoint );
-                $current_svg = $svg_icons[$endpoint] ?? $default_svg;
-                ?>
-
-                <li class="<?php echo wc_get_account_menu_item_classes( $endpoint ); ?> bg-gray-50 hover:bg-gray-100 max-lg:border-b lg:border border-gray-200 lg:rounded-xl transition-all <?php echo $active ? '!bg-primary !border-primary' : ''; ?>">
-
-                    <a href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>"
-                       class="flex items-center h-10 px-1 lg:px-4 gap-3 no-underline <?php echo $active ? '!text-white' : '!text-gray-600'; ?>"
-                        <?php echo $active ? 'aria-current="page"' : ''; ?>>
-
-                        <div class="w-9 flex justify-center shrink-0">
-                            <?php echo $current_svg; ?>
-                        </div>
-
-                        <span :class="isMobileMenuOpen ? 'opacity-100' : 'opacity-0 lg:opacity-100'"
-                              class="text-sm whitespace-nowrap transition-all duration-300 <?php echo $active ? 'font-bold' : 'font-medium'; ?>">
-                            <?php echo esc_html( $label ); ?>
-                        </span>
-
-                    </a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </nav>
-</div>
+<?php do_action( 'woocommerce_after_account_navigation' ); ?>

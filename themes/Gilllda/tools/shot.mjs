@@ -18,10 +18,12 @@ await page.goto(url, { waitUntil: 'networkidle2', timeout: 90000 });
 const loadMs = Date.now() - t0;
 // scroll through to trigger lazy/reveal
 const H = await page.evaluate(() => document.documentElement.scrollHeight);
+await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; });
 for (let y = 0; y < H; y += 500) { await page.evaluate(v => window.scrollTo(0, v), y); await new Promise(r => setTimeout(r, 120)); }
 await page.addStyleTag({ content: '*{content-visibility:visible!important}' });
-await page.evaluate(() => { window.scrollTo(0, 0); document.querySelectorAll('[data-reveal]').forEach(e => e.classList.add('is-in')); });
-await new Promise(r => setTimeout(r, 1200));
+await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; window.scrollTo({ top: 0, behavior: 'instant' }); document.querySelectorAll('[data-reveal]').forEach(e => e.classList.add('is-in')); });
+await new Promise(r => setTimeout(r, 1500));
+await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
 const info = await page.evaluate(() => ({ w: document.documentElement.scrollWidth, h: document.documentElement.scrollHeight, vw: innerWidth }));
 const sh = +slice; let i = 0;
 for (let y = 0; y < info.h && i < 12; y += sh, i++) {

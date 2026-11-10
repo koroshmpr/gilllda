@@ -62,11 +62,6 @@ if ( $is_variable && function_exists( 'gl_card_variations' ) ) {
 $can_buy = ! $catMode && $in_stock && $product->is_purchasable() && ( $is_variable || $product->is_type( 'simple' ) );
 $form_id = 'gl-card-form-' . $product_id . '-' . wp_unique_id();
 
-$args_svg = array(
-	'size'  => '20',
-	'class' => 'group-hover/add:delay-100 text-white duration-300 rotate-45 group-hover/add:rotate-0 translate-x-2 opacity-0 transition-all group-hover/add:opacity-100 group-hover/add:translate-x-0',
-);
-
 $image_id        = $product->get_image_id();
 $image_url       = (string) wp_get_attachment_image_url( $image_id, 'woocommerce_thumbnail' );
 $gallery_ids     = $product->get_gallery_image_ids();
@@ -109,7 +104,7 @@ $alpine = array(
 	}"
 	@mouseenter="hover = true"
 	@mouseleave="hover = false"
-	class="group relative bg-white border rounded-lg border-gray-100 max-lg:border-gray-200 !my-0 transition-all duration-500 hover:shadow-lg rtl flex flex-col <?php echo $isArchive ? 'max-lg:flex-row' : ''; ?> <?php echo esc_attr( $args['class'] ?? '' ); ?>"
+	class="group relative overflow-hidden bg-white border rounded-3xl border-gray-100 max-lg:border-gray-200 !my-0 transition-all duration-500 hover:shadow-lg rtl flex flex-col <?php echo $isArchive ? 'max-lg:flex-row' : ''; ?> <?php echo esc_attr( $args['class'] ?? '' ); ?>"
 	dir="rtl"
 	data-gl-card
 >
@@ -141,10 +136,10 @@ $alpine = array(
 		</form>
 	<?php endif; ?>
 
-	<div class="relative overflow-hidden rounded-t-lg bg-gray-50/50 <?php echo $isArchive ? 'max-lg:w-1/3 max-lg:rounded-e-none max-lg:rounded-t-none max-lg:rounded-s-lg' : ''; ?>">
+	<div class="relative shrink-0 overflow-hidden bg-gray-50/50 <?php echo $isArchive ? 'max-lg:w-1/3' : ''; ?>">
 		<a href="<?php echo esc_url( $permalink ); ?>" :href="link" class="block bg-white relative size-full aspect-square overflow-hidden p-4" tabindex="-1" aria-hidden="true">
 			<?php if ( 'outofstock' === $stock_status ) : ?>
-				<span class="absolute top-2 start-2 z-[2] bg-red-600/90 text-white text-sm font-bold px-2.5 py-1 text-center rounded-lg">
+				<span class="absolute top-2 start-2 z-[2] bg-red-600/90 text-white text-sm font-bold px-2.5 py-1 text-center rounded-full">
 					ناموجود
 				</span>
 			<?php endif; ?>
@@ -176,36 +171,18 @@ $alpine = array(
 				     :class="hover ? 'opacity-100 scale-105 duration-500' : 'opacity-0'">
 			<?php endif; ?>
 		</a>
-
-		<?php if ( $can_buy ) : ?>
-			<button type="submit" form="<?php echo esc_attr( $form_id ); ?>"
-			        aria-label="<?php echo esc_attr( sprintf( 'افزودن %s به سبد خرید', $product_name ) ); ?>"
-			        class="gl-atc max-lg:hidden absolute bottom-3 group/add overflow-hidden inset-x-4 duration-300 shadow-md translate-y-[130%] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100 z-20 flex min-h-11 items-center justify-center gap-2 py-3 bg-secondary text-white cursor-pointer rounded-lg font-bold hover:brightness-125 transition-all">
-				<span class="gl-atc-idle flex items-center gap-2">
-					<?php get_template_part( 'template-parts/svg/shop', null, $args_svg ); ?>
-					<span class="text-sm translate-x-4 group-hover/add:translate-x-0 transition-all duration-300">افزودن به سبد</span>
-				</span>
-				<span class="gl-atc-loading" aria-hidden="true"><span class="gl-spinner"></span></span>
-				<span class="gl-atc-done text-sm" aria-hidden="true">
-					<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path class="gl-check-path" stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-					اضافه شد
-				</span>
-			</button>
-		<?php endif; ?>
 	</div>
 
-	<div class="flex flex-1 relative <?php echo $isArchive ? 'max-lg:w-2/3' : 'items-center max-lg:gap-1'; ?> max-lg:flex-col justify-between p-3 lg:px-4 gap-3">
-		<div class="flex flex-col <?php echo $isArchive ? '' : 'max-lg:flex-row max-lg:justify-between w-full'; ?> gap-1">
-
+	<div class="relative flex min-w-0 flex-1 flex-col gap-2 p-3 lg:p-4 <?php echo $isArchive ? 'max-lg:w-2/3' : ''; ?>">
+		<div class="flex min-w-0 flex-wrap items-center justify-between gap-x-2 gap-y-1 <?php echo $isArchive ? 'max-lg:pe-11' : ''; ?>">
 			<a href="<?php echo esc_url( $permalink ); ?>" :href="link"
-			   class="text-sm lg:text-base font-semibold text-gray-800 line-clamp-1 w-full text-right leading-relaxed hover:text-primary after:absolute after:inset-0 after:content-[''] after:z-[1]">
+			   class="min-w-24 flex-1 text-sm lg:text-base font-semibold text-gray-800 line-clamp-1 text-right leading-relaxed hover:text-primary after:absolute after:inset-0 after:content-[''] after:z-[1]">
 				<?php echo esc_html( $product_name ); ?>
 			</a>
-
 			<?php
 			$colors = wc_get_product_terms( $product_id, 'pa_color', array( 'fields' => 'all' ) );
 			if ( ! empty( $colors ) && ! is_wp_error( $colors ) ) : ?>
-				<div class="relative z-[2] -mx-2 flex items-center" data-gl-swatches role="group" aria-label="انتخاب رنگ">
+				<div class="relative z-[2] -me-2 flex shrink-0 items-center" data-gl-swatches role="group" aria-label="انتخاب رنگ">
 					<?php foreach ( $colors as $color ) :
 						$acf_color = function_exists( 'get_field' ) ? get_field( 'color', $color->taxonomy . '_' . $color->term_id ) : '';
 						if ( ! $acf_color ) {
@@ -217,58 +194,54 @@ $alpine = array(
 						        @click="selectColor('<?php echo esc_js( $color->slug ); ?>')"
 						        :aria-pressed="selectedColor === '<?php echo esc_js( $color->slug ); ?>' ? 'true' : 'false'"
 						        aria-pressed="false"
-						        class="relative -my-2 flex size-11 cursor-pointer items-center justify-center rounded-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 <?php echo $color_ok ? '' : 'opacity-40'; ?>"
+						        class="relative -my-2 flex size-11 cursor-pointer items-center justify-center rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 <?php echo $color_ok ? '' : 'opacity-40'; ?>"
 						        title="<?php echo esc_attr( $color->name . ( $color_ok ? '' : ' (ناموجود)' ) ); ?>"
 						        aria-label="<?php echo esc_attr( 'رنگ ' . $color->name . ( $color_ok ? '' : ' (ناموجود)' ) ); ?>">
-							<span class="size-6 rounded-sm border border-gray-300 shadow-sm transition-all"
+							<span class="size-6 rounded-full border border-gray-300 shadow-sm transition-all"
 							      :class="selectedColor === '<?php echo esc_js( $color->slug ); ?>' ? 'ring-2 ring-offset-1 ring-primary scale-110' : ''"
 							      style="background-color: <?php echo esc_attr( $acf_color ); ?>;"></span>
 						</button>
 					<?php endforeach; ?>
 				</div>
-			<?php else : ?>
-				<div class="h-4"></div>
 			<?php endif; ?>
 		</div>
 
-		<div class="flex justify-between items-start <?php echo $isArchive ? 'max-lg:items-center' : ' flex-wrap'; ?> mt-1 min-h-[50px]">
-			<?php if ( $in_stock ) : ?>
-				<div class="flex flex-col items-end gap-0.5 <?php echo $isArchive ? '' : 'w-full max-lg:items-center'; ?>">
-					<div class="flex items-center gap-1.5">
-						<span class="text-lg lg:text-[19px] font-bold text-gray-800 tracking-tight" x-text="currentPrice"><?php echo esc_html( number_format( $price_val ) ); ?></span>
-						<div class="flex flex-col items-center justify-center text-[9px] font-black leading-[0.85] text-gray-600 mt-1" aria-label="تومان">
-							<span aria-hidden="true">ن</span>
-							<span class="-mb-[2px]" aria-hidden="true">توما</span>
-						</div>
-					</div>
-					<div class="h-4 pe-1 flex gap-1 items-center">
-						<div x-show="isOnSale && currentDiscount > 0" <?php echo $is_on_sale && $percentage > 0 ? '' : 'style="display:none"'; ?>
-						     class="bg-secondary text-white text-[12px] font-bold px-2 py-0.5 rounded-md inline-flex items-center justify-center">
-							<span x-text="currentDiscount"><?php echo esc_html( $percentage ); ?></span>٪
-						</div>
-						<del x-show="isOnSale && currentDiscount > 0" <?php echo $is_on_sale && $percentage > 0 ? '' : 'style="display:none"'; ?>
-						     class="text-[12px] text-gray-500 font-medium decoration-red-600"
-						     x-text="currentRegularPrice"><?php echo esc_html( number_format( $reg_val ) ); ?></del>
+		<?php if ( $in_stock ) : ?>
+			<div class="flex min-h-[46px] flex-col items-start gap-0.5">
+				<div class="flex items-center gap-1.5">
+					<span class="text-lg lg:text-[19px] font-bold text-gray-800 tracking-tight" x-text="currentPrice"><?php echo esc_html( number_format( $price_val ) ); ?></span>
+					<div class="flex flex-col items-center justify-center text-[9px] font-black leading-[0.85] text-gray-600 mt-1" aria-label="تومان">
+						<span aria-hidden="true">ن</span>
+						<span class="-mb-[2px]" aria-hidden="true">توما</span>
 					</div>
 				</div>
-				<?php if ( $can_buy ) : ?>
-					<button type="submit" form="<?php echo esc_attr( $form_id ); ?>"
-					        aria-label="<?php echo esc_attr( sprintf( 'افزودن %s به سبد خرید', $product_name ) ); ?>"
-					        class="gl-atc lg:hidden relative z-[2] <?php echo $isArchive ? 'w-fit px-3' : 'w-full mt-3'; ?> group/add overflow-hidden duration-300 shadow-sm flex min-h-11 items-center cursor-pointer justify-center gap-2 px-1 rounded-lg bg-primary text-white transition-all active:scale-[0.98]">
-						<span class="gl-atc-idle flex items-center gap-2">
-							<?php get_template_part( 'template-parts/svg/shop', null, array( 'size' => '18', 'class' => 'text-white' ) ); ?>
-							<span class="text-xs text-nowrap">افزودن به سبد</span>
-						</span>
-						<span class="gl-atc-loading" aria-hidden="true"><span class="gl-spinner"></span></span>
-						<span class="gl-atc-done text-xs" aria-hidden="true">
-							<svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path class="gl-check-path" stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-							اضافه شد
-						</span>
-					</button>
-				<?php endif; ?>
-			<?php else : ?>
-				<span class="text-sm text-gray-500 w-full text-left">ناموجود</span>
+				<div class="flex h-5 items-center gap-1.5">
+					<div x-show="isOnSale && currentDiscount > 0" <?php echo $is_on_sale && $percentage > 0 ? '' : 'style="display:none"'; ?>
+					     class="bg-secondary text-white text-[12px] font-bold px-2 py-0.5 rounded-full inline-flex items-center justify-center">
+						<span x-text="currentDiscount"><?php echo esc_html( $percentage ); ?></span>٪
+					</div>
+					<del x-show="isOnSale && currentDiscount > 0" <?php echo $is_on_sale && $percentage > 0 ? '' : 'style="display:none"'; ?>
+					     class="text-[12px] text-gray-500 font-medium decoration-red-600"
+					     x-text="currentRegularPrice"><?php echo esc_html( number_format( $reg_val ) ); ?></del>
+				</div>
+			</div>
+			<?php if ( $can_buy ) : ?>
+				<button type="submit" form="<?php echo esc_attr( $form_id ); ?>"
+				        aria-label="<?php echo esc_attr( sprintf( 'افزودن %s به سبد خرید', $product_name ) ); ?>"
+				        class="gl-atc relative z-[2] mt-auto flex min-h-11 w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl bg-primary px-3 text-white shadow-sm transition-all hover:brightness-125 active:scale-[0.98]">
+					<span class="gl-atc-idle flex items-center gap-2 whitespace-nowrap">
+						<?php get_template_part( 'template-parts/svg/shop', null, array( 'size' => '18', 'class' => 'text-white' ) ); ?>
+						<span class="text-xs lg:text-sm font-bold">افزودن به سبد</span>
+					</span>
+					<span class="gl-atc-loading" aria-hidden="true"><span class="gl-spinner"></span></span>
+					<span class="gl-atc-done text-xs lg:text-sm font-bold whitespace-nowrap" aria-hidden="true">
+						<svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path class="gl-check-path" stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+						اضافه شد
+					</span>
+				</button>
 			<?php endif; ?>
-		</div>
+		<?php else : ?>
+			<span class="mt-auto flex min-h-11 items-center justify-center rounded-2xl bg-gray-100 text-sm text-gray-500">ناموجود</span>
+		<?php endif; ?>
 	</div>
 </div>

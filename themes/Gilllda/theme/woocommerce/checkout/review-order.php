@@ -36,7 +36,7 @@ defined( 'ABSPATH' ) || exit;
 				<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 					<td class="product-name">
 						<div class="flex items-center gap-3">
-							<span class="relative size-14 shrink-0 overflow-visible rounded-xl border border-gray-100 bg-gray-50 [&_img]:size-full [&_img]:rounded-xl [&_img]:object-cover">
+							<span class="relative size-14 shrink-0 overflow-visible rounded-2xl border border-gray-100 bg-gray-50 [&_img]:size-full [&_img]:rounded-2xl [&_img]:object-cover">
 								<?php echo $_product->get_image( 'woocommerce_gallery_thumbnail', array( 'alt' => '', 'loading' => 'lazy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								<span class="absolute -top-1.5 -start-1.5 flex size-5 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white" aria-hidden="true"><?php echo esc_html( $cart_item['quantity'] ); ?></span>
 							</span>

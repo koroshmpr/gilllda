@@ -35,7 +35,7 @@ do_action( 'woocommerce_cart_is_empty' );
 		</div>
 		<?php if ( wc_get_page_id( 'shop' ) > 0 ) : ?>
 			<p class="return-to-shop">
-				<a class="wc-backward inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-8 text-sm font-bold !text-white shadow-sm shadow-primary/20 transition hover:brightness-110<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>">
+				<a class="wc-backward inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-primary px-8 text-sm font-bold !text-white shadow-sm shadow-primary/20 transition hover:brightness-110<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>">
 					<?php
 					/**
 					 * Filter "Return To Shop" text.

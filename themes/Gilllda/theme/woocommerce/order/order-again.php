@@ -2,6 +2,8 @@
 /**
  * Order again button
  *
+ * Gilllda: rounded «سفارش مجدد» button.
+ *
  * This template can be overridden by copying it to yourtheme/woocommerce/order/order-again.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
@@ -18,6 +20,9 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<p class="order-again">
-	<a href="<?php echo esc_url( $order_again_url ); ?>" class="button<?php echo esc_attr( $wp_button_class ); ?>"><?php esc_html_e( 'Order again', 'woocommerce' ); ?></a>
+<p class="order-again mt-5 flex">
+	<a href="<?php echo esc_url( $order_again_url ); ?>" class="gl-btn inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-white transition hover:bg-primary/90 sm:w-auto<?php echo esc_attr( $wp_button_class ); ?>">
+		<?php echo function_exists( 'gl_acc_icon' ) ? gl_acc_icon( 'refresh', 'size-5' ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		<?php esc_html_e( 'Order again', 'woocommerce' ); ?>
+	</a>
 </p>

@@ -18,7 +18,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<div class="cart_totals gl-summary !w-full !float-none rounded-2xl border border-gray-200 bg-white p-4 lg:p-5 <?php echo ( WC()->customer->has_calculated_shipping() ) ? 'calculated_shipping' : ''; ?>">
+<div class="cart_totals gl-summary !w-full !float-none rounded-3xl border border-gray-200 bg-white p-4 lg:p-5 <?php echo ( WC()->customer->has_calculated_shipping() ) ? 'calculated_shipping' : ''; ?>">
 
     <?php do_action( 'woocommerce_before_cart_totals' ); ?>
     <h2 class="mb-3 text-base font-bold text-primary"><?php esc_html_e( 'Cart totals', 'woocommerce' ); ?></h2>
@@ -31,7 +31,7 @@ defined( 'ABSPATH' ) || exit;
         $gl_remaining = max( 0, $gl_threshold - $gl_basis );
         $gl_percent   = min( 100, (int) round( ( $gl_basis / $gl_threshold ) * 100 ) );
         ?>
-        <div class="mb-4 rounded-xl bg-gray-50 px-3 py-2.5">
+        <div class="mb-4 rounded-2xl bg-gray-50 px-3 py-2.5">
             <p class="mb-2 text-xs text-gray-600">
                 <?php if ( $gl_remaining > 0 ) : ?>
                     فقط <b class="font-bold text-primary"><?php echo esc_html( number_format( $gl_remaining ) ); ?> تومان</b> تا ارسال رایگان
@@ -129,12 +129,12 @@ defined( 'ABSPATH' ) || exit;
         <span>هزینه ارسال: <?php echo esc_html( function_exists( 'gl_cart_shipping_note' ) ? gl_cart_shipping_note() : '' ); ?></span>
     </p>
 
-    <div class="wc-proceed-to-checkout gl-paybar mt-4 flex items-center gap-3 max-lg:fixed max-lg:inset-x-3 max-lg:bottom-17 max-lg:z-40 max-lg:mt-0 max-lg:rounded-2xl max-lg:border max-lg:border-gray-200 max-lg:bg-white/95 max-lg:p-2 max-lg:shadow-[0_8px_30px_rgba(16,37,66,0.18)] max-lg:backdrop-blur">
+    <div class="wc-proceed-to-checkout gl-paybar mt-4 flex items-center gap-3 max-lg:fixed max-lg:inset-x-3 max-lg:bottom-17 max-lg:z-40 max-lg:mt-0 max-lg:rounded-3xl max-lg:border max-lg:border-gray-200 max-lg:bg-white/95 max-lg:p-2 max-lg:shadow-[0_8px_30px_rgba(16,37,66,0.18)] max-lg:backdrop-blur">
         <div class="shrink-0 ps-2 lg:hidden">
             <span class="block text-[11px] text-gray-500">مبلغ قابل پرداخت</span>
             <span class="block text-sm font-black text-gray-900 [&_small]:hidden"><?php wc_cart_totals_order_total_html(); ?></span>
         </div>
-        <div class="flex-1">
+        <div class="min-w-0 flex-1">
             <?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
         </div>
     </div>

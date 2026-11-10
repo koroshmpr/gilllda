@@ -22,7 +22,7 @@ if ( $isSale && $regular_price > 0 ) {
 }
 ?>
 <nav :class="[intro ? '!translate-y-0' : '', scrollingDown ? 'max-lg:scale-85 !translate-y-2' : '']"
-     class="fixed md:px-24 translate-y-full border border-gray-300 xl:hidden p-1 transition-all z-10 bg-gray-50 duration-500 flex justify-between items-center bottom-17 lg:bottom-0 inset-x-3 rounded-2xl"
+     class="fixed md:px-24 translate-y-full border border-gray-300 xl:hidden p-1 transition-all z-10 bg-gray-50 duration-500 flex justify-between items-center bottom-17 lg:bottom-0 inset-x-3 rounded-3xl"
      aria-label="خرید سریع">
 
 	<div class="flex flex-col ps-2 flex-1 relative">
@@ -40,7 +40,7 @@ if ( $isSale && $regular_price > 0 ) {
 		get_template_part( 'template-parts/shop/shop-contact' );
 	elseif ( ! $product->is_in_stock() ) : ?>
 		<a href="<?php echo esc_url( home_url( '/make-available/?' . $product->get_id() ) ); ?>"
-		   class="flex min-h-12 items-center rounded-xl bg-primary px-5 text-sm font-bold text-white">
+		   class="flex min-h-12 items-center rounded-2xl bg-primary px-5 text-sm font-bold text-white">
 			درخواست موجود کردن
 		</a>
 	<?php elseif ( $can_buy && $is_simple ) : ?>
@@ -53,7 +53,7 @@ if ( $isSale && $regular_price > 0 ) {
 			<input type="hidden" name="add-to-cart" value="<?php echo absint( $product->get_id() ); ?>">
 			<input type="hidden" name="quantity" value="1">
 			<button type="submit"
-			        class="gl-atc relative flex min-h-12 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-primary px-5 text-white transition hover:brightness-125 active:scale-[0.98]">
+			        class="gl-atc relative flex min-h-12 cursor-pointer items-center justify-center overflow-hidden rounded-2xl bg-primary px-5 text-white transition hover:brightness-125 active:scale-[0.98]">
 				<span class="gl-atc-idle text-sm font-bold">افزودن به سبد خرید</span>
 				<span class="gl-atc-loading" aria-hidden="true"><span class="gl-spinner"></span></span>
 				<span class="gl-atc-done text-sm font-bold" aria-hidden="true">
@@ -64,7 +64,7 @@ if ( $isSale && $regular_price > 0 ) {
 		</form>
 	<?php else : ?>
 		<button @click="openForm = true" type="button" aria-haspopup="dialog" aria-controls="openForm"
-		        class="flex min-h-12 cursor-pointer items-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-white transition hover:brightness-125 active:scale-[0.98]">
+		        class="flex min-h-12 cursor-pointer items-center gap-2 rounded-2xl bg-primary px-5 text-sm font-bold text-white transition hover:brightness-125 active:scale-[0.98]">
 			<?php get_template_part( 'template-parts/svg/shop', null, array( 'size' => '18', 'class' => 'text-white' ) ); ?>
 			<?php echo $product->is_purchasable() ? 'افزودن به سبد خرید' : esc_html( $product->add_to_cart_text() ); ?>
 		</button>
@@ -85,14 +85,14 @@ if ( $isSale && $regular_price > 0 ) {
 			<div class="mb-4 flex items-center gap-3 border-b border-gray-100 pb-3">
 				<?php if ( $thumb_url ) : ?>
 					<img src="<?php echo esc_url( $thumb_url ); ?>" alt="<?php echo esc_attr( $product->get_name() ); ?>" width="64" height="64" loading="lazy"
-					     class="size-16 shrink-0 rounded-xl border border-gray-100 bg-gray-50 object-cover">
+					     class="size-16 shrink-0 rounded-2xl border border-gray-100 bg-gray-50 object-cover">
 				<?php endif; ?>
 				<div class="min-w-0 flex-1">
 					<p id="gl-sheet-title-<?php echo esc_attr( $product->get_id() ); ?>" class="line-clamp-1 text-sm font-bold text-gray-800"><?php echo esc_html( $product->get_name() ); ?></p>
 					<p class="text-xs text-gray-500">رنگ را انتخاب کنید و به سبد اضافه کنید</p>
 				</div>
 				<button @click="openForm = false" type="button" aria-label="بستن"
-				        class="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-gray-100 text-gray-600">
+				        class="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-2xl bg-gray-100 text-gray-600">
 					<?php get_template_part( 'template-parts/svg/close', null, array( 'size' => '20', 'class' => '' ) ); ?>
 				</button>
 			</div>

@@ -56,7 +56,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 	<?php endif; ?>
 
-	<aside class="gl-summary min-w-0 rounded-2xl border border-gray-200 bg-white p-4 lg:sticky lg:top-28 lg:p-5" aria-labelledby="order_review_heading">
+	<aside class="gl-summary min-w-0 rounded-3xl border border-gray-200 bg-white p-4 lg:sticky lg:top-28 lg:p-5" aria-labelledby="order_review_heading">
 		<?php do_action( 'woocommerce_checkout_before_order_review_heading' ); ?>
 
 		<h3 id="order_review_heading" class="mb-3 flex items-center justify-between text-base font-bold text-primary">

@@ -139,7 +139,7 @@ function gl_cart_drawer_body() {
 					<p class="text-base font-bold text-gray-800">سبد خرید شما خالی است</p>
 					<p class="text-sm text-gray-500">کیف محبوبت را پیدا کن و با یک ضربه به سبد اضافه کن.</p>
 				</div>
-				<a href="<?php echo esc_url( $shop_url ); ?>" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-8 text-sm font-bold text-white shadow-sm transition hover:brightness-110">
+				<a href="<?php echo esc_url( $shop_url ); ?>" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-primary px-8 text-sm font-bold text-white shadow-sm transition hover:brightness-110">
 					رفتن به فروشگاه
 				</a>
 			</div>
@@ -150,7 +150,7 @@ function gl_cart_drawer_body() {
 				$remaining = max( 0, $threshold - $basis );
 				$percent   = min( 100, (int) round( ( $basis / $threshold ) * 100 ) );
 				?>
-				<div class="mx-4 mt-3 rounded-2xl bg-white px-4 py-3 ring-1 ring-gray-100">
+				<div class="mx-4 mt-3 rounded-3xl bg-white px-4 py-3 ring-1 ring-gray-100">
 					<p class="mb-2 text-xs text-gray-600">
 						<?php if ( $remaining > 0 ) : ?>
 							فقط <b class="font-bold text-primary"><?php echo esc_html( gl_cart_number( $remaining ) ); ?> تومان</b> تا ارسال رایگان
@@ -168,18 +168,18 @@ function gl_cart_drawer_body() {
 				<?php foreach ( $items as $item ) :
 					$at_max = $item['max'] > 0 && $item['qty'] >= $item['max'];
 					?>
-					<li class="gl-item relative flex gap-3 rounded-2xl border border-gray-100 bg-white p-3 transition-all duration-300"
+					<li class="gl-item relative flex gap-3 rounded-3xl border border-gray-100 bg-white p-3 transition-all duration-300"
 						data-gl-item="<?php echo esc_attr( $item['key'] ); ?>"
 						data-qty="<?php echo esc_attr( $item['qty'] ); ?>"
 						data-max="<?php echo esc_attr( $item['max'] ); ?>"
 						data-name="<?php echo esc_attr( $item['name'] ); ?>">
 
 						<?php if ( $item['permalink'] ) : ?>
-							<a href="<?php echo esc_url( $item['permalink'] ); ?>" class="block size-20 shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-gray-50" tabindex="-1" aria-hidden="true">
+							<a href="<?php echo esc_url( $item['permalink'] ); ?>" class="block size-20 shrink-0 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50" tabindex="-1" aria-hidden="true">
 								<?php echo $item['thumbnail']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 							</a>
 						<?php else : ?>
-							<span class="block size-20 shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-gray-50"><?php echo $item['thumbnail']; // phpcs:ignore ?></span>
+							<span class="block size-20 shrink-0 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50"><?php echo $item['thumbnail']; // phpcs:ignore ?></span>
 						<?php endif; ?>
 
 						<div class="flex min-w-0 flex-1 flex-col gap-1">
@@ -190,7 +190,7 @@ function gl_cart_drawer_body() {
 									<span class="line-clamp-2 pt-0.5 text-sm font-bold leading-6 text-gray-800"><?php echo esc_html( $item['name'] ); ?></span>
 								<?php endif; ?>
 								<button type="button" data-gl-remove
-										class="-me-2 -mt-2 flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-xl text-gray-400 transition hover:bg-secondary/5 hover:text-secondary"
+										class="-me-2 -mt-2 flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-2xl text-gray-400 transition hover:bg-secondary/5 hover:text-secondary"
 										aria-label="<?php echo esc_attr( sprintf( 'حذف %s از سبد', $item['name'] ) ); ?>">
 									<svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
 								</button>
@@ -206,15 +206,15 @@ function gl_cart_drawer_body() {
 							<?php endforeach; ?>
 
 							<div class="mt-auto flex items-end justify-between gap-2 pt-1">
-								<div class="gl-stepper flex items-center rounded-xl border border-gray-200 bg-gray-50" role="group" aria-label="<?php echo esc_attr( sprintf( 'تعداد %s', $item['name'] ) ); ?>">
+								<div class="gl-stepper flex items-center rounded-2xl border border-gray-200 bg-gray-50" role="group" aria-label="<?php echo esc_attr( sprintf( 'تعداد %s', $item['name'] ) ); ?>">
 									<button type="button" data-gl-qty="1"
-											class="flex size-11 cursor-pointer items-center justify-center rounded-xl text-primary transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-30"
+											class="flex size-11 cursor-pointer items-center justify-center rounded-2xl text-primary transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-30"
 											aria-label="افزایش تعداد" <?php disabled( $at_max ); ?>>
 										<svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-width="2.4" d="M12 5v14M5 12h14"/></svg>
 									</button>
 									<output class="w-7 text-center text-sm font-black text-gray-800" data-gl-qty-value aria-live="polite"><?php echo esc_html( $item['qty'] ); ?></output>
 									<button type="button" data-gl-qty="-1"
-											class="flex size-11 cursor-pointer items-center justify-center rounded-xl text-primary transition hover:bg-white"
+											class="flex size-11 cursor-pointer items-center justify-center rounded-2xl text-primary transition hover:bg-white"
 											aria-label="<?php echo 1 === $item['qty'] ? 'حذف از سبد' : 'کاهش تعداد'; ?>">
 										<svg class="gl-ico-minus size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-width="2.4" d="M5 12h14"/></svg>
 										<svg class="gl-ico-trash size-[18px] text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
@@ -252,11 +252,11 @@ function gl_cart_drawer_body() {
 				</dl>
 				<div class="grid grid-cols-[1fr_1.5fr] gap-2">
 					<button type="button" data-gl-close
-							class="min-h-12 cursor-pointer rounded-xl border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700 transition hover:bg-gray-50">
+							class="min-h-12 cursor-pointer rounded-2xl border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700 transition hover:bg-gray-50">
 						ادامه خرید
 					</button>
 					<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>"
-					   class="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-3 text-sm font-bold text-white shadow-sm shadow-primary/20 transition hover:brightness-110">
+					   class="flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-primary px-3 text-sm font-bold text-white shadow-sm shadow-primary/20 transition hover:brightness-110">
 						تسویه حساب
 						<svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7"/></svg>
 					</a>

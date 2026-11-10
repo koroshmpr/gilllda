@@ -98,3 +98,13 @@ blockquote {
 		top: 46px;
 	}
 }
+
+/* WooCommerce markup uses .col-1/.col-2 (and .col2-set) as layout names; Tailwind v4 also
+   generates `col-1` = grid-column utilities from them. Neutralise so addresses/checkout
+   columns are never forced into a grid track. */
+.col2-set > .col-1,
+.col2-set > .col-2,
+.woocommerce-Addresses > .col-1,
+.woocommerce-Addresses > .col-2 {
+	grid-column: auto;
+}

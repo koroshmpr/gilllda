@@ -1,3 +1,5 @@
+import './compare.js';
+import './search.js';
 import './cart.js';
 // Only the Swiper modules the theme uses (the full bundle added ~60 KB to every page).
 import Swiper from 'swiper';

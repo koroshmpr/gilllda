@@ -9,7 +9,7 @@ $id           = is_home() ? (int) get_option('page_for_posts') : get_queried_obj
 $current_page = max(1, (int) get_query_var('paged'));
 $faq          = function_exists('get_field') ? get_field('faq_list', $id) : null;
 $page_content = $id ? get_post_field('post_content', $id) : '';
-$first        = $current_page === 1 && empty($_GET) && is_home();
+$first        = $current_page === 1 && is_home(); // tracking params (utm_*) must not hide the featured block
 
 get_header();
 

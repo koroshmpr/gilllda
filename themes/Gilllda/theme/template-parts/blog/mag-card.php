@@ -37,7 +37,7 @@ $series = function_exists('gl_series_info') ? gl_series_info($pid) : null;
             <span><?= esc_html(gl_fa_num(gl_reading_minutes($pid))); ?> دقیقه مطالعه</span>
         </div>
         <h3 class="font-black leading-snug text-gray-900 <?= $large ? 'text-2xl lg:text-3xl' : 'text-lg'; ?>">
-            <a href="<?php the_permalink(); ?>" class="bg-[length:0_2px] bg-[0_100%] bg-no-repeat bg-gradient-to-l from-secondary to-secondary transition-[background-size] duration-500 group-hover:bg-[length:100%_2px]"><?php the_title(); ?></a>
+            <a href="<?php the_permalink(); ?>" class="decoration-secondary/60 decoration-2 underline-offset-[6px] transition-colors duration-300 group-hover:text-secondary group-hover:underline"><?php the_title(); ?></a>
         </h3>
         <p class="mt-2 line-clamp-2 text-sm leading-7 text-gray-600"><?= esc_html(wp_trim_words(get_the_excerpt(), $large ? 34 : 22)); ?></p>
         <time class="mt-auto pt-3 text-xs text-gray-400" datetime="<?= esc_attr(get_the_date('c')); ?>"><?= esc_html(function_exists('shamsi_date') ? shamsi_date('j F Y', get_the_time('U')) : get_the_date()); ?></time>

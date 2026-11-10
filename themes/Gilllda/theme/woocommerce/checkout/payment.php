@@ -50,14 +50,14 @@ if ( ! wp_doing_ajax() ) {
 
 		<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
 
-		<div class="gl-paybar flex items-center gap-3 max-lg:fixed max-lg:inset-x-3 max-lg:bottom-17 max-lg:z-40 max-lg:rounded-2xl max-lg:border max-lg:border-gray-200 max-lg:bg-white/95 max-lg:p-2 max-lg:shadow-[0_8px_30px_rgba(16,37,66,0.18)] max-lg:backdrop-blur lg:mt-4">
+		<div class="gl-paybar flex items-center gap-3 max-lg:fixed max-lg:inset-x-3 max-lg:bottom-17 max-lg:z-40 max-lg:rounded-3xl max-lg:border max-lg:border-gray-200 max-lg:bg-white/95 max-lg:p-2 max-lg:shadow-[0_8px_30px_rgba(16,37,66,0.18)] max-lg:backdrop-blur lg:mt-4">
 			<?php if ( WC()->cart ) : ?>
 				<div class="shrink-0 ps-2 lg:hidden">
 					<span class="block text-[11px] text-gray-500">مبلغ قابل پرداخت</span>
 					<span class="block text-sm font-black text-gray-900"><?php echo wp_kses_post( WC()->cart->get_total() ); ?></span>
 				</div>
 			<?php endif; ?>
-			<?php echo apply_filters( 'woocommerce_order_button_html', '<button type="submit" class="gl-place-order alt flex min-h-12 flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl !bg-primary px-4 text-base font-bold !text-white shadow-sm shadow-primary/20 transition hover:brightness-110 active:scale-[0.98] lg:min-h-14 lg:w-full' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '">' . esc_html( $order_button_text ) . '</button>' ); // @codingStandardsIgnoreLine ?>
+			<?php echo apply_filters( 'woocommerce_order_button_html', '<button type="submit" class="gl-place-order alt flex min-h-12 flex-1 cursor-pointer items-center justify-center gap-2 rounded-2xl !bg-primary px-4 text-base font-bold !text-white shadow-sm shadow-primary/20 transition hover:brightness-110 active:scale-[0.98] lg:min-h-14 lg:w-full' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '">' . esc_html( $order_button_text ) . '</button>' ); // @codingStandardsIgnoreLine ?>
 		</div>
 
 		<p class="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-gray-500">

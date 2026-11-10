@@ -2,6 +2,8 @@
 /**
  * Order Item Details
  *
+ * Gilllda: thumbnail + name + quantity + variation chips (rendered as a table row so plugin rows still fit).
+ *
  * This template can be overridden by copying it to yourtheme/woocommerce/order/order-details-item.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
@@ -22,33 +24,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! apply_filters( 'woocommerce_order_item_visible', true, $item ) ) {
 	return;
 }
+
+$is_visible        = $product && $product->is_visible();
+$product_permalink = apply_filters( 'woocommerce_order_item_permalink', $is_visible ? $product->get_permalink( $item ) : '', $item, $order );
+$gl_thumb          = $product ? $product->get_image( 'woocommerce_gallery_thumbnail', array( 'class' => 'size-full object-cover', 'loading' => 'lazy' ) ) : wc_placeholder_img( 'woocommerce_gallery_thumbnail', array( 'class' => 'size-full object-cover' ) );
 ?>
 <tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'woocommerce-table__line-item order_item', $item, $order ) ); ?>">
 
 	<td class="woocommerce-table__product-name product-name">
-		<?php
-		$is_visible        = $product && $product->is_visible();
-		$product_permalink = apply_filters( 'woocommerce_order_item_permalink', $is_visible ? $product->get_permalink( $item ) : '', $item, $order );
+		<div class="flex items-start gap-3">
+			<?php if ( $product_permalink ) : ?>
+				<a href="<?php echo esc_url( $product_permalink ); ?>" class="block size-16 shrink-0 overflow-hidden rounded-2xl bg-gray-50 ring-1 ring-gray-100 sm:size-20" tabindex="-1" aria-hidden="true"><?php echo $gl_thumb; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- core image markup. ?></a>
+			<?php else : ?>
+				<span class="block size-16 shrink-0 overflow-hidden rounded-2xl bg-gray-50 ring-1 ring-gray-100 sm:size-20" aria-hidden="true"><?php echo $gl_thumb; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- core image markup. ?></span>
+			<?php endif; ?>
+			<div class="gl-item-info min-w-0 flex-1 text-sm leading-6">
+				<span class="font-bold text-primary [&_a]:text-primary [&_a:hover]:underline">
+				<?php
+				echo wp_kses_post( apply_filters( 'woocommerce_order_item_name', $product_permalink ? sprintf( '<a href="%s">%s</a>', $product_permalink, $item->get_name() ) : $item->get_name(), $item, $is_visible ) );
+				?>
+				</span>
+				<?php
+				$qty          = $item->get_quantity();
+				$refunded_qty = $order->get_qty_refunded_for_item( $item_id );
 
-		echo wp_kses_post( apply_filters( 'woocommerce_order_item_name', $product_permalink ? sprintf( '<a href="%s">%s</a>', $product_permalink, $item->get_name() ) : $item->get_name(), $item, $is_visible ) );
+				if ( $refunded_qty ) {
+					$qty_display = '<del>' . esc_html( $qty ) . '</del> <ins>' . esc_html( $qty - ( $refunded_qty * -1 ) ) . '</ins>';
+				} else {
+					$qty_display = esc_html( $qty );
+				}
 
-		$qty          = $item->get_quantity();
-		$refunded_qty = $order->get_qty_refunded_for_item( $item_id );
+				echo apply_filters( 'woocommerce_order_item_quantity_html', ' <strong class="product-quantity">' . sprintf( '&times;&nbsp;%s', $qty_display ) . '</strong>', $item ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		if ( $refunded_qty ) {
-			$qty_display = '<del>' . esc_html( $qty ) . '</del> <ins>' . esc_html( $qty - ( $refunded_qty * -1 ) ) . '</ins>';
-		} else {
-			$qty_display = esc_html( $qty );
-		}
+				do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order, false );
 
-		echo apply_filters( 'woocommerce_order_item_quantity_html', ' <strong class="product-quantity">' . sprintf( '&times;&nbsp;%s', $qty_display ) . '</strong>', $item ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				wc_display_item_meta( $item ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order, false );
-
-		wc_display_item_meta( $item ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
-		do_action( 'woocommerce_order_item_meta_end', $item_id, $item, $order, false );
-		?>
+				do_action( 'woocommerce_order_item_meta_end', $item_id, $item, $order, false );
+				?>
+			</div>
+		</div>
 	</td>
 
 	<td class="woocommerce-table__product-total product-total">

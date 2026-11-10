@@ -20,9 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<form role="search" method="get" class="woocommerce-product-search" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-	<label class="screen-reader-text" for="woocommerce-product-search-field-<?php echo isset( $index ) ? absint( $index ) : 0; ?>"><?php esc_html_e( 'Search for:', 'woocommerce' ); ?></label>
-	<input type="search" id="woocommerce-product-search-field-<?php echo isset( $index ) ? absint( $index ) : 0; ?>" class="search-field" placeholder="<?php echo esc_attr__( 'Search products&hellip;', 'woocommerce' ); ?>" value="<?php echo get_search_query(); ?>" name="s" />
-	<button type="submit" value="<?php echo esc_attr_x( 'Search', 'submit button', 'woocommerce' ); ?>" class="<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ); ?>"><?php echo esc_html_x( 'Search', 'submit button', 'woocommerce' ); ?></button>
-	<input type="hidden" name="post_type" value="product" />
+<form role="search" method="get" class="woocommerce-product-search flex gap-2" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+	<label class="sr-only" for="woocommerce-product-search-field-<?php echo isset( $index ) ? absint( $index ) : 0; ?>"><?php esc_html_e( 'Search for:', 'woocommerce' ); ?></label>
+	<input type="search" id="woocommerce-product-search-field-<?php echo isset( $index ) ? absint( $index ) : 0; ?>"
+	       class="search-field h-12 min-w-0 flex-1 rounded-2xl border border-gray-200 bg-white px-4 text-base outline-none transition focus:border-primary/40 focus:ring-4 focus:ring-primary/5"
+	       placeholder="جستجوی کیف، رنگ یا مقاله…" maxlength="64" enterkeyhint="search"
+	       value="<?php echo esc_attr( get_search_query() ); ?>" name="s" />
+	<button type="submit" class="min-h-12 shrink-0 cursor-pointer rounded-full bg-primary px-5 text-sm font-bold text-white transition hover:brightness-125">جستجو</button>
 </form>

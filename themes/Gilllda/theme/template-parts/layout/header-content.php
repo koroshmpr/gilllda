@@ -5,7 +5,7 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
 
     <header id="header"
             :class="[scrolled ? 'lg:shadow-sm' : '', scrollingDown ? 'max-lg:scale-85' : '']"
-            class="fixed <?= is_admin_bar_showing() ? 'lg:top-8' : 'lg:top-0'; ?> shadow-[0_-5px_5px_-3px_rgba(0,0,0,0.1)] max-lg:bottom-2 max-lg:inset-x-4 left-0 lg:w-full max-lg:rounded-3xl bg-white/90 backdrop-blur-sm max-lg:border border-gray-300 lg:bg-white transition-all duration-300 z-50">
+            class="fixed <?= is_admin_bar_showing() ? 'lg:top-8' : 'lg:top-0'; ?> shadow-[0_-5px_5px_-3px_rgba(0,0,0,0.1)] max-lg:bottom-2 max-lg:inset-x-4 left-0 lg:w-full max-lg:rounded-3xl bg-white/90 backdrop-blur-md max-lg:border border-gray-200 lg:bg-white/95 transition-all duration-300 z-50">
         <nav class="container <?= is_admin() ? 'lg:pt-12' : '' ?> flex items-center lg:h-14 max-lg:p-[3px] lg:py-4 justify-between">
             <div class="flex items-center gap-5 max-lg:hidden">
                 <?php get_template_part('template-parts/global/logo', null, [
@@ -35,7 +35,7 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
                     }
                 endif;
 
-                $baseClass = 'relative lg:bg-gray-50 justify-center lg:border border-gray-300 p-2 max-lg:py-3 max-lg:flex-1 hover:bg-primary hover:text-white flex items-center gap-3 cursor-pointer lg:rounded-sm transition-all duration-300';
+                $baseClass = 'relative lg:bg-gray-50 justify-center lg:border border-gray-200 p-2 lg:min-h-10 lg:min-w-10 max-lg:py-3 max-lg:flex-1 hover:bg-primary hover:border-primary hover:text-white flex items-center gap-3 cursor-pointer max-lg:rounded-2xl lg:rounded-2xl transition-all duration-300';
                 $baseSvgClass = 'max-lg:size-5.5 duration-300 transition-all';
                 $svgSize = '18';
 
@@ -54,7 +54,7 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
                     <button @click="cart = true" aria-label="open cart modal"
                             class="<?= $baseClass; ?> <?= is_cart() ? $activeClass : ''; ?> relative cursor-pointer">
                         <?php get_template_part('template-parts/svg/cart', null, ['size' => $svgSize, 'class' => $baseSvgClass]); ?>
-                        <span class="header-cart-count absolute top-0 start-2 lg:start-0 lg:translate-x-1/2 lg:-translate-y-1/2 translate-y-1 bg-secondary/80 text-white flex leading-auto justify-center items-center pt-1 p-0.5 rounded-sm text-xs size-4">
+                        <span class="header-cart-count absolute top-0 start-2 lg:start-0 lg:translate-x-1/2 lg:-translate-y-1/2 translate-y-1 bg-secondary text-white flex leading-auto justify-center items-center pt-0.5 p-0.5 rounded-full text-[10px] font-bold size-4.5 ring-2 ring-white">
                              <?= $cart_count; ?>
                         </span>
                     </button>
@@ -86,7 +86,7 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
                        x-init="compareCount = JSON.parse(localStorage.getItem('compare_products') || '[]').length;">
                         <?php get_template_part('template-parts/svg/compare', null, ['size' => $svgSize, 'class' => $baseSvgClass]); ?>
                         <span :class="compareCount === 0 ? 'hidden' : '!opacity-100'"
-                              class="absolute top-0 start-2 lg:start-0 opacity-0 lg:translate-x-1/2 text-white lg:-translate-y-1/2 translate-y-1 bg-secondary/80 flex leading-auto justify-center items-center pt-1 p-0.5 rounded-sm text-xs size-4"
+                              class="absolute top-0 start-2 lg:start-0 opacity-0 lg:translate-x-1/2 text-white lg:-translate-y-1/2 translate-y-1 bg-secondary flex leading-auto justify-center items-center pt-0.5 p-0.5 rounded-full text-[10px] font-bold size-4.5 ring-2 ring-white"
                               x-text="compareCount">
                     </span>
                     </a>

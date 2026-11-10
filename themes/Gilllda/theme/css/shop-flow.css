@@ -178,7 +178,7 @@
 	margin: 0 0 1rem !important;
 	padding: 0.875rem 2.85rem 0.875rem 1rem !important;
 	border: 1px solid transparent !important;
-	border-radius: 1rem !important;
+	border-radius: 1.5rem !important;
 	background: #fff;
 	color: #1f2937 !important;
 	font-size: 0.875rem;
@@ -249,7 +249,7 @@
 	min-height: 2.25rem;
 	margin: -0.2rem 0.75rem 0 0 !important;
 	padding: 0.25rem 0.9rem !important;
-	border-radius: 0.75rem !important;
+	border-radius: 999px !important;
 	background: var(--gl-primary) !important;
 	color: #fff !important;
 	font-size: 0.75rem !important;
@@ -264,7 +264,7 @@
 
 /* ---------- shared form controls (cart + checkout) ---------- */
 .gl-checkout .input-text,
-.gl-checkout select,
+.gl-checkout select:not(.select2-hidden-accessible),
 .gl-checkout textarea,
 .gl-cart .input-text:not(.qty),
 .gl-coupon-form .input-text,
@@ -273,7 +273,7 @@
 	min-height: 3rem;
 	padding: 0.75rem 1rem !important;
 	border: 1px solid var(--gl-border) !important;
-	border-radius: 0.875rem !important;
+	border-radius: 1rem !important;
 	background: #fff !important;
 	color: #111827;
 	font-size: 1rem; /* >= 16px: no iOS zoom */
@@ -286,7 +286,7 @@
 		background-color 0.2s ease;
 }
 .gl-checkout .input-text:focus,
-.gl-checkout select:focus,
+.gl-checkout select:not(.select2-hidden-accessible):focus,
 .gl-checkout textarea:focus,
 .gl-cart .input-text:not(.qty):focus,
 .gl-coupon-form .input-text:focus,
@@ -362,7 +362,7 @@
 	margin-top: 1rem;
 	padding: 1rem;
 	border: 1px solid var(--gl-border);
-	border-radius: 1rem;
+	border-radius: 1.5rem;
 	background: #fff;
 }
 @media (min-width: 1024px) {
@@ -460,7 +460,7 @@
 	height: 3rem !important;
 	padding: 0 !important;
 	border: 1px solid var(--gl-border) !important;
-	border-radius: 0.875rem !important;
+	border-radius: 1rem !important;
 	background: #fff !important;
 }
 .gl-checkout
@@ -490,7 +490,7 @@
 .select2-dropdown {
 	overflow: hidden;
 	border-color: var(--gl-border) !important;
-	border-radius: 0.875rem !important;
+	border-radius: 1rem !important;
 }
 .select2-results__option {
 	padding: 0.6rem 0.9rem !important;
@@ -648,7 +648,7 @@
 	margin: 0 !important;
 	padding: 0.65rem 0.9rem !important;
 	border: 1px solid var(--gl-border);
-	border-radius: 1rem;
+	border-radius: 1.5rem;
 	background: #fff;
 	line-height: 1.6 !important;
 	transition:
@@ -679,7 +679,7 @@
 .gl-checkout #payment div.payment_box {
 	margin: 0.4rem 0 0.2rem !important;
 	padding: 0.6rem 0.85rem !important;
-	border-radius: 0.75rem !important;
+	border-radius: 1rem !important;
 	background: #f9fafb !important;
 	color: #4b5563 !important;
 	font-size: 0.8125rem;
@@ -735,13 +735,13 @@
 	margin: 0 0 1rem !important;
 	padding: 1rem !important;
 	border: 1px solid var(--gl-border) !important;
-	border-radius: 1rem !important;
+	border-radius: 1.5rem !important;
 	background: #fff;
 }
 .woocommerce-checkout .woocommerce-form-login .woocommerce-form-login__submit {
 	min-height: 3rem;
 	padding: 0 1.5rem !important;
-	border-radius: 0.875rem !important;
+	border-radius: 1rem !important;
 	background: var(--gl-primary) !important;
 	color: #fff !important;
 	font-weight: 700;
@@ -875,4 +875,90 @@
 	.gl-atc .gl-atc-done {
 		transition: none !important;
 	}
+}
+
+/* ---------- v1.7.1 layout fixes ---------- */
+
+/* Never let WooCommerce's select2 originals or long strings widen the page. */
+.gl-checkout select.select2-hidden-accessible {
+	width: 1px !important;
+	padding: 0 !important;
+}
+.gl-cart,
+.gl-checkout,
+.gl-summary {
+	max-width: 100%;
+	min-width: 0;
+}
+.gl-summary td,
+.gl-cart .product-name {
+	overflow-wrap: anywhere;
+}
+
+/* Proceed-to-checkout: WooCommerce makes it a 1.25em block with 1em padding. */
+.gl-summary .wc-proceed-to-checkout {
+	padding: 0 !important;
+}
+@media (max-width: 1023.98px) {
+	.gl-summary .wc-proceed-to-checkout {
+		padding: 0.5rem !important;
+	}
+}
+.gl-summary .wc-proceed-to-checkout a.checkout-button {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	margin: 0 !important;
+	padding: 0 1rem !important;
+	font-size: 0.875rem !important;
+	line-height: 1.4;
+	white-space: nowrap;
+}
+.gl-summary .wc-proceed-to-checkout a.checkout-button svg {
+	flex: none;
+}
+
+/* Prices: number first (right), currency after it (left) in RTL; end-aligned. */
+.gl-summary .woocommerce-Price-amount,
+.gl-summary .woocommerce-Price-amount bdi,
+.gl-cart .woocommerce-Price-amount,
+.gl-cart .woocommerce-Price-amount bdi,
+.gl-paybar .woocommerce-Price-amount,
+.gl-paybar .woocommerce-Price-amount bdi {
+	direction: rtl;
+	unicode-bidi: isolate;
+	white-space: nowrap;
+}
+
+/* Shipping row: compact method + muted, clamped destination text. */
+.gl-summary #shipping_method li label {
+	font-weight: 500;
+	font-size: 0.8125rem;
+}
+.gl-summary .woocommerce-shipping-destination,
+.gl-summary .woocommerce-shipping-contents {
+	display: -webkit-box;
+	margin: 0.25rem 0 0 !important;
+	overflow: hidden;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	color: #6b7280 !important;
+	font-size: 0.72rem !important;
+	font-weight: 400 !important;
+	line-height: 1.7;
+	text-align: left;
+}
+.gl-summary .woocommerce-shipping-destination strong {
+	font-weight: 400 !important;
+}
+.gl-summary .woocommerce-shipping-calculator {
+	margin: 0.25rem 0 0;
+	font-size: 0.75rem;
+	font-weight: 400;
+	text-align: left;
+}
+.gl-summary .woocommerce-shipping-totals td {
+	max-width: 0; /* let the clamp work inside the table cell */
+	width: 62%;
 }

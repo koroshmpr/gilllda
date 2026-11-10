@@ -213,7 +213,7 @@ while (have_posts()) :
                 <?php get_template_part('template-parts/global/faq-list', null, ['class' => 'mt-14', 'title' => 'پرسش‌های متداول']); ?>
 
                 <?php if ($series && ($series['next'] || $series['prev'])) : ?>
-                    <nav class="mt-14 grid gap-4" aria-label="قسمت‌های پرونده" data-reveal>
+                    <nav class="mt-14 grid min-w-0 gap-4 [&>*]:min-w-0" aria-label="قسمت‌های پرونده" data-reveal>
                         <?php if ($series['next']) : $n = $series['next']; ?>
                             <a href="<?= esc_url(get_permalink($n)); ?>" rel="next" class="group relative flex flex-col gap-5 overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-[#1d3a63] p-6 text-white sm:flex-row sm:items-center sm:p-8">
                                 <div class="pointer-events-none absolute -bottom-16 -start-10 size-56 rounded-full bg-secondary/40 blur-3xl transition-transform duration-700 group-hover:scale-125" aria-hidden="true"></div>
@@ -231,11 +231,11 @@ while (have_posts()) :
                             </a>
                         <?php endif; ?>
                         <?php if ($series['prev']) : $p = $series['prev']; ?>
-                            <a href="<?= esc_url(get_permalink($p)); ?>" rel="prev" class="group flex items-center gap-4 rounded-2xl border border-gray-200 p-4 transition hover:border-secondary/40 hover:bg-gray-50">
+                            <a href="<?= esc_url(get_permalink($p)); ?>" rel="prev" class="group flex min-w-0 items-center gap-4 rounded-2xl border border-gray-200 p-4 transition hover:border-secondary/40 hover:bg-gray-50">
                                 <span class="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-gray-500 group-hover:text-secondary" aria-hidden="true">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
                                 </span>
-                                <span class="min-w-0">
+                                <span class="min-w-0 flex-1">
                                     <span class="block text-xs text-gray-500">قسمت قبلی · <?= esc_html(gl_fa_num($series['number'] - 1)); ?></span>
                                     <span class="block truncate font-bold text-gray-800"><?= esc_html(get_the_title($p)); ?></span>
                                 </span>

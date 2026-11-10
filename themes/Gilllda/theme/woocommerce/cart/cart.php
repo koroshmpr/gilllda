@@ -59,9 +59,9 @@ do_action( 'woocommerce_before_cart' ); ?>
 					$base_name         = function_exists( 'gl_cart_item_base_name' ) ? gl_cart_item_base_name( $_product ) : $_product->get_name();
 					$item_attrs        = function_exists( 'gl_cart_item_attrs' ) ? gl_cart_item_attrs( $cart_item, $_product ) : array();
 					?>
-					<div class="woocommerce-cart-form__cart-item gl-cart-item relative flex gap-3 rounded-2xl border border-gray-200 bg-white p-3 transition lg:gap-4 lg:p-4 <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
+					<div class="woocommerce-cart-form__cart-item gl-cart-item relative flex gap-3 rounded-3xl border border-gray-200 bg-white p-3 transition lg:gap-4 lg:p-4 <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 
-						<div class="product-thumbnail size-24 shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-gray-50 lg:size-28 [&_img]:size-full [&_img]:object-cover">
+						<div class="product-thumbnail size-24 shrink-0 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 lg:size-28 [&_img]:size-full [&_img]:object-cover">
 							<?php
 							/**
 							 * Filter the product thumbnail displayed in the WooCommerce cart.
@@ -126,7 +126,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 									echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 										'woocommerce_cart_item_remove_link',
 										sprintf(
-											'<a role="button" href="%s" class="gl-remove -me-2 -mt-2 flex size-11 items-center justify-center rounded-xl text-gray-400 transition hover:bg-secondary/5 hover:text-secondary" aria-label="%s" data-product_id="%s" data-product_sku="%s"><svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></a>',
+											'<a role="button" href="%s" class="gl-remove -me-2 -mt-2 flex size-11 items-center justify-center rounded-2xl text-gray-400 transition hover:bg-secondary/5 hover:text-secondary" aria-label="%s" data-product_id="%s" data-product_sku="%s"><svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></a>',
 											esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
 											/* translators: %s is the product name */
 											esc_attr( sprintf( __( 'Remove %s from cart', 'woocommerce' ), wp_strip_all_tags( $product_name ) ) ),
@@ -170,14 +170,14 @@ do_action( 'woocommerce_before_cart' ); ?>
 										echo '<span class="text-xs text-gray-500">۱ عدد</span>';
 									else :
 										?>
-										<div class="gl-qty flex items-center rounded-xl border border-gray-200 bg-gray-50" data-gl-cart-qty>
+										<div class="gl-qty flex items-center rounded-2xl border border-gray-200 bg-gray-50" data-gl-cart-qty>
 											<button type="button" data-gl-cart-step="1" aria-label="افزایش تعداد"
-											        class="hidden size-11 cursor-pointer items-center justify-center rounded-xl text-primary transition hover:bg-white [.gl-js_&]:flex">
+											        class="hidden size-11 cursor-pointer items-center justify-center rounded-2xl text-primary transition hover:bg-white [.gl-js_&]:flex">
 												<svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-width="2.4" d="M12 5v14M5 12h14"/></svg>
 											</button>
 											<?php echo $product_quantity; // PHPCS: XSS ok. ?>
 											<button type="button" data-gl-cart-step="-1" aria-label="کاهش تعداد"
-											        class="hidden size-11 cursor-pointer items-center justify-center rounded-xl text-primary transition hover:bg-white [.gl-js_&]:flex">
+											        class="hidden size-11 cursor-pointer items-center justify-center rounded-2xl text-primary transition hover:bg-white [.gl-js_&]:flex">
 												<svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-width="2.4" d="M5 12h14"/></svg>
 											</button>
 										</div>
@@ -202,17 +202,17 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 			<?php do_action( 'woocommerce_cart_contents' ); ?>
 
-			<div class="actions flex flex-col gap-3 rounded-2xl border border-dashed border-gray-300 bg-white p-3 sm:flex-row sm:items-center sm:justify-between">
+			<div class="actions flex min-w-0 flex-col gap-3 rounded-3xl border border-dashed border-gray-300 bg-white p-3 sm:flex-row sm:items-center sm:justify-between">
 				<?php if ( wc_coupons_enabled() ) { ?>
-					<div class="coupon flex w-full flex-wrap items-center gap-2 sm:max-w-md">
-						<label for="coupon_code" class="text-sm font-bold text-gray-700"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label>
-						<input type="text" name="coupon_code" class="input-text min-w-0 flex-1" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" />
-						<button type="submit" class="min-h-11 cursor-pointer rounded-xl bg-gray-800 px-4 text-sm font-bold text-white transition hover:brightness-125<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_html_e( 'Apply coupon', 'woocommerce' ); ?></button>
-						<?php do_action( 'woocommerce_cart_coupon' ); ?>
+					<div class="coupon grid w-full min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-2 sm:max-w-md">
+						<label for="coupon_code" class="col-span-2 text-sm font-bold text-gray-700"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label>
+						<input type="text" name="coupon_code" class="input-text min-w-0" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" />
+						<button type="submit" class="min-h-12 cursor-pointer whitespace-nowrap rounded-2xl bg-gray-800 px-4 text-sm font-bold text-white transition hover:brightness-125<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_html_e( 'Apply coupon', 'woocommerce' ); ?></button>
+						<div class="col-span-2 empty:hidden"><?php do_action( 'woocommerce_cart_coupon' ); ?></div>
 					</div>
 				<?php } ?>
 
-				<button type="submit" class="gl-nojs-only min-h-11 cursor-pointer rounded-xl border border-gray-300 bg-white px-4 text-sm font-bold text-gray-700<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" name="update_cart" value="<?php esc_attr_e( 'Update cart', 'woocommerce' ); ?>"><?php esc_html_e( 'Update cart', 'woocommerce' ); ?></button>
+				<button type="submit" class="gl-nojs-only min-h-11 cursor-pointer rounded-2xl border border-gray-300 bg-white px-4 text-sm font-bold text-gray-700<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" name="update_cart" value="<?php esc_attr_e( 'Update cart', 'woocommerce' ); ?>"><?php esc_html_e( 'Update cart', 'woocommerce' ); ?></button>
 
 				<?php do_action( 'woocommerce_cart_actions' ); ?>
 

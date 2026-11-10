@@ -23,8 +23,13 @@ add_filter('pre_option_woocommerce_enable_checkout_login_reminder', function () 
     return 'yes';
 });
 
-// موبایل اجباری و با کیبورد عددی
-add_filter('woocommerce_billing_fields', function ($fields) {
+// موبایل اجباری و با کیبورد عددی.
+// WooCommerce 8+ reads the "phone field" setting (optional/required/hidden) and other plugins
+// (e.g. persian-woocommerce) rewrite checkout fields late, so enforce it at every layer.
+add_filter('pre_option_woocommerce_checkout_phone_field', function () {
+    return 'required';
+});
+$gl_phone_required = function ($fields) {
     if (isset($fields['billing_phone'])) {
         $fields['billing_phone']['required'] = true;
         $fields['billing_phone']['label'] = 'شماره موبایل';
@@ -35,7 +40,14 @@ add_filter('woocommerce_billing_fields', function ($fields) {
         );
     }
     return $fields;
-}, 20);
+};
+add_filter('woocommerce_billing_fields', $gl_phone_required, 9999);
+add_filter('woocommerce_checkout_fields', function ($fields) use ($gl_phone_required) {
+    if (isset($fields['billing'])) {
+        $fields['billing'] = $gl_phone_required($fields['billing']);
+    }
+    return $fields;
+}, 9999);
 
 // اعتبارسنجی موبایل ایران (ارقام فارسی هم قبول می‌شود و ذخیره به‌صورت 09xxxxxxxxx)
 add_action('woocommerce_after_checkout_validation', function ($data, $errors) {

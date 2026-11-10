@@ -53,12 +53,12 @@ $cart_count = (int) WC()->cart->get_cart_contents_count();
 		<header class="flex items-center justify-between gap-3 border-b border-gray-100 bg-white px-4 py-2 lg:py-3">
 			<h2 id="gl-cart-title" class="flex items-center gap-2 text-base font-bold text-primary">
 				سبد خرید
-				<span data-gl-count-chip <?php echo $cart_count ? '' : 'hidden'; ?> class="rounded-lg bg-secondary px-2 py-0.5 text-xs font-bold text-white">
+				<span data-gl-count-chip <?php echo $cart_count ? '' : 'hidden'; ?> class="rounded-full bg-secondary px-2.5 py-0.5 text-xs font-bold text-white">
 					<?php echo esc_html( $cart_count ); ?> کالا
 				</span>
 			</h2>
 			<button type="button" data-gl-close x-ref="close"
-			        class="flex size-11 cursor-pointer items-center justify-center rounded-xl bg-gray-50 text-gray-500 transition hover:bg-gray-100 hover:text-gray-800"
+			        class="flex size-11 cursor-pointer items-center justify-center rounded-2xl bg-gray-50 text-gray-500 transition hover:bg-gray-100 hover:text-gray-800"
 			        aria-label="بستن سبد خرید">
 				<svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -66,9 +66,9 @@ $cart_count = (int) WC()->cart->get_cart_contents_count();
 			</button>
 		</header>
 
-		<div data-gl-undo-bar hidden class="mx-4 mt-3 flex items-center justify-between gap-3 rounded-2xl bg-primary px-4 py-2 text-sm text-white shadow-lg" role="status">
+		<div data-gl-undo-bar hidden class="mx-4 mt-3 flex items-center justify-between gap-3 rounded-3xl bg-primary px-4 py-2 text-sm text-white shadow-lg" role="status">
 			<span data-gl-undo-text class="line-clamp-1"></span>
-			<button type="button" data-gl-undo class="min-h-11 shrink-0 cursor-pointer rounded-lg px-3 font-bold text-amber-300 transition hover:bg-white/10">
+			<button type="button" data-gl-undo class="min-h-11 shrink-0 cursor-pointer rounded-2xl px-3 font-bold text-amber-300 transition hover:bg-white/10">
 				بازگرداندن
 			</button>
 		</div>

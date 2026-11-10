@@ -18,9 +18,9 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div class="woocommerce-billing-fields gl-card rounded-2xl border border-gray-200 bg-white p-4 lg:p-6">
+<div class="woocommerce-billing-fields gl-card rounded-3xl border border-gray-200 bg-white p-4 lg:p-6">
 	<div class="mb-4 flex items-center gap-3">
-		<span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/5 text-primary" aria-hidden="true">
+		<span class="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/5 text-primary" aria-hidden="true">
 			<svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
 		</span>
 		<div>
@@ -53,9 +53,9 @@ defined( 'ABSPATH' ) || exit;
 </div>
 
 <?php if ( ! is_user_logged_in() && $checkout->is_registration_enabled() ) : ?>
-	<div class="woocommerce-account-fields gl-card gl-account-card rounded-2xl border border-primary/15 bg-gradient-to-l from-primary/[0.04] to-white p-4 lg:p-6">
+	<div class="woocommerce-account-fields gl-card gl-account-card rounded-3xl border border-primary/15 bg-gradient-to-l from-primary/[0.04] to-white p-4 lg:p-6">
 		<div class="mb-4 flex items-start gap-3">
-			<span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white" aria-hidden="true">
+			<span class="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary text-white" aria-hidden="true">
 				<svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
 			</span>
 			<div>
