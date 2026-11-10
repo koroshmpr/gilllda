@@ -258,6 +258,11 @@ require get_template_directory() . '/inc/gravity-form.php';
 require get_template_directory() . '/inc/optimize.php';
 require get_template_directory() . '/inc/otp-login-form.php';
 require get_template_directory() . '/inc/account-rules.php';
+// Product landing pages (/l/{product-slug}/)
+require get_template_directory() . '/inc/landing/landing.php';
+if ( is_admin() ) {
+	require get_template_directory() . '/inc/landing/landing-admin.php';
+}
 include_once get_template_directory() . '/inc/search-route.php';
 include_once get_template_directory() . '/inc/ajax-search.php';
 
