@@ -1,7 +1,7 @@
 <section
         @keydown.escape.window="searchOpen = false" id="searchModal"
         :class="searchOpen ? '!z-50 !opacity-100' : 'transition-all duration-100 delay-75'"
-        class="fixed <?= current_user_can('administrator') ? 'pt-8' : ''; ?> inset-0 bg-white flex justify-center z-[-1] opacity-0"
+        class="fixed <?= is_admin_bar_showing() ? 'pt-8' : ''; ?> inset-0 bg-white flex justify-center z-[-1] opacity-0"
         @click.self="searchOpen = false"
 >
     <div class="container max-w-content max-lg:px-3 relative text-black transition-all duration-200 opacity-0 flex flex-col overflow-hidden"

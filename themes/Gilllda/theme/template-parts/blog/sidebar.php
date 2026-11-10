@@ -1,5 +1,5 @@
 <?php $term_id = $args['term_id'] ?? '';
-$stickyClass = current_user_can('administrator') ? 'lg:top-24' : 'lg:top-18';
+$stickyClass = is_admin_bar_showing() ? 'lg:top-24' : 'lg:top-18';
 ?>
 <aside x-data="{open : false}" class="lg:col-span-4 flex flex-col justify-start relative xl:col-span-3">
     <?php get_template_part('template-parts/blog/category-sticky-button'); ?>

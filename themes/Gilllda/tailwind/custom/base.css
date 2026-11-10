@@ -92,3 +92,9 @@ blockquote {
 .digits-form_submit-btn {
 	@apply w-full !py-4 !bg-primary cursor-pointer !text-white !rounded-2xl font-black !text-lg transition-all duration-300
 }
+/* WordPress admin bar: keep the mobile sticky header below it (bar is fixed 601–782px) */
+@media (min-width: 601px) and (max-width: 782px) {
+	.admin-bar .gl-mobile-top {
+		top: 46px;
+	}
+}

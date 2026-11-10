@@ -27,7 +27,7 @@ if ($woo_active) :
              x-transition:leave="transition ease-in duration-200 transform"
              x-transition:leave-start="translate-x-0"
              x-transition:leave-end="-translate-x-full"
-             class="absolute top-0 bottom-0 left-0 w-80 sm:w-96 bg-gray-50 shadow-2xl flex flex-col z-10 <?= current_user_can('administrator') ? 'pt-12' : ''; ?>">
+             class="absolute top-0 bottom-0 left-0 w-80 sm:w-96 bg-gray-50 shadow-2xl flex flex-col z-10 <?= is_admin_bar_showing() ? 'pt-12' : ''; ?>">
             <div class="cart-modal-inner flex flex-col h-full">
                 <div class="flex items-center justify-between p-4 bg-white border-b border-gray-200">
                 <h3 class="text-base font-bold text-gray-800 flex items-center gap-2">

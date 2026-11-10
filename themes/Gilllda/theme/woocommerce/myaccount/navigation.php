@@ -8,7 +8,7 @@
          style="display: none;"></div>
 
     <nav :class="isMobileMenuOpen ? 'w-[65vw] max-w-[280px] z-40' : 'max-lg:!w-12'"
-         class="lg:w-[30%] float-right max-lg:fixed top-0 <?= current_user_can('administrator') ? 'max-lg:pt-24' : 'max-lg:pt-12'; ?> right-0 h-full bg-white border-l border-gray-100 transition-all duration-300 ease-out flex flex-col overflow-hidden lg:shadow-none lg:border-none lg:bg-transparent lg:static lg:h-auto lg:p-0"
+         class="lg:w-[30%] float-right max-lg:fixed top-0 <?= is_admin_bar_showing() ? 'max-lg:pt-24' : 'max-lg:pt-12'; ?> right-0 h-full bg-white border-l border-gray-100 transition-all duration-300 ease-out flex flex-col overflow-hidden lg:shadow-none lg:border-none lg:bg-transparent lg:static lg:h-auto lg:p-0"
          aria-label="<?php esc_html_e( 'Account pages', 'woocommerce' ); ?>">
 
         <div :class="isMobileMenuOpen ? 'p-1' : 'pt-1'" class="flex items-center gap-3 border-b transition-all duration-300 border-gray-200 bg-gray-50 lg:hidden relative shrink-0">

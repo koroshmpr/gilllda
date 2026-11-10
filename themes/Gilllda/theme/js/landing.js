@@ -37,8 +37,11 @@
 	/* ---------- header: solid on scroll, hide on scroll down, progress ---------- */
 	var top = $('[data-top]'), bar = $('[data-bar]'), prog = $('[data-progress]'), buy = $('#lp-buy');
 	var last = 0, ticking = false;
+	var adminBar = document.getElementById('wpadminbar');
 	function onScroll() {
 		var y = window.scrollY, h = document.documentElement.scrollHeight - innerHeight;
+		// admin bar scrolls away on phones (<600px): keep the header glued right under it
+		if (adminBar) document.body.style.setProperty('--lp-ab', Math.max(0, adminBar.getBoundingClientRect().bottom) + 'px');
 		top.classList.toggle('is-solid', y > 30);
 		top.classList.toggle('is-hidden', y > 400 && y > last);
 		if (prog) prog.style.transform = 'scaleX(' + (h > 0 ? y / h : 0) + ')';

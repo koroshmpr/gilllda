@@ -4,7 +4,7 @@ $contactLinks = get_field('shop_contact_links', 'option');
 <div
         @keydown.escape.window="shopContact = false" id="searchModal"
         :class="shopContact ? '!z-50 !opacity-100' : ''"
-        class="fixed <?= current_user_can('administrator') ? 'pt-8' : ''; ?> inset-0 flex justify-center z-[-1] bg-black/50 opacity-0 lg:items-center items-end backdrop-blur-sm transition-all duration-300"
+        class="fixed <?= is_admin_bar_showing() ? 'pt-8' : ''; ?> inset-0 flex justify-center z-[-1] bg-black/50 opacity-0 lg:items-center items-end backdrop-blur-sm transition-all duration-300"
         @click.self="shopContact = false">
     <div
             class="bg-gray-50 text-black w-full lg:max-w-96 p-5 lg:p-7 pt-9 rounded-lg flex flex-col gap-1 translate-y-full transition-all duration-300"
