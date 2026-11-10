@@ -7,3 +7,8 @@
 /upgrade-temp-backup/
 /uploads/
 /wflogs/
+.DS_Store
+**/.DS_Store
+/.idea/
+/index.php
+/themes/index.php

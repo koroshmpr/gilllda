@@ -20,16 +20,16 @@ document.addEventListener('DOMContentLoaded', function () {
 			let index = slider.dataset.index ?? i;
 			let space = slider.dataset.space ? parseFloat(slider.dataset.space) : 20;
 			let speed = slider.dataset.speed ? parseFloat(slider.dataset.speed) : 1000;
-			let free = slider.dataset.free === '1' ;
-			let loop = slider.dataset.loop === '1' ;
+			let free = slider.dataset.free === '1';
+			let loop = slider.dataset.loop === '1';
 
 			new Swiper(slider, {
 				direction: direction,
 				grabCursor: true,
 				speed: speed,
-				loop : loop,
+				loop: loop,
 				effect: 'slide',
-				freeMode : free ,
+				freeMode: free,
 				spaceBetween: space,
 				slidesPerView: perPageMobile,
 				centeredSlides: false,
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	initPageSliders();
 
-	window.initModalGallery = function() {
+	window.initModalGallery = function () {
 		setTimeout(() => {
 			const thumbSlider = new Swiper(".thumb-modal-slider", {
 				spaceBetween: 8,      // Unified gap

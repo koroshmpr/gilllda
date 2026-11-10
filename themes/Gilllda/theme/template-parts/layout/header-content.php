@@ -121,9 +121,9 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
 <?php
 // --- Mobile Top Header ---
 if (wp_is_mobile()):
-    $mobileBaseClass = 'justify-center flex items-center px-3 py-4 shrink-0 cursor-pointer transition-all group';
+    $mobileBaseClass = 'justify-center flex items-center p-2.5 shrink-0 cursor-pointer transition-all group';
     ?>
-    <nav class="flex sticky lg:hidden top-0 z-50 bg-white ps-4 pl-1 justify-between items-center">
+    <nav class="flex sticky lg:hidden top-0 z-50 bg-white p-2 justify-between items-center">
 
         <div class="flex items-center">
             <button class="<?= $mobileBaseClass; ?>"
@@ -134,8 +134,14 @@ if (wp_is_mobile()):
             <button class="<?= $mobileBaseClass; ?>"
                     :class="searchOpen ? 'max-lg:!bg-primary/10 max-lg:!text-primary is-active shadow-inner' : ''"
                     @click="searchOpen = true" aria-label="open search modal">
-                <?php get_template_part('template-parts/svg/search', null, ['size' => 18, 'class' => $baseSvgClass]); ?>
+                <?php get_template_part('template-parts/svg/search', null, ['size' => 18, 'class' => '']); ?>
             </button>
+        </div>
+        <?php get_template_part('template-parts/global/logo', null, [
+                'logoSize' => 'max-h-8 w-auto',
+                'class' => 'absolute top-1/2 start-1/2 translate-x-1/2 -translate-y-1/2 ',
+        ]); ?>
+        <div class="flex gap-1 items-center">
             <?php
             // Get the current post type
             $post_type = get_post_type();
@@ -145,11 +151,23 @@ if (wp_is_mobile()):
                 get_template_part('template-parts/global/channel-btn', null, ['type' => 'blog']);
 
             } elseif ($woo_active && ('product' === $post_type || is_shop())) {
+
                 // Shows on single products and the shop archive (assuming WooCommerce)
                 get_template_part('template-parts/global/channel-btn', null, ['type' => 'shop']);
             }
             ?>
+            <?php
+            if(is_singular('post')):
+
+                get_template_part('template-parts/global/back-to-archive', null, ['type' => 'blog']);
+            endif;
+            if(is_singular('product')):
+
+                get_template_part('template-parts/global/back-to-archive', null, ['type' => 'shop']);
+            endif;
+
+            ?>
         </div>
-        <?php get_template_part('template-parts/global/logo', null, ['logoSize' => 'max-h-8 w-auto']); ?>
+
     </nav>
 <?php endif; ?>

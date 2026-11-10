@@ -3,18 +3,18 @@
  * Template Name: Login
  */
 get_header();
+$otp_enabled = function_exists('gl_otp_enabled') && gl_otp_enabled();
 ?>
     <section dir="rtl" class="flex items-center max-lg:px-5 justify-center min-h-[93.5vh] bg-primary py-10">
         <div x-data="otpAuth()" class="w-full container max-w-96 transition-all duration-500 p-5 bg-white rounded-2xl shadow-lg">
             <?php get_template_part('template-parts/global/logo', null, ['logoSize' => 'max-h-16 w-auto']); ?>
             <h1 class="text-2xl font-bold text-center text-gray-800 my-3"><?php the_title(); ?></h1>
 
-            <template x-if="errorMessage">
-                <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm text-center" x-text="errorMessage"></div>
-            </template>
+            <div x-show="errorMessage" x-cloak role="alert" aria-live="assertive" class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm text-center" x-text="errorMessage"></div>
 
             <div class="relative min-h-64 mt-6 p-3 overflow-hidden">
 
+                <?php if ($otp_enabled) : ?>
                 <div x-show="step === 1"
                      x-transition:enter="transition transform ease-out duration-300 delay-100"
                      x-transition:enter-start="-translate-x-full opacity-0"
@@ -53,7 +53,7 @@ get_header();
                      class="w-full">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">کد تایید پیامک شده</label>
-                        <input type="text" x-model="otp" @keydown.enter="verifyOtp()" autocomplete="one-time-code" inputmode="numeric" placeholder="- - - -" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center tracking-widest text-xl">
+                        <input type="text" x-model="otp" @keydown.enter="verifyOtp()" autocomplete="one-time-code" inputmode="numeric" maxlength="5" placeholder="- - - - -" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center tracking-widest text-xl">
                     </div>
                     <button @click="verifyOtp()" :disabled="isLoading" class="w-full bg-blue-600 text-white font-bold p-4 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 mb-3">
                         <span x-show="!isLoading">تایید و ادامه</span>
@@ -73,15 +73,16 @@ get_header();
                      class="w-full">
                     <div class="space-y-4 mb-6">
                         <div><label class="block text-gray-700 text-sm font-bold mb-1">نام و نام خانوادگی</label><input type="text" x-model="name" @keydown.enter="registerUser()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"></div>
-                        <div><label class="block text-gray-700 text-sm font-bold mb-1">نام کاربری (انگلیسی)</label><input type="text" x-model="username" @keydown.enter="registerUser()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr"></div>
-                        <div><label class="block text-gray-700 text-sm font-bold mb-1">ایمیل</label><input type="email" x-model="email" @keydown.enter="registerUser()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr"></div>
+                        <div><label class="block text-gray-700 text-sm font-bold mb-1">نام کاربری انگلیسی <span class="font-normal text-gray-400">(اختیاری)</span></label><input type="text" x-model="username" @keydown.enter="registerUser()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr"></div>
+                        <div><label class="block text-gray-700 text-sm font-bold mb-1">ایمیل <span class="font-normal text-gray-400">(اختیاری)</span></label><input type="email" x-model="email" @keydown.enter="registerUser()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr"></div>
                     </div>
                     <button @click="registerUser()" :disabled="isLoading" class="w-full bg-green-600 text-white font-bold p-4 rounded-lg hover:bg-green-700 transition disabled:opacity-50">
                         <span x-show="!isLoading">تکمیل ثبت‌نام</span><span x-show="isLoading">در حال ثبت...</span>
                     </button>
                 </div>
+                <?php endif; ?>
 
-                <div x-show="step === 4" style="display: none;"
+                <form x-show="step === 4" @submit.prevent="loginWithPassword()" <?= $otp_enabled ? 'style="display: none;"' : ''; ?>
                      x-transition:enter="transition transform ease-out duration-300 delay-100"
                      x-transition:enter-start="-translate-x-full opacity-0"
                      x-transition:enter-end="translate-x-0 opacity-100"
@@ -90,19 +91,19 @@ get_header();
                      x-transition:leave-end="translate-x-full opacity-0"
                      class="w-full">
                     <div class="space-y-4 mb-6">
-                        <div><label class="block text-gray-700 text-sm font-bold mb-1">ایمیل یا نام کاربری</label><input type="text" x-model="loginUsername" @keydown.enter="loginWithPassword()" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr"></div>
-                        <div><label class="block text-gray-700 text-sm font-bold mb-1">رمز عبور</label><input type="password" x-model="loginPassword" @keydown.enter="loginWithPassword()" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr"></div>
+                        <div><label for="gl-login-user" class="block text-gray-700 text-sm font-bold mb-1">ایمیل یا نام کاربری</label><input id="gl-login-user" name="username" type="text" autocomplete="username" required x-model="loginUsername" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr"></div>
+                        <div><label for="gl-login-pass" class="block text-gray-700 text-sm font-bold mb-1">رمز عبور</label><input id="gl-login-pass" name="password" type="password" autocomplete="current-password" required x-model="loginPassword" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr"><a href="<?= esc_url(wp_lostpassword_url()); ?>" class="inline-block mt-2 text-xs text-primary hover:underline">رمز عبور را فراموش کرده‌اید؟</a></div>
                     </div>
-                    <button @click="loginWithPassword()" :disabled="isLoading" class="w-full bg-gray-800 text-white font-bold p-4 rounded-lg hover:bg-gray-900 cursor-pointer transition disabled:opacity-50">
+                    <button type="submit" :disabled="isLoading" class="w-full bg-primary text-white font-bold p-4 rounded-lg hover:bg-primary/90 cursor-pointer transition disabled:opacity-50">
                         <span x-show="!isLoading">ورود</span><span x-show="isLoading">در حال بررسی...</span>
                     </button>
                     <div class="mt-5 flex flex-col gap-3 text-center">
-                        <button @click="step = 5; errorMessage = ''" class="text-sm text-blue-600 hover:text-blue-800 transition font-medium">حساب کاربری ندارید؟ ثبت‌نام کنید</button>
-                        <button @click="step = 1; errorMessage = ''" class="text-sm text-gray-500 hover:text-gray-800 transition">بازگشت به ورود با پیامک</button>
+                        <button type="button" @click="step = 5; errorMessage = ''" class="text-sm text-blue-600 hover:text-blue-800 transition font-medium">حساب کاربری ندارید؟ ثبت‌نام کنید</button>
+                        <?php if ($otp_enabled) : ?><button type="button" @click="step = 1; errorMessage = ''" class="text-sm text-gray-500 hover:text-gray-800 transition">بازگشت به ورود با پیامک</button><?php endif; ?>
                     </div>
-                </div>
+                </form>
 
-                <div x-show="step === 5" style="display: none;"
+                <form x-show="step === 5" @submit.prevent="registerWithPassword()" style="display: none;"
                      x-transition:enter="transition transform ease-out duration-300 delay-100"
                      x-transition:enter-start="-translate-x-full opacity-0"
                      x-transition:enter-end="translate-x-0 opacity-100"
@@ -112,28 +113,23 @@ get_header();
                      class="w-full">
                     <div class="space-y-4 mb-6">
                         <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-1">نام و نام خانوادگی</label>
-                            <input type="text" x-model="name" @keydown.enter="registerWithPassword()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                            <label for="gl-reg-name" class="block text-gray-700 text-sm font-bold mb-1">نام و نام خانوادگی</label>
+                            <input id="gl-reg-name" name="name" type="text" autocomplete="name" required x-model="name" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
                         </div>
                         <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-1">شماره موبایل</label>
-                            <input type="tel" x-model="regPhone" @keydown.enter="registerWithPassword()" placeholder="09123456789" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr">
+                            <label for="gl-reg-phone" class="block text-gray-700 text-sm font-bold mb-1">شماره موبایل</label>
+                            <input id="gl-reg-phone" name="tel" type="tel" inputmode="numeric" autocomplete="tel" required x-model="regPhone" placeholder="09123456789" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr">
                         </div>
                         <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-1">نام کاربری (انگلیسی)</label>
-                            <input type="text" x-model="username" @keydown.enter="registerWithPassword()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-1">ایمیل</label>
-                            <input type="email" x-model="email" @keydown.enter="registerWithPassword()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr">
+                            <label for="gl-reg-email" class="block text-gray-700 text-sm font-bold mb-1">ایمیل</label>
+                            <input id="gl-reg-email" name="email" type="email" autocomplete="email" required x-model="email" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr">
                         </div>
 
                         <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-1">رمز عبور</label>
-                            <input type="password"
+                            <label for="gl-reg-pass" class="block text-gray-700 text-sm font-bold mb-1">رمز عبور <span class="font-normal text-gray-400">(حداقل ۸ کاراکتر)</span></label>
+                            <input id="gl-reg-pass" name="new-password" type="password" autocomplete="new-password" minlength="8" required
                                    x-model="regPassword"
                                    @input="evaluatePasswordStrength()"
-                                   @keydown.enter="registerWithPassword()"
                                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary text-left dir-ltr">
 
                             <div x-show="regPassword.length > 0" x-transition class="mt-2">
@@ -153,16 +149,16 @@ get_header();
                         </div>
 
                     </div>
-                    <button @click="registerWithPassword()" :disabled="isLoading" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition disabled:opacity-50 mt-2">
+                    <button type="submit" :disabled="isLoading" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition disabled:opacity-50 mt-2">
                         <span x-show="!isLoading">ثبت‌نام</span>
                         <span x-show="isLoading">در حال ثبت...</span>
                     </button>
 
                     <div class="mt-5 flex flex-col gap-3 text-center">
-                        <button @click="step = 4; errorMessage = ''" class="text-sm text-blue-600 hover:text-blue-800 transition font-medium">قبلا ثبت‌نام کرده‌اید؟ وارد شوید</button>
-                        <button @click="step = 1; errorMessage = ''" class="text-sm text-gray-500 hover:text-gray-800 transition">بازگشت به ورود با پیامک</button>
+                        <button type="button" @click="step = 4; errorMessage = ''" class="text-sm text-blue-600 hover:text-blue-800 transition font-medium">قبلا ثبت‌نام کرده‌اید؟ وارد شوید</button>
+                        <?php if ($otp_enabled) : ?><button type="button" @click="step = 1; errorMessage = ''" class="text-sm text-gray-500 hover:text-gray-800 transition">بازگشت به ورود با پیامک</button><?php endif; ?>
                     </div>
-                </div>
+                </form>
 
             </div>
         </div>
@@ -171,7 +167,7 @@ get_header();
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('otpAuth', () => ({
-                step: 1,
+                step: <?= $otp_enabled ? 1 : 4; ?>,
                 phone: '',
                 regPhone: '',
                 otp: '',
@@ -185,7 +181,7 @@ get_header();
                 errorMessage: '',
                 timer: 0,
                 intervalId: null,
-                ajaxUrl: '/wp-admin/admin-ajax.php',
+                ajaxUrl: <?= wp_json_encode(admin_url('admin-ajax.php')); ?>,
 
                 // متغیرهای قدرت رمز عبور
                 passwordScore: 0,
@@ -247,6 +243,17 @@ get_header();
                     }
                 },
 
+                redirectTo: <?= wp_json_encode(wp_validate_redirect(isset($_GET['redirect_to']) ? wp_unslash($_GET['redirect_to']) : '', function_exists('wc_get_page_permalink') ? wc_get_page_permalink('myaccount') : home_url('/'))); ?>,
+
+                // ارقام فارسی/عربی کیبورد موبایل → انگلیسی
+                en(v) {
+                    return String(v || '').replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/\s+/g, '');
+                },
+
+                go() {
+                    window.location.href = this.redirectTo;
+                },
+
                  async sendRequest(action, data) {
                     this.isLoading = true;
                     this.errorMessage = '';
@@ -258,9 +265,17 @@ get_header();
                     for (const key in data) formData.append(key, data[key]);
 
                     try {
-                        const response = await fetch(this.ajaxUrl, { method: 'POST', body: formData });
-                        const result = await response.json();
+                        const response = await fetch(this.ajaxUrl, { method: 'POST', body: formData, credentials: 'same-origin' });
+                        const text = await response.text();
                         this.isLoading = false;
+                        let result;
+                        try { result = JSON.parse(text); } catch (e) { result = null; }
+                        if (!result || typeof result !== 'object') {
+                            // nonce منقضی (پاسخ -1) یا خطای سرور
+                            this.errorMessage = response.status === 403 ? 'نشست صفحه منقضی شده؛ صفحه را یک‌بار تازه کنید.' : 'خطای ارتباط با سرور';
+                            return { success: false, data: { message: this.errorMessage } };
+                        }
+                        result.data = result.data || {};
                         return result;
                     } catch (error) {
                         this.isLoading = false;
@@ -270,6 +285,7 @@ get_header();
                 },
 
                 async sendOtp() {
+                    this.phone = this.en(this.phone);
                     if (!this.phone.match(/^09\d{9}$/)) {
                         this.errorMessage = 'شماره موبایل نامعتبر است.';
                         return;
@@ -286,12 +302,13 @@ get_header();
                 },
 
                 async verifyOtp() {
-                    if (this.otp.length < 4) return;
+                    this.otp = this.en(this.otp);
+                    if (this.otp.length < 5) return;
                     const res = await this.sendRequest('kavenegar_verify_otp', { phone: this.phone, otp: this.otp });
                     if (res.success) {
                         clearInterval(this.intervalId);
                         if (res.data.action === 'logged_in') {
-                            window.location.href = '/my-account';
+                            this.go();
                         } else if (res.data.action === 'needs_registration') {
                             this.step = 3;
                         }
@@ -301,8 +318,8 @@ get_header();
                 },
 
                 async registerUser() {
-                    if (!this.name || !this.username || !this.email) {
-                        this.errorMessage = 'لطفا تمام فیلدها را پر کنید.';
+                    if (!this.name) {
+                        this.errorMessage = 'لطفا نام خود را وارد کنید.';
                         return;
                     }
                     const res = await this.sendRequest('kavenegar_register_user', {
@@ -313,7 +330,7 @@ get_header();
                         email: this.email
                     });
                     if (res.success) {
-                        window.location.href = '/my-account';
+                        this.go();
                     } else {
                         this.errorMessage = res.data.message || 'خطا در ثبت‌نام';
                     }
@@ -329,25 +346,26 @@ get_header();
                         password: this.loginPassword
                     });
                     if (res.success) {
-                        window.location.href = '/my-account';
+                        this.go();
                     } else {
                         this.errorMessage = res.data.message || 'اطلاعات ورود اشتباه است.';
                     }
                 },
 
                 async registerWithPassword() {
-                    if (!this.name || !this.username || !this.email || !this.regPassword || !this.regPhone) {
+                    if (!this.name || !this.email || !this.regPassword || !this.regPhone) {
                         this.errorMessage = 'لطفا تمام فیلدها را پر کنید.';
                         return;
                     }
 
+                    this.regPhone = this.en(this.regPhone);
                     if (!this.regPhone.match(/^09\d{9}$/)) {
                         this.errorMessage = 'شماره موبایل نامعتبر است.';
                         return;
                     }
 
-                    if (this.passwordScore < 2) {
-                        this.errorMessage = 'رمز عبور شما بسیار ضعیف است. لطفا از ترکیب قوی‌تری استفاده کنید.';
+                    if (this.regPassword.length < 8) {
+                        this.errorMessage = 'رمز عبور باید حداقل ۸ کاراکتر باشد.';
                         return;
                     }
 
@@ -360,7 +378,7 @@ get_header();
                     });
 
                     if (res.success) {
-                        window.location.href = '/my-account';
+                        this.go();
                     } else {
                         this.errorMessage = res.data.message || 'خطا در ثبت‌نام.';
                     }

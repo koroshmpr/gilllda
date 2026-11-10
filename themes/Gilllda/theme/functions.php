@@ -18,6 +18,16 @@ if ( ! defined( 'BLUEBOX_VERSION' ) ) {
 	define( 'BLUEBOX_VERSION', '0.1.0' );
 }
 
+/**
+ * Cache-busting version for a theme asset, based on the file's modification
+ * time. Every deploy that changes the file changes its URL, so browsers and
+ * LiteSpeed never serve a stale style.css / script.min.js.
+ */
+function bluebox_asset_ver( $relative_path ) {
+	$file = get_template_directory() . '/' . ltrim( $relative_path, '/' );
+	return file_exists( $file ) ? (string) filemtime( $file ) : BLUEBOX_VERSION;
+}
+
 if ( ! defined( 'BLUEBOX_TYPOGRAPHY_CLASSES' ) ) {
 	/*
 	 * Set Tailwind Typography classes for the front end, block editor and
@@ -148,10 +158,10 @@ add_action( 'widgets_init', 'bluebox_widgets_init' );
  */
 function bluebox_scripts() {
     // 1. Load your main stylesheet
-    wp_enqueue_style( 'bluebox-style', get_stylesheet_uri(), array(), BLUEBOX_VERSION );
+    wp_enqueue_style( 'bluebox-style', get_stylesheet_uri(), array(), bluebox_asset_ver( 'style.css' ) );
 
     // 2. Load script with the modern 'defer' strategy
-    wp_enqueue_script( 'bluebox-script', get_template_directory_uri() . '/js/script.min.js', array(), BLUEBOX_VERSION, array(
+    wp_enqueue_script( 'bluebox-script', get_template_directory_uri() . '/js/script.min.js', array(), bluebox_asset_ver( 'js/script.min.js' ), array(
         'in_footer' => true,
         'strategy'  => 'defer'
     ));
@@ -162,7 +172,7 @@ function bluebox_scripts() {
 
     // 4. Defer conditional scripts
     if (is_product()) {
-        wp_enqueue_script('single-product', get_template_directory_uri() . '/js/single-product.js', array('jquery'), BLUEBOX_VERSION, array(
+        wp_enqueue_script('single-product', get_template_directory_uri() . '/js/single-product.js', array('jquery'), bluebox_asset_ver( 'js/single-product.js' ), array(
             'in_footer' => true,
             'strategy'  => 'defer'
         ));
@@ -197,7 +207,7 @@ function bluebox_enqueue_block_editor_script() {
 				'wp-blocks',
 				'wp-edit-post',
 			),
-			BLUEBOX_VERSION,
+			bluebox_asset_ver( 'js/block-editor.min.js' ),
 			true
 		);
 		wp_add_inline_script( 'bluebox-editor', "tailwindTypographyClasses = '" . esc_attr( BLUEBOX_TYPOGRAPHY_CLASSES ) . "'.split(' ');", 'before' );
@@ -247,6 +257,7 @@ require get_template_directory() . '/inc/custom-post-type.php';
 require get_template_directory() . '/inc/gravity-form.php';
 require get_template_directory() . '/inc/optimize.php';
 require get_template_directory() . '/inc/otp-login-form.php';
+require get_template_directory() . '/inc/account-rules.php';
 include_once get_template_directory() . '/inc/search-route.php';
 include_once get_template_directory() . '/inc/ajax-search.php';
 
