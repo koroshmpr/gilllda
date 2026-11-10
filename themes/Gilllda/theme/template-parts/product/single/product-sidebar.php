@@ -25,7 +25,7 @@ $is_purchasable = $product->is_purchasable();
         <?php get_template_part('template-parts/shop/shop-contact'); ?>
 
     <?php else : ?>
-        <?php if ($is_purchasable & !wp_is_mobile()) :
+        <?php if ($is_purchasable) : // always rendered; the aside is hidden below xl by CSS (cache-safe)
             get_template_part('template-parts/product/single/product', 'buyform');
         endif;
     endif;

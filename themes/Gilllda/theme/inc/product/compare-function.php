@@ -30,6 +30,9 @@ function get_compare_products() {
 		$query->the_post();
 
 		$product = wc_get_product(get_the_ID());
+		if (!$product) {
+			continue;
+		}
 
 		$products[] = [
 			'id'     => get_the_ID(),

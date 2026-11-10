@@ -36,8 +36,8 @@ add_filter( 'rank_math/json_ld', function( $data, $jsonld ) {
                 ],
                 'shippingRate' => [
                     '@type'    => 'MonetaryAmount',
-                    'value'    => 50000, // هزینه ارسال
-                    'currency' => 'IRT'
+                    'value'    => 2000000, // 200,000 Toman (Tehran; other cities 300,000) in IRR — schema.org needs ISO 4217
+                    'currency' => 'IRR'
                 ],
                 'deliveryTime' => [
                     '@type'        => 'ShippingDeliveryTime',

@@ -16,16 +16,17 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
 if ( ! $notices ) {
-    return;
+	return;
 }
+
 ?>
 
 <?php foreach ( $notices as $notice ) : ?>
-    <div class="bg-green-300/10 border border-green-300 p-5 mb-4 rounded-lg flex max-lg:flex-col gap-y-2 justify-between items-center"<?php echo wc_get_notice_data_attr( $notice ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> role="alert">
-        <?php echo wc_kses_notice( $notice['notice'] ); ?>
-    </div>
+	<div class="woocommerce-message gl-notice gl-notice--success"<?php echo wc_get_notice_data_attr( $notice ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> role="alert">
+		<?php echo wc_kses_notice( $notice['notice'] ); ?>
+	</div>
 <?php endforeach; ?>

@@ -18,14 +18,34 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<div class="cart_totals !w-full <?php echo ( WC()->customer->has_calculated_shipping() ) ? 'calculated_shipping' : ''; ?>">
+<div class="cart_totals gl-summary !w-full !float-none rounded-2xl border border-gray-200 bg-white p-4 lg:p-5 <?php echo ( WC()->customer->has_calculated_shipping() ) ? 'calculated_shipping' : ''; ?>">
 
     <?php do_action( 'woocommerce_before_cart_totals' ); ?>
-    <div class="mb-3 border-b border-black/15">
-        <h2 class="woocommerce-order-details__title border-b w-fit border-primary pb-2 !my-0"><?php esc_html_e( 'Cart totals', 'woocommerce' ); ?></h2>
-    </div>
+    <h2 class="mb-3 text-base font-bold text-primary"><?php esc_html_e( 'Cart totals', 'woocommerce' ); ?></h2>
 
-    <table cellspacing="0" class="shop_table shop_table_responsive text-sm">
+    <?php
+    // Free-shipping progress (only when a free-shipping minimum is configured).
+    $gl_threshold = function_exists( 'gl_free_shipping_threshold' ) ? gl_free_shipping_threshold() : 0;
+    if ( $gl_threshold > 0 ) :
+        $gl_basis     = max( 0, (float) WC()->cart->get_displayed_subtotal() - (float) WC()->cart->get_discount_total() );
+        $gl_remaining = max( 0, $gl_threshold - $gl_basis );
+        $gl_percent   = min( 100, (int) round( ( $gl_basis / $gl_threshold ) * 100 ) );
+        ?>
+        <div class="mb-4 rounded-xl bg-gray-50 px-3 py-2.5">
+            <p class="mb-2 text-xs text-gray-600">
+                <?php if ( $gl_remaining > 0 ) : ?>
+                    فقط <b class="font-bold text-primary"><?php echo esc_html( number_format( $gl_remaining ) ); ?> تومان</b> تا ارسال رایگان
+                <?php else : ?>
+                    <b class="font-bold text-emerald-700">ارسال این سفارش رایگان است.</b>
+                <?php endif; ?>
+            </p>
+            <div class="h-1.5 overflow-hidden rounded-full bg-gray-200" role="progressbar" aria-label="پیشرفت تا ارسال رایگان" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<?php echo esc_attr( $gl_percent ); ?>">
+                <div class="h-full rounded-full <?php echo $gl_remaining > 0 ? 'bg-secondary' : 'bg-emerald-600'; ?>" style="width: <?php echo esc_attr( $gl_percent ); ?>%"></div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <table cellspacing="0" class="shop_table shop_table_responsive gl-totals-table text-sm">
 
         <tr class="cart-subtotal">
             <th><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
@@ -104,8 +124,19 @@ defined( 'ABSPATH' ) || exit;
 
     </table>
 
-    <div :class="scrollingDown ? 'scale-85 translate-y-2' : ''" class="max-lg:fixed transition-all duration-500 bottom-18 inset-x-4 max-lg:!p-[2px] rounded-2xl max-lg:z-[6] max-lg:bg-white/50 wc-proceed-to-checkout">
-        <?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
+    <p class="mt-3 flex items-start gap-2 text-xs leading-5 text-gray-500">
+        <svg class="mt-0.5 size-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>هزینه ارسال: <?php echo esc_html( function_exists( 'gl_cart_shipping_note' ) ? gl_cart_shipping_note() : '' ); ?></span>
+    </p>
+
+    <div class="wc-proceed-to-checkout gl-paybar mt-4 flex items-center gap-3 max-lg:fixed max-lg:inset-x-3 max-lg:bottom-17 max-lg:z-40 max-lg:mt-0 max-lg:rounded-2xl max-lg:border max-lg:border-gray-200 max-lg:bg-white/95 max-lg:p-2 max-lg:shadow-[0_8px_30px_rgba(16,37,66,0.18)] max-lg:backdrop-blur">
+        <div class="shrink-0 ps-2 lg:hidden">
+            <span class="block text-[11px] text-gray-500">مبلغ قابل پرداخت</span>
+            <span class="block text-sm font-black text-gray-900 [&_small]:hidden"><?php wc_cart_totals_order_total_html(); ?></span>
+        </div>
+        <div class="flex-1">
+            <?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
+        </div>
     </div>
 
     <?php do_action( 'woocommerce_after_cart_totals' ); ?>

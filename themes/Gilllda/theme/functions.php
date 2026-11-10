@@ -189,7 +189,6 @@ add_action( 'wp_enqueue_scripts', 'bluebox_scripts' );
 function bluebox_preload_fonts() {
     $font_dir = get_template_directory_uri() . '/fonts/Peyda/fonts/woff2/';
     echo '<link rel="preload" href="' . $font_dir . 'PeydaWebFaNum-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
-    echo '<link rel="preload" href="' . $font_dir . 'PeydaWebFaNum-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
     echo '<link rel="preload" href="' . $font_dir . 'PeydaWebFaNum-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
 }
 // Using priority 5 to ensure it loads high up in the <head>
@@ -233,6 +232,7 @@ require get_template_directory() . '/inc/post-type-functions/reading-time.php';
 require get_template_directory() . '/inc/post-type-functions/post-view.php';
 require get_template_directory() . '/inc/post-type-functions/post-rating.php';
 require get_template_directory() . '/inc/post-type-functions/toc.php';
+require get_template_directory() . '/inc/blog/magazine.php';
 require get_template_directory() . '/inc/post-type-functions/comments-field.php';
 require get_template_directory() . '/inc/post-type-functions/inline-ads.php';
 //product functions
@@ -247,6 +247,7 @@ require get_template_directory() . '/inc/product/filter-search-query.php';
 require get_template_directory() . '/inc/product/return-policy-schema.php';
 require get_template_directory() . '/inc/product/shop-actions.php';
 require get_template_directory() . '/inc/product/cart-fragments.php';
+require get_template_directory() . '/inc/product/ajax-cart.php';
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
 
@@ -256,6 +257,9 @@ require get_template_directory() . '/inc/walker.php';
 require get_template_directory() . '/inc/custom-post-type.php';
 require get_template_directory() . '/inc/gravity-form.php';
 require get_template_directory() . '/inc/optimize.php';
+require get_template_directory() . '/inc/app-shell.php';
+require get_template_directory() . '/inc/seo.php';
+require get_template_directory() . '/inc/telegram.php';
 require get_template_directory() . '/inc/otp-login-form.php';
 require get_template_directory() . '/inc/account-rules.php';
 // Product landing pages (/l/{product-slug}/)
@@ -263,6 +267,5 @@ require get_template_directory() . '/inc/landing/landing.php';
 if ( is_admin() ) {
 	require get_template_directory() . '/inc/landing/landing-admin.php';
 }
-include_once get_template_directory() . '/inc/search-route.php';
 include_once get_template_directory() . '/inc/ajax-search.php';
 

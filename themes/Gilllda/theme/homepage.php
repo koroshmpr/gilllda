@@ -1,6 +1,7 @@
 <?php /* Template Name: Home */
 get_header();
 get_template_part('template-parts/homepage/hero');
+get_template_part('template-parts/homepage/usp');
 get_template_part('template-parts/homepage/banners');
 $args = array(
     'class' => 'px-0 container',
@@ -27,12 +28,17 @@ get_template_part('template-parts/homepage/portfolios-slider');
 echo '</div>';
 
 echo '<div class="[content-visibility:auto] [contain-intrinsic-size:auto_500px]">';
-get_template_part('template-parts/blog/latest-blog');
+get_template_part('template-parts/homepage/magazine-teaser');
 echo '</div>';
 
 $categories = get_field('product_category');
 if ($categories) :
     foreach ($categories as $category) :
+        $category = is_object($category) ? $category : get_term((int) $category, 'product_cat');
+        // A one- or two-product category looks empty in a slider; the shop grid covers it.
+        if (!$category || is_wp_error($category) || (int) $category->count < 3) {
+            continue;
+        }
         $args = array(
             'category' => $category,
             'mobilePerPage' => '1.7',

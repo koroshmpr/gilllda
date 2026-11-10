@@ -36,6 +36,27 @@ if ( $product ) :
         ];
     }
 
+    // ORDER BY RAND() on every product view is expensive: cache the candidate IDs for 6 h
+    // and shuffle in PHP instead.
+    $cache_key = 'gl_other_prod_' . md5(wp_json_encode($product_cat_ids));
+    $pool = get_transient($cache_key);
+    if (!is_array($pool)) {
+        $pool_args = $args_other;
+        $pool_args['posts_per_page'] = 30;
+        $pool_args['fields'] = 'ids';
+        $pool_args['orderby'] = 'date';
+        $pool_args['no_found_rows'] = true;
+        unset($pool_args['post__not_in']);
+        $pool = get_posts($pool_args);
+        set_transient($cache_key, $pool, 6 * HOUR_IN_SECONDS);
+    }
+    $pool = array_values(array_diff($pool, [$current_post_id]));
+    shuffle($pool);
+    $args_other['post__in'] = $pool ? array_slice($pool, 0, 5) : [0];
+    $args_other['orderby'] = 'post__in';
+    $args_other['no_found_rows'] = true;
+    unset($args_other['tax_query']);
+
     $other_products = new WP_Query($args_other);
 
     if ($other_products->have_posts()) :

@@ -15,15 +15,11 @@
 <html <?php language_attributes(); ?>>
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
-    <?php
-    $focus_keyword = get_post_meta(get_the_ID(), 'rank_math_focus_keyword', true);
-    ?>
-    <meta name="keywords" content="<?= $focus_keyword ?? get_bloginfo('name'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="https://gmpg.org/xfn/11">
 
     <?php wp_head();
-    if (is_front_page() || is_page_template('theme/homepage.php')) {
+    if (is_front_page() || is_page_template('homepage.php')) {
         $hero = get_field('hero', get_the_ID());
         if ($hero && !empty($hero['image'])) {
             $image = $hero['image'];
@@ -41,7 +37,6 @@
     $scripts = get_field('header-scripts', 'option');
     echo $scripts ?? '';
     ?>
-    <noscript><style>#alpine-preloader { display: none !important; }</style></noscript>
 </head>
 
 <body   <?php body_class('font-peyda'); ?>
@@ -68,6 +63,10 @@
 $scripts = get_field('body-scripts', 'option');
 echo $scripts ?? '';
 wp_body_open();
+// First-visit splash: must be the first thing in <body> so it covers the page while it loads.
+if (function_exists('get_field') && get_field('preloader', 'option')) {
+    get_template_part('template-parts/global/preloader');
+}
 global $woo_active;
 get_template_part('template-parts/layout/header-content');
 

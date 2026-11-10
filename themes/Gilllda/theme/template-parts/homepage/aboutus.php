@@ -36,12 +36,12 @@
              :style="`background-position: ${progress}%; background-image: url('<?= esc_url($about['image']['url'] ?? ''); ?>')`"
              dir="rtl">
 
-        <div class="absolute inset-0 bg-black/60 lg:bg-black/10 transition-all duration-500"></div>
+        <div class="absolute inset-0 bg-black/60 lg:bg-black/25 transition-all duration-500"></div>
 
         <div class="container min-h-[70vh] lg:min-h-[100vh] relative z-10 mx-auto px-6 lg:px-12 py-16 flex items-center lg:items-start justify-center lg:justify-start h-full">
 
             <div :class="about ? 'lg:translate-y-6 scale-95' : ''"
-                 class="bg-transparent lg:bg-white/20 lg:border-2 border-white/30 lg:backdrop-blur-lg lg:sticky lg:top-36 lg:shadow-2xl lg:w-3/5 xl:max-w-2/5 lg:p-10 rounded-2xl text-white flex flex-col gap-6 text-center lg:text-right transition-all ease-linear duration-100">
+                 class="bg-transparent lg:bg-white/85 lg:text-gray-800 lg:border border-white/60 lg:backdrop-blur-xl lg:sticky lg:top-36 lg:shadow-2xl lg:w-3/5 xl:max-w-2/5 lg:p-10 rounded-2xl text-white flex flex-col gap-6 text-center lg:text-right transition-all ease-linear duration-100">
 
                 <h2 class="text-xl lg:text-3xl font-black relative lg:text-primary pb-4 flex items-center justify-center lg:justify-start gap-3">
                     <svg class="w-8 h-8 lg:size-16 lg:text-primary" viewBox="0 0 16 16">
@@ -66,7 +66,7 @@
                     <span class="absolute bottom-0 right-0 lg:right-16 left-0 lg:left-auto w-16 h-1.5 bg-primary rounded-full mx-auto lg:mx-0"></span>
                 </h2>
 
-                <article class="text-sm lg:text-base leading-8 lg:leading-8 font-medium lg:font-normal text-gray-100 text-justify text-justify-last-center lg:text-justify-last-right">
+                <article class="text-sm lg:text-base leading-8 lg:leading-8 font-medium lg:font-normal text-gray-100 lg:text-gray-700 text-justify text-justify-last-center lg:text-justify-last-right">
                     <?= wp_kses_post($about['content'] ?? ''); ?>
                 </article>
 

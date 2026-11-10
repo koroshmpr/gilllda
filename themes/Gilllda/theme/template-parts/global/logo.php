@@ -3,9 +3,9 @@
 	$logoLink = $args['logoLink'] ?? 'site_logo';
     $logoImg = get_field( $logoLink , 'option');
     ?>
-    <img width="<?= $args['width'] ?? $logoImg['width']; ?>" height="<?= $args['height'] ?? $logoImg['height']; ?>" class="<?= $args['logoSize'] ?? 'w-20' ?> object-cover"
+    <img width="<?= esc_attr($args['width'] ?? ($logoImg['width'] ?? 120)); ?>" height="<?= esc_attr($args['height'] ?? ($logoImg['height'] ?? 60)); ?>" class="<?= $args['logoSize'] ?? 'w-20' ?> object-cover"
 		 src="<?= esc_url($logoImg['sizes']['small'] ?? $logoImg['sizes']['medium'] ?? $logoImg['url'] ?? '') ?>"
-		 alt="<?= esc_attr($logoImg['title']) ?>">
+		 alt="<?= esc_attr(get_bloginfo('name')); ?>">
 	<?php ?>
 </a>
 <?php

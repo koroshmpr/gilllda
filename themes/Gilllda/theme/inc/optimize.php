@@ -116,8 +116,34 @@ function disable_woo_css_on_single_product() {
 
 // 8. NEW: Defer WooCommerce non-critical scripts to fix critical request chain
 add_filter('script_loader_tag', function($tag, $handle) {
-    if (strpos($tag, 'sourcebuster.min.js') !== false || strpos($tag, 'order-attribution.min.js') !== false) {
+    if ((strpos($tag, 'sourcebuster.min.js') !== false || strpos($tag, 'order-attribution.min.js') !== false) && strpos($tag, ' defer') === false) {
         return str_replace(' src', ' defer="defer" src', $tag);
     }
     return $tag;
 }, 10, 2);
+
+// 9. WooCommerce's generic CSS (~120 KB, render-blocking) is only needed where WooCommerce
+//    renders its own forms: cart, checkout and the account area. Everything else is Tailwind.
+add_action( 'wp_enqueue_scripts', function () {
+    if ( ! function_exists( 'is_cart' ) || is_cart() || is_checkout() || is_account_page() ) {
+        return;
+    }
+    foreach ( [ 'woocommerce-general', 'woocommerce-layout', 'woocommerce-smallscreen', 'wc-blocks-style' ] as $handle ) {
+        wp_dequeue_style( $handle );
+    }
+}, 99 );
+
+// 10. Product page: the theme has its own Swiper gallery, so WooCommerce's zoom/slider/lightbox
+//     scripts are dead weight.
+add_action( 'wp_enqueue_scripts', function () {
+    if ( function_exists( 'is_product' ) && is_product() ) {
+        foreach ( [ 'zoom', 'flexslider', 'photoswipe', 'photoswipe-ui-default', 'wc-zoom', 'wc-flexslider', 'wc-photoswipe', 'wc-photoswipe-ui-default' ] as $handle ) {
+            wp_dequeue_script( $handle );
+        }
+    }
+}, 99 );
+add_action( 'after_setup_theme', function () {
+    remove_theme_support( 'wc-product-gallery-zoom' );
+    remove_theme_support( 'wc-product-gallery-lightbox' );
+    remove_theme_support( 'wc-product-gallery-slider' );
+}, 100 );

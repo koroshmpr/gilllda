@@ -35,10 +35,6 @@ if ( function_exists('get_field') ) :
     if ( $catMode ) :
         get_template_part('template-parts/shop/shop-contact-modal');
     endif;
-    $preloader = get_field('preloader', 'option');
-    if ( $preloader ) :
-        get_template_part('template-parts/global/preloader');
-    endif;
 
 endif;
 

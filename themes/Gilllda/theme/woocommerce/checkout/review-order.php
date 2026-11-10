@@ -17,8 +17,8 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<table class="shop_table woocommerce-checkout-review-order-table">
-	<thead>
+<table class="shop_table woocommerce-checkout-review-order-table gl-review-table">
+	<thead class="sr-only">
 		<tr>
 			<th class="product-name"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
 			<th class="product-total"><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
@@ -35,9 +35,17 @@ defined( 'ABSPATH' ) || exit;
 				?>
 				<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 					<td class="product-name">
-						<?php echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ) . '&nbsp;'; ?>
-						<?php echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity">' . sprintf( '&times;&nbsp;%s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-						<?php echo wc_get_formatted_cart_item_data( $cart_item ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<div class="flex items-center gap-3">
+							<span class="relative size-14 shrink-0 overflow-visible rounded-xl border border-gray-100 bg-gray-50 [&_img]:size-full [&_img]:rounded-xl [&_img]:object-cover">
+								<?php echo $_product->get_image( 'woocommerce_gallery_thumbnail', array( 'alt' => '', 'loading' => 'lazy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								<span class="absolute -top-1.5 -start-1.5 flex size-5 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white" aria-hidden="true"><?php echo esc_html( $cart_item['quantity'] ); ?></span>
+							</span>
+							<span class="min-w-0 text-sm leading-6">
+								<?php echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ) . '&nbsp;'; ?>
+								<?php echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity">' . sprintf( '&times;&nbsp;%s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								<?php echo wc_get_formatted_cart_item_data( $cart_item ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							</span>
+						</div>
 					</td>
 					<td class="product-total">
 						<?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

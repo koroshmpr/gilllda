@@ -12,21 +12,21 @@
  *
  * @see     https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 10.2.0
+ * @version 10.4.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
 if ( ! $notices ) {
-    return;
+	return;
 }
 
 ?>
 
 <?php foreach ( $notices as $notice ) : ?>
-    <div class="border p-3 rounded-lg bg-icon/30 text-center border-icon"<?php echo wc_get_notice_data_attr( $notice ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> role="status">
-        <?php echo wc_kses_notice( $notice['notice'] ); ?>
-    </div>
+	<div class="woocommerce-info gl-notice gl-notice--info"<?php echo wc_get_notice_data_attr( $notice ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> role="status">
+		<?php echo wc_kses_notice( $notice['notice'] ); ?>
+	</div>
 <?php endforeach; ?>

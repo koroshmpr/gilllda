@@ -1,42 +1,28 @@
 <?php
-
-// Get the current service ID
+/**
+ * Product page: magazine articles that recommend this product (ACF related_product on posts).
+ */
 $id = get_the_ID();
-// Query portfolios related to this service
-$args = array(
-    'post_type' => 'post',
-    'post_per_page' => 6,
-    'meta_query' => array(
-        array(
-            'key' => 'related_product', // ACF field name
-            'value' => $id, // Need to search within serialized array
-            'compare' => 'LIKE'
-        )
-    )
-);
-
-$related_post = new WP_Query($args);
-if ($related_post->have_posts()) :?>
-    <section class="container max-lg:px-3 my-4">
-        <div class="border-b border-black/10 flex mb-6">
-            <p class="pb-3 border-b-2 border-primary text-center text-black text-2xl fw-bold">
-                مقالات مرتبط
-            </p>
-        </div>
-        <div class="flex flex-nowrap overflow-x-scroll md:grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2 lg:gap-4">
-            <?php
-            while ($related_post->have_posts()):
-                $related_post->the_post();
-
-                $args = array(
-                    'class' => 'max-lg:min-w-[250px] block',
-                    'eager' => $related_post->current_post < 4 // Eager load the first 4 items
-                );
-
-                get_template_part('template-parts/blog/archive-card', null, $args);
+$related_post = new WP_Query([
+    'post_type'      => 'post',
+    'post_status'    => 'publish',
+    'posts_per_page' => 3,
+    'no_found_rows'  => true,
+    'meta_query'     => [[
+        'key'     => 'related_product',
+        'value'   => '"' . $id . '"', // ACF stores the relationship as a serialized array of strings
+        'compare' => 'LIKE',
+    ]],
+]);
+if ($related_post->have_posts()) : ?>
+    <section class="container my-10 px-4 lg:px-0" aria-labelledby="prod-mag-title">
+        <p class="mb-2 flex items-center gap-2 text-sm font-bold text-secondary"><span class="h-0.5 w-6 bg-current"></span>مجله گیلدا</p>
+        <h2 id="prod-mag-title" class="mb-8 text-2xl font-black text-gray-900">درباره این کیف بیشتر بخوانید</h2>
+        <div class="grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+            <?php while ($related_post->have_posts()) : $related_post->the_post();
+                get_template_part('template-parts/blog/mag-card', null, ['d' => $related_post->current_post]);
             endwhile;
-            wp_reset_postdata(); // Added this to safely reset the custom query
-            ?>
+            wp_reset_postdata(); ?>
         </div>
     </section>
-<?php endif; ?>
+<?php endif;

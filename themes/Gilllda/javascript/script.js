@@ -1,6 +1,13 @@
-import Swiper from 'swiper/bundle';
+import './cart.js';
+// Only the Swiper modules the theme uses (the full bundle added ~60 KB to every page).
+import Swiper from 'swiper';
+import { Navigation, Pagination, Autoplay, FreeMode, Thumbs } from 'swiper/modules';
+import './motion.js';
 import Alpine from 'alpinejs';
 import intersect from '@alpinejs/intersect';
+
+Swiper.use([Navigation, Pagination, Autoplay, FreeMode, Thumbs]);
+window.Swiper = Swiper;
 
 document.addEventListener('DOMContentLoaded', function () {
 	window.Alpine = Alpine;

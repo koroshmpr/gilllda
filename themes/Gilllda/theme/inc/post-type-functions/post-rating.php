@@ -4,6 +4,15 @@ function save_rating() {
         $post_id = intval($_POST['post_id']);
         $rating_value = floatval($_POST['rating_value']);
 
+        if (get_post_type($post_id) !== 'post' || get_post_status($post_id) !== 'publish') {
+            wp_send_json_error('Invalid post');
+        }
+        $ip_key = 'gl_rate_' . md5(($_SERVER['REMOTE_ADDR'] ?? '') . '|' . $post_id);
+        if (get_transient($ip_key)) {
+            wp_send_json_error('شما قبلا به این مطلب امتیاز داده‌اید.');
+        }
+        set_transient($ip_key, 1, DAY_IN_SECONDS);
+
         // --- NEW: Check if user already voted using a cookie ---
         $cookie_name = 'voted_on_post_' . $post_id;
         if (isset($_COOKIE[$cookie_name])) {
@@ -67,7 +76,7 @@ add_filter( 'rank_math/json_ld', function( $data, $jsonld ) {
 
                 // 🔴 تغییر مهم: فقط اسکیماهای مجاز گوگل را در این لیست قرار دهید
                 // اگر سایت شما دوره‌های آموزشی هم دارد، می‌توانید 'Course' را هم اضافه کنید
-                $valid_types = ['Product', 'SoftwareApplication', 'Book', 'Course'];
+                $valid_types = [ 'SoftwareApplication', 'Book', 'Course'];
 
                 if ( in_array( $type, $valid_types ) ) {
                     $data[$key]['aggregateRating'] = [

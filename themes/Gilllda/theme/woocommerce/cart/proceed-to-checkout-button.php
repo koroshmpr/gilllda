@@ -22,6 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="checkout-button max-lg:!py-3.5 bg-primary rounded-2xl transition-all hover:brightness-110 hover:scale-95 duration-300 !mb-0 !text-white alt wc-forward<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>">
+<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="checkout-button wc-forward flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-bold !text-white shadow-sm shadow-primary/20 transition hover:brightness-110 active:scale-[0.98]<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>">
 	<?php esc_html_e( 'Proceed to checkout', 'woocommerce' ); ?>
+	<svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7"/></svg>
 </a>

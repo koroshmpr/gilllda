@@ -18,8 +18,12 @@
 defined( 'ABSPATH' ) || exit;
 
 $totals = $order->get_order_item_totals(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+
+if ( function_exists( 'gl_checkout_steps' ) ) {
+	gl_checkout_steps( 3 );
+}
 ?>
-<form id="order_review" method="post">
+<form id="order_review" method="post" class="gl-checkout">
 
 	<table class="shop_table">
 		<thead>

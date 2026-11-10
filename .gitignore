@@ -1,4 +1,5 @@
-/plugins/
+/plugins/*
+!/plugins/gilllda-ai/
 /themes/Gilllda/node_modules/
 /languages/
 /backups-dup-lite/

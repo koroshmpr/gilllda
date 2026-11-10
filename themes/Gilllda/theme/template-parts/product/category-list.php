@@ -31,7 +31,7 @@ if (!empty($terms) && !is_wp_error($terms)):
     ?>
     <section class="py-5 mt-4 bg-white">
         <div class="container mx-auto px-4">
-            <div class="flex items-center overflow-x-auto gap-6 lg:grid lg:grid-cols-7 xl:grid-cols-8 lg:gap-y-8 lg:gap-x-6 justify-items-center lg:overflow-x-visible [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <div class="flex items-center overflow-x-auto gap-6 lg:flex-wrap lg:gap-x-12 lg:gap-y-8 lg:overflow-x-visible [&>*:first-child]:ms-auto [&>*:last-child]:me-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 <?php
                 foreach ($terms as $term):
                     // Get ACF field for term thumbnail

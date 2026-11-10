@@ -56,12 +56,15 @@ $total_grid_items = count($grid_images);
      dir="rtl">
 
     <div>
-        <img
-                @click="openAt(0)"
-                fetchpriority="high"
-                src="<?= get_the_post_thumbnail_url(get_the_ID(), 'large'); ?>"
-                alt="<?= the_title_attribute(['echo' => false]); ?>"
-                class="object-contain w-full duration-500 aspect-video lg:aspect-square mb-1 overflow-hidden transition-all rounded-sm">
+        <?= wp_get_attachment_image(get_post_thumbnail_id(), 'large', false, [
+            '@click'        => 'openAt(0)',
+            'fetchpriority' => 'high',
+            'loading'       => 'eager',
+            'decoding'      => 'async',
+            'sizes'         => '(min-width: 1024px) 40vw, 100vw',
+            'alt'           => esc_attr(get_the_title()),
+            'class'         => 'object-contain w-full duration-500 aspect-video lg:aspect-square mb-1 overflow-hidden transition-all rounded-sm',
+        ]); ?>
 
         <div class="grid grid-cols-4 gap-1">
             <?php
@@ -72,10 +75,9 @@ $total_grid_items = count($grid_images);
                 $has_more = ($total_grid_items > 4);
                 ?>
                 <div class="relative aspect-square overflow-hidden rounded-sm" @click="openAt(<?= $slide_index; ?>)">
-                    <img class="object-contain w-full h-full"
-                         fetchpriority="high"
-                         src="<?= wp_get_attachment_image_url($image_id, 'medium') ?>"
-                         alt="<?= get_the_title(); ?>">
+                    <img class="object-contain w-full h-full" loading="lazy" decoding="async" width="300" height="300"
+                         src="<?= esc_url(wp_get_attachment_image_url($image_id, 'medium')); ?>"
+                         alt="<?= esc_attr(get_the_title()); ?>">
 
                     <?php if ($is_fourth_item && $has_more) : ?>
                         <div class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-white backdrop-blur-[2px]">

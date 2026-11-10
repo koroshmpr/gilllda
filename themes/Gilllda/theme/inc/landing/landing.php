@@ -122,7 +122,7 @@ add_action('wp_enqueue_scripts', function () {
     if (!gl_is_landing()) {
         return;
     }
-    foreach (['bluebox-style', 'woocommerce-general', 'woocommerce-layout', 'woocommerce-smallscreen', 'woocommerce-inline', 'wc-blocks-style', 'photoswipe', 'photoswipe-default-skin'] as $h) {
+    foreach (['gl-shop-flow', 'bluebox-style', 'woocommerce-general', 'woocommerce-layout', 'woocommerce-smallscreen', 'woocommerce-inline', 'wc-blocks-style', 'photoswipe', 'photoswipe-default-skin'] as $h) {
         wp_dequeue_style($h);
     }
     foreach (['bluebox-script', 'single-product', 'wc-single-product', 'zoom', 'flexslider', 'photoswipe', 'photoswipe-ui-default', 'wc-add-to-cart-variation', 'comment-reply'] as $h) {

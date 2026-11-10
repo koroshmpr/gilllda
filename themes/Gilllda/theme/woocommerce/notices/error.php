@@ -25,7 +25,7 @@ if ( ! $notices ) {
 
 ?>
 
-<ul class="woocommerce-error" role="alert">
+<ul class="woocommerce-error gl-notice gl-notice--error" role="alert">
 	<?php foreach ( $notices as $notice ) : ?>
 		<li<?php echo wc_get_notice_data_attr( $notice ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php echo wc_kses_notice( $notice['notice'] ); ?>

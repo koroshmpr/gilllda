@@ -103,7 +103,7 @@
 
             searchTimeout = setTimeout(() => {
                 fetchSearchResults(query);
-            }, 2000);
+            }, 300);
         }
 
         async function fetchSearchResults(query) {

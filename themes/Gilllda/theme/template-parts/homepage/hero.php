@@ -1,5 +1,8 @@
 <?php
-$hero = get_field('hero');
+$hero = function_exists('get_field') ? get_field('hero') : null;
+if (empty($hero['image'])) {
+    return;
+}
 $image = $hero['image'];
 ?>
 <section class="relative overflow-hidden lg:h-[85vh] h-[55vh] lg:pb-16">
@@ -11,7 +14,7 @@ $image = $hero['image'];
             <img width="390" height="374" fetchpriority="high" loading="eager" decoding="sync"
                  :class="scrollingDown ? 'scale-95' : (scrollingUp ? 'lg:scale-105 lg:mt-5' : '')"
                  class="absolute inset-0 w-full lg:h-[80vh] select-none h-[55vh] transition-transform border border-y-0 border-black/5 lg:px-5 pb-0 duration-700 object-cover"
-                 src="<?= $image['desktop']['sizes']['1536x1536'] ?? $image['desktop']['sizes']['large'] ?? $image['desktop']['url'] ?? ''; ?>" alt="<?= $image['desktop']['title'] ?? ''; ?>">
+                 src="<?= $image['desktop']['sizes']['1536x1536'] ?? $image['desktop']['sizes']['large'] ?? $image['desktop']['url'] ?? ''; ?>" alt="<?= esc_attr(($image['desktop']['alt'] ?? '') ?: 'کیف زنانه گیلدا'); ?>">
         </picture>
 		<div :class="scrollingDown ? 'lg:-translate-y-24 -translate-y-8 scale-85' : (scrollingUp ? 'scale-105' : '')"
 			 class="absolute duration-700 text-white transition-all bottom-20 lg:bottom-0 z-[2] w-full inset-x-0 flex flex-col items-center">
@@ -19,8 +22,9 @@ $image = $hero['image'];
 				<p class="lg:text-9xl !leading-0 tracking-[-5px] lg:tracking-[-10px] me-2 lg:me-5 stroke-3 text-secondary font-bold stroke-white text-6xl"><?= $hero['title'] ?? ''; ?></p>
 				<p class="!leading-0 lg:text-5xl font-thin pb-2 lg:pb-4 text-xl text-primary/50 stroke-white border-b border-white"><?= $hero['adjectives'] ?? ''; ?></p>
 			</div>
-			<h1 class="lg:text-4xl bg-gradient-to-t from-primary/60 border border-t-0 p-3 pb-1 border-white/50 xl:me-32 text-2xl"><?= $hero['subtitle'] ?? ''; ?></h1>
-			<a href="<?= $hero['button']['url'] ?? ''; ?>" aria-label="link to <?= $hero['button']['title'] ?? ''; ?>"
+			<h1 class="lg:text-4xl bg-gradient-to-t from-primary/60 border border-t-0 p-3 pb-1 border-white/50 xl:me-32 text-2xl"><?= esc_html($hero['subtitle'] ?? get_bloginfo('name')); ?></h1>
+			<p class="mt-3 rounded-full bg-white/80 px-4 py-1.5 text-xs font-bold text-primary backdrop-blur lg:text-sm">خرید آنلاین کیف زنانه · ارسال به سراسر ایران</p>
+			<a href="<?= esc_url($hero['button']['url'] ?? home_url('/shop/')); ?>"
 			   class="px-5 font-bold flex gap-2 items-center group/add transition-all ease-in-out mt-10 lg:mt-4 bg-secondary rounded-sm lg:-mb-10 hover:brightness-125 hover:rounded-sm hover:ring-1 border shadow-lg backdrop-blur-sm ring-white duration-700 hover:scale-110 py-3"
 			   :class="scrollingDown ? 'translate-y-12 px-24 py-4 lg:py-8 text-2xl' : (scrollingUp ? '' : '')">
 				<?php
@@ -30,7 +34,7 @@ $image = $hero['image'];
 				);
 				get_template_part('template-parts/svg/shop',null,$args);
 				?>
-				<span class="group-hover/add:-translate-x-0 transition-all duration-700 translate-x-4"><?= $hero['button']['title'] ?? ''; ?></span>
+				<span class="group-hover/add:-translate-x-0 transition-all duration-700 translate-x-4"><?= esc_html($hero['button']['title'] ?? 'فروشگاه'); ?></span>
 			</a>
 		</div>
 	</div>

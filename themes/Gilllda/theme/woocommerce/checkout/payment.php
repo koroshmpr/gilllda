@@ -21,7 +21,7 @@ if ( ! wp_doing_ajax() ) {
 	do_action( 'woocommerce_review_order_before_payment' );
 }
 ?>
-<div id="payment" class="woocommerce-checkout-payment">
+<div id="payment" class="woocommerce-checkout-payment gl-payment">
 	<?php if ( WC()->cart && WC()->cart->needs_payment() ) : ?>
 		<ul class="wc_payment_methods payment_methods methods">
 			<?php
@@ -49,14 +49,21 @@ if ( ! wp_doing_ajax() ) {
 		<?php wc_get_template( 'checkout/terms.php' ); ?>
 
 		<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
-        <div :class="scrollingDown ? 'scale-85 translate-y-2' : ''" class="max-lg:fixed transition-all duration-500 bg-white/50 max-lg:inset-x-4 p-[2px] max-lg:z-[6] bottom-17 rounded-2xl ">
-            <?php echo apply_filters( 'woocommerce_order_button_html', '
-            <button type="submit" class=" alt bg-primary border border-white/20 lg:mt-3 py-4 text-xl cursor-pointer hover:brightness-125 transition-all !mb-0 lg:w-full rounded-2xl text-white' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '" 
-            name="woocommerce_checkout_place_order" 
-            id="place_order" 
-            value="' . esc_attr( $order_button_text ) . '" 
-            data-value="' . esc_attr( $order_button_text ) . '"> ' . esc_html( $order_button_text ) . ' </button>' ); // @codingStandardsIgnoreLine ?>
-        </div>
+
+		<div class="gl-paybar flex items-center gap-3 max-lg:fixed max-lg:inset-x-3 max-lg:bottom-17 max-lg:z-40 max-lg:rounded-2xl max-lg:border max-lg:border-gray-200 max-lg:bg-white/95 max-lg:p-2 max-lg:shadow-[0_8px_30px_rgba(16,37,66,0.18)] max-lg:backdrop-blur lg:mt-4">
+			<?php if ( WC()->cart ) : ?>
+				<div class="shrink-0 ps-2 lg:hidden">
+					<span class="block text-[11px] text-gray-500">مبلغ قابل پرداخت</span>
+					<span class="block text-sm font-black text-gray-900"><?php echo wp_kses_post( WC()->cart->get_total() ); ?></span>
+				</div>
+			<?php endif; ?>
+			<?php echo apply_filters( 'woocommerce_order_button_html', '<button type="submit" class="gl-place-order alt flex min-h-12 flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl !bg-primary px-4 text-base font-bold !text-white shadow-sm shadow-primary/20 transition hover:brightness-110 active:scale-[0.98] lg:min-h-14 lg:w-full' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '">' . esc_html( $order_button_text ) . '</button>' ); // @codingStandardsIgnoreLine ?>
+		</div>
+
+		<p class="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-gray-500">
+			<svg class="size-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+			پرداخت امن از طریق درگاه بانکی
+		</p>
 		<?php do_action( 'woocommerce_review_order_after_submit' ); ?>
 
 		<?php wp_nonce_field( 'woocommerce-process_checkout', 'woocommerce-process-checkout-nonce' ); ?>

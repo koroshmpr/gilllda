@@ -1,123 +1,43 @@
 <?php
 /**
- * Template Part: Custom Page Transition Preloader
- * Requires Alpine.js and Tailwind CSS
+ * First-visit splash (enabled by the «preloader» option in Site Settings).
+ * Shown once per browser session, hidden on DOMContentLoaded (min 350 ms, max 1.2 s).
+ * Never delays link clicks — page-to-page motion is handled by View Transitions (motion.css).
  */
+$logo = function_exists('get_field') ? get_field('site_logo', 'option') : null;
 ?>
-
-<style>
-    #alpine-preloader {
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: white;
-    }
-    .dots {
-        width: 13.4px;
-        height: 13.4px;
-        position: relative;
-    }
-
-    .dots::before,
-    .dots::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        background: var(--color-primary);
-    }
-
-    .dots::before {
-        box-shadow: -26.9px 0 var(--color-primary);
-        animation: dots-dm1l1cmd 0.6s infinite linear;
-    }
-
-    .dots::after {
-        transform: rotate(0deg) translateX(26.9px);
-        animation: dots-dh1qq5md 0.6s infinite linear;
-    }
-
-    @keyframes dots-dm1l1cmd {
-        100% {
-            transform: translateX(26.9px);
-        }
-    }
-
-    @keyframes dots-dh1qq5md {
-        100% {
-            transform: rotate(-180deg) translateX(26.9px);
-        }
-    }
-</style>
-
-<div id="alpine-preloader"
-     x-data="pageTransition()"
-     x-show="isLoading"
-     x-transition.opacity.duration.500ms>
-
-    <div class="dots"></div>
-
+<div id="gl-splash" aria-hidden="true">
+    <div class="gl-splash__mark">
+        <?php if (!empty($logo['url'])) : ?>
+            <img src="<?= esc_url($logo['sizes']['medium'] ?? $logo['url']); ?>" alt="" width="120" height="60" decoding="async">
+        <?php endif; ?>
+        <span class="gl-splash__bar"><span></span></span>
+    </div>
 </div>
+<style>
+    #gl-splash{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#fff;transition:opacity .45s ease,visibility .45s;}
+    #gl-splash.is-done{opacity:0;visibility:hidden}
+    .gl-splash__mark{display:grid;justify-items:center;gap:18px;animation:gl-splash-in .6s cubic-bezier(.2,.8,.2,1) both}
+    .gl-splash__mark img{width:120px;height:auto}
+    .gl-splash__bar{display:block;width:120px;height:3px;border-radius:3px;background:#eef0f3;overflow:hidden}
+    .gl-splash__bar span{display:block;height:100%;width:40%;border-radius:3px;background:linear-gradient(90deg,#102542,#9d0617);animation:gl-splash-bar 1s ease-in-out infinite}
+    @keyframes gl-splash-in{from{opacity:0;transform:scale(.92)}}
+    @keyframes gl-splash-bar{0%{transform:translateX(160%)}100%{transform:translateX(-260%)}}
+    @media (prefers-reduced-motion:reduce){.gl-splash__mark,.gl-splash__bar span{animation:none}}
+</style>
 <script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('pageTransition', () => ({
-            isLoading: true, // Start visible when page loads
-
-            init() {
-                // 1. Fade out when the page fully loads
-                window.addEventListener('load', () => {
-                    setTimeout(() => {
-                        this.isLoading = false;
-                    }, 200); // Tiny delay so the user actually sees the logo
-                });
-
-                // 2. Fix the Safari/Chrome back-button cache issue (BFCache)
-                window.addEventListener('pageshow', (event) => {
-                    if (event.persisted) {
-                        this.isLoading = false;
-                    }
-                });
-
-                // 3. Intercept all link clicks globally to trigger exit animation
-                document.addEventListener('click', (e) => {
-                    const link = e.target.closest('a');
-
-                    // Ignore if it's not a valid link, or if the href is exactly "#"
-                    // We use getAttribute to check exactly what is in the HTML
-                    if (!link || !link.href || link.getAttribute('href') === '#' || link.getAttribute('role') === 'button') return;
-
-                    if (link.target === '_blank') return;
-
-                    // Ignore external links
-                    if (link.hostname !== window.location.hostname) return;
-
-                    // Ignore mailto: and tel: links
-                    if (link.href.startsWith('mailto:') || link.href.startsWith('tel:')) return;
-
-                    // Ignore anchor links on the same page (e.g., #details or #gallery)
-                    const currentUrl = window.location.origin + window.location.pathname;
-                    const linkUrl = link.origin + link.pathname;
-                    if (link.hash && currentUrl === linkUrl) return;
-
-                    // Ignore if user is opening in a new tab (Ctrl/Cmd + Click)
-                    if (e.ctrlKey || e.metaKey || e.shiftKey) return;
-
-                    e.preventDefault();
-                    const targetUrl = link.href;
-
-                    // Trigger Alpine's fade-in transition
-                    this.isLoading = true;
-
-                    // Wait for the x-transition duration (500ms) before navigating
-                    setTimeout(() => {
-                        window.location.href = targetUrl;
-                    }, 500);
-                });
-            }
-        }));
-    });
+    (function () {
+        var s = document.getElementById('gl-splash');
+        if (!s) return;
+        var seen = false;
+        try { seen = sessionStorage.getItem('gl_splash') === '1'; sessionStorage.setItem('gl_splash', '1'); } catch (e) {}
+        if (seen) { s.remove(); return; }
+        var t0 = Date.now();
+        var done = function () {
+            setTimeout(function () { s.classList.add('is-done'); setTimeout(function () { s.remove(); }, 500); }, Math.max(0, 350 - (Date.now() - t0)));
+        };
+        if (document.readyState !== 'loading') done(); else document.addEventListener('DOMContentLoaded', done);
+        setTimeout(done, 1200);
+        window.addEventListener('pageshow', function (e) { if (e.persisted) s.remove(); });
+    })();
 </script>

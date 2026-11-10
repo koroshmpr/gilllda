@@ -36,16 +36,16 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
     ?>
 </div>
 
-<form class="checkout_coupon woocommerce-form-coupon w-full bg-white shadow-sm lg:w-1/3 flex flex-col items-center !my-0 !p-1 !rounded-t-0 !border-t-transparent !mx-auto" method="post" style="display:none" id="woocommerce-checkout-form-coupon">
+<form class="checkout_coupon woocommerce-form-coupon gl-coupon-form mx-auto mb-4 flex w-full max-w-xl items-start gap-2 rounded-2xl border border-gray-200 bg-white p-2" method="post" style="display:none" id="woocommerce-checkout-form-coupon">
 
-    <p class="form-row form-row-first !w-full !mb-0">
+    <p class="form-row form-row-first !m-0 !w-auto flex-1 !p-0">
         <label for="coupon_code" class="screen-reader-text"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label>
         <input type="text" name="coupon_code" class="input-text" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" id="coupon_code" value="" />
     </p>
 
-    <p class="form-row form-row-last !w-full !mb-0">
-        <button type="submit" class="size-full button<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_html_e( 'Apply coupon', 'woocommerce' ); ?></button>
+    <p class="form-row form-row-last !m-0 !w-auto !p-0">
+        <button type="submit" class="min-h-12 cursor-pointer rounded-xl bg-gray-800 px-4 text-sm font-bold text-white transition hover:brightness-125<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_html_e( 'Apply coupon', 'woocommerce' ); ?></button>
     </p>
 
-    <div class="clear"></div>
+    <div class="clear hidden"></div>
 </form>

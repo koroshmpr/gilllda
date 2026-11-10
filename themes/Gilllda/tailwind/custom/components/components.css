@@ -54,3 +54,5 @@
 .entry-content > .alignright {
 	@apply float-right ml-8;
 }
+
+@import "./motion.css";

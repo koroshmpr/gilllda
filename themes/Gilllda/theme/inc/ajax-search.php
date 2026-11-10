@@ -7,9 +7,9 @@ add_action('wp_ajax_nopriv_custom_ajax_search', 'handle_custom_ajax_search');
 function handle_custom_ajax_search()
 {
     // Sanitize the search keyword
-    $keyword = isset($_POST['keyword']) ? sanitize_text_field($_POST['keyword']) : '';
+    $keyword = isset($_POST['keyword']) ? mb_substr(sanitize_text_field(wp_unslash($_POST['keyword'])), 0, 64) : '';
 
-    if (empty($keyword)) {
+    if (mb_strlen($keyword) < 2) {
         wp_send_json_success('');
     }
 

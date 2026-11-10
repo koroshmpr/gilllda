@@ -7,53 +7,23 @@ $acf_term_id = $term->taxonomy . '_' . $term->term_id;
 
 $content = get_field('content', $acf_term_id);
 ?>
-    <article class="container bg-white grid lg:grid-cols-12 gap-4 max-lg:px-3 pt-2">
-        <header class="lg:col-span-12 border-b border-black/10">
-            <h1 class="text-black text-3xl border-b-2 pb-3 border-primary w-fit">
-                <?= esc_html(single_term_title('', false)); ?>
-            </h1>
-        </header>
-
-        <?php if (have_posts()) : ?>
-
-            <?php
-            $args = array(
-                'term_id' => $term->term_id,
-            );
-            get_template_part('template-parts/blog/sidebar', null, $args);
-            ?>
-
-            <section class="lg:col-span-8 xl:col-span-9 max-w-content flex flex-col gap-3 mb-8">
-
-                <?php get_template_part('template-parts/global/grid-button'); ?>
-
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
-                     :class="gridView === 'large' ? 'md:grid-cols-1 lg:!grid-cols-2 xl:!grid-cols-3' : 'grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4'">
-                    <?php
-                    global $wp_query; // Bring the main query object into scope
-
-                    while (have_posts()) :
-                        the_post();
-
-                        $args = array(
-                            'class' => 'transition-all duration-500',
-                            'eager' => $wp_query->current_post < 4 // Eager load the first 4 blog posts
-                        );
-
-                        get_template_part('template-parts/blog/archive-card', null, $args);
-                    endwhile;
-                    ?>
-                </div>
-            </section>
-
-            <?php
-            get_template_part('template-parts/global/pagination');
-            // Reset query
-            wp_reset_postdata();
-            ?>
-
+<?php get_template_part('template-parts/blog/mag-header', null, [
+        'title'   => single_term_title('', false),
+        'desc'    => wp_strip_all_tags(term_description($term)),
+        'current' => $term->term_id,
+    ]); ?>
+    <section class="container px-4 pb-14 pt-6 lg:px-0">
+        <?php if (have_posts()) : global $wp_query; ?>
+            <div class="grid gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+                <?php while (have_posts()) : the_post();
+                    get_template_part('template-parts/blog/mag-card', null, ['d' => $wp_query->current_post % 3, 'eager' => $wp_query->current_post < 3]);
+                endwhile; ?>
+            </div>
+            <?php get_template_part('template-parts/global/pagination'); ?>
+        <?php else : ?>
+            <p class="py-20 text-center text-2xl text-gray-400">هنوز مقاله‌ای در این دسته منتشر نشده است.</p>
         <?php endif; ?>
-    </article>
+    </section>
 
 <?php
 

@@ -15,7 +15,7 @@ $url = $link_data['url'] ?? ($link_data['link'] ?? '');
 // Only output the anchor tag if a URL actually exists
 if ( ! empty( $url ) ) :
     ?>
-    <a aria-label="link to <?= $type ?? ''; ?> telegram channel" class="flex justify-center text-[#0088cc] items-center relative p-2 <?= esc_attr( $class ); ?>" href="<?= esc_url( $url ); ?>" target="_blank">
+    <a aria-label="<?= esc_attr($type === 'blog' ? 'کانال تلگرام مجله گیلدا' : 'کانال تلگرام فروشگاه گیلدا'); ?>" title="<?= esc_attr($type === 'blog' ? 'کانال تلگرام مقالات' : 'کانال تلگرام فروشگاه'); ?>" rel="noopener" class="flex justify-center text-[#0088cc] items-center relative p-2 <?= esc_attr( $class ); ?>" href="<?= esc_url( $url ); ?>" target="_blank">
         <?php
         get_template_part( 'template-parts/svg/socials/telegram', null, [
                 'size' => 25,

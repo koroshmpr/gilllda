@@ -1,122 +1,126 @@
 <?php
 /**
- * The main template file
- *
- * This is the most generic template file in a WordPress theme
- * and one of the two required files for a theme (the other being style.css).
- * It is used to display a page when nothing more specific matches a query.
- * E.g., it puts together the home page when no `home.php` file exists.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ * Blog home — «مجله گیلدا» (also the generic fallback template).
  *
  * @package bluebox
  */
 
-// اصلاح مهم: دریافت ID صحیح حتی در صفحه بلاگ
-$id = is_home() ? get_option('page_for_posts') : get_queried_object_id();
-
-$current_page = (get_query_var('paged')) ? get_query_var('paged') : 1;
-
-$args = array(
-    'post_type' => 'page',
-    'post_status' => 'publish',
-    'post__in' => [$id]
-);
-
-// دریافت فیلدهای ACF از ID صحیح
-$faq = get_field('faq_list', $id);
-$pages = new WP_Query($args);
-$content = $pages->posts[0]->post_content ?? '';
+$id           = is_home() ? (int) get_option('page_for_posts') : get_queried_object_id();
+$current_page = max(1, (int) get_query_var('paged'));
+$faq          = function_exists('get_field') ? get_field('faq_list', $id) : null;
+$page_content = $id ? get_post_field('post_content', $id) : '';
+$first        = $current_page === 1 && empty($_GET) && is_home();
 
 get_header();
-?>
 
-    <header class="container lg:px-0 border-b border-black/10">
-        <h1 class="text-black text-3xl border-b-2 border-primary w-fit">
-            <?php
-            // نمایش داینامیک و اصولی عنوان بر اساس نوع صفحه
-            if (is_home()) {
-                echo single_post_title('', false); // عنوان برگه بلاگ
-            } elseif (is_category() || is_tag() || is_tax()) {
-                echo single_term_title('', false); // عنوان دسته‌بندی یا برچسب
-            } elseif (is_search()) {
-                echo 'نتایج جستجو برای: ' . get_search_query(); // عنوان صفحه جستجو
-            } else {
-                echo get_the_title($id); // عنوان برگه‌های عادی
+if (is_home()) {
+    $title = single_post_title('', false) ?: 'مجله گیلدا';
+} elseif (is_search()) {
+    $title = 'نتایج جستجو برای: ' . get_search_query();
+} else {
+    $title = get_the_title($id);
+}
+get_template_part('template-parts/blog/mag-header', null, [
+    'title' => $title,
+    'desc'  => is_home() ? 'راهنمای خرید، نگهداری و استایل کیف زنانه؛ پرونده‌های چندقسمتی که قدم‌به‌قدم انتخاب بهتر را یادت می‌دهند.' : '',
+]);
+
+$exclude = [];
+
+/* ---------- featured ---------- */
+if ($first) :
+    $featured = new WP_Query(['post_type' => 'post', 'post__in' => gl_featured_post_ids(), 'orderby' => 'post__in', 'posts_per_page' => 4, 'ignore_sticky_posts' => true, 'no_found_rows' => true]);
+    if ($featured->have_posts()) : ?>
+        <section class="container grid gap-8 px-4 py-6 lg:grid-cols-12 lg:px-0" aria-label="مقالات تازه">
+            <?php while ($featured->have_posts()) : $featured->the_post();
+                $exclude[] = get_the_ID();
+                if ($featured->current_post === 0) : ?>
+                    <div class="lg:col-span-7"><?php get_template_part('template-parts/blog/mag-card', null, ['size' => 'lg', 'eager' => true]); ?></div>
+                    <div class="flex flex-col gap-5 lg:col-span-5">
+                <?php else : ?>
+                    <a href="<?php the_permalink(); ?>" class="group flex items-center gap-4" data-reveal style="--d:<?= (int) $featured->current_post; ?>">
+                        <span class="block aspect-square w-24 shrink-0 overflow-hidden rounded-2xl bg-gray-100 sm:w-28">
+                            <?php the_post_thumbnail('medium', ['class' => 'size-full object-cover transition duration-700 group-hover:scale-110', 'loading' => 'lazy', 'alt' => '']); ?>
+                        </span>
+                        <span class="min-w-0">
+                            <?php $c = get_the_category()[0] ?? null;
+                            if ($c) : ?><span class="text-xs font-bold text-secondary"><?= esc_html($c->name); ?></span><?php endif; ?>
+                            <span class="mt-1 line-clamp-2 block font-black leading-7 text-gray-900 group-hover:text-secondary"><?php the_title(); ?></span>
+                            <span class="mt-1 block text-xs text-gray-400"><?= esc_html(gl_fa_num(gl_reading_minutes())); ?> دقیقه مطالعه</span>
+                        </span>
+                    </a>
+                <?php endif;
+            endwhile;
+            if ($featured->post_count > 0) {
+                echo '</div>';
             }
-            ?>
-        </h1>
-    </header>
-
-<?php
-if ($current_page == 1 && empty($_GET)) :
-    get_template_part('template-parts/blog/archive/must-visited-posts');
-endif;
-
-$args2 = array(
-    'post_type' => 'post',
-    'post_status' => 'publish',
-    'orderby' => 'date',
-    'order' => 'DESC',
-    'paged' => $current_page,
-);
-
-$posts = new WP_Query($args2);
-if ($posts->have_posts()) :
-    ?>
-    <article class=" container bg-white max-lg:px-2 grid lg:grid-cols-12 gap-2 lg:gap-4 pt-2">
-        <?php get_template_part('template-parts/blog/sidebar'); ?>
-
-        <section class="lg:col-span-8 xl:col-span-9 max-w-content flex flex-col gap-3 lg:mb-4">
-            <?php get_template_part('template-parts/global/grid-button'); ?>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
-                 :class="gridView === 'large' ? 'md:grid-cols-1 lg:!grid-cols-2 xl:!grid-cols-3' : 'grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4'">
-                <?php
-                while ($posts->have_posts()) :
-                    $posts->the_post();
-
-                    $args = array(
-                        'class' => 'transition-all duration-500',
-                        'eager' => $posts->current_post < 4 // Eager load the first 4 blog posts
-                    );
-
-                    get_template_part('template-parts/blog/archive-card', null, $args);
-                endwhile;
-                ?>
-            </div>
+            wp_reset_postdata(); ?>
         </section>
+    <?php endif;
 
-        <?php
-        get_template_part('template-parts/global/pagination');
-        // Reset query
-        wp_reset_postdata(); // اضافه کردن این تابع برای جلوگیری از تداخل کوئری‌ها
-        ?>
-    </article>
-<?php else : ?>
-    <article class="container min-h-[30vh] flex flex-col justify-center items-center gap-4">
-        <?php get_template_part('template-parts/svg/message', null, ['size' => 150, 'class' => 'opacity-10']); ?>
-        <p class="text-4xl text-black/50">مقاله‌ای یافت نشد!</p>
-    </article>
-<?php endif;
-
-if ($current_page == 1 && empty($_GET)) :
-    $args = array(
-        'content' => $content
-    );
-    get_template_part('template-parts/global/content', null, $args);
-
-    if ($faq): ?>
-        <section class="container max-lg:px-3 lg:mb-4">
-            <?php
-            $args = array(
-                'items' => $faq
-            );
-            get_template_part('template-parts/global/faq-list', null, $args);
-            ?>
+    /* ---------- series rail ---------- */
+    $all_series = array_filter(gl_all_series(), function ($ids) {
+        return count($ids) > 1;
+    });
+    if ($all_series) : ?>
+        <section class="my-10 bg-primary py-14 text-white lg:py-20" aria-labelledby="series-title">
+            <div class="container px-4 lg:px-0">
+                <p class="mb-2 flex items-center gap-2 text-sm font-bold text-white/60"><span class="h-0.5 w-6 bg-current"></span>قدم‌به‌قدم یاد بگیر</p>
+                <h2 id="series-title" class="mb-8 text-2xl font-black lg:text-4xl">پرونده‌های مجله</h2>
+                <div class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] lg:mx-0 lg:grid lg:grid-cols-3 lg:overflow-visible lg:px-0">
+                    <?php $si = 0;
+                    foreach ($all_series as $name => $ids) :
+                        $first_id = $ids[0]; ?>
+                        <a href="<?= esc_url(get_permalink($first_id)); ?>" class="group relative flex w-[82%] shrink-0 snap-start flex-col overflow-hidden rounded-3xl bg-white/[0.06] ring-1 ring-white/10 transition hover:-translate-y-1 hover:bg-white/10 sm:w-[46%] lg:w-auto" data-reveal style="--d:<?= $si++; ?>">
+                            <span class="relative block aspect-[16/9] overflow-hidden">
+                                <?= get_the_post_thumbnail($first_id, 'medium_large', ['class' => 'size-full object-cover opacity-80 transition duration-700 group-hover:scale-105 group-hover:opacity-100', 'loading' => 'lazy', 'alt' => '']); ?>
+                                <span class="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent"></span>
+                                <span class="absolute bottom-3 start-4 rounded-full bg-secondary px-3 py-1 text-xs font-bold"><?= esc_html(gl_fa_num(count($ids))); ?> قسمت</span>
+                            </span>
+                            <span class="flex flex-1 flex-col p-5">
+                                <span class="text-xl font-black"><?= esc_html($name); ?></span>
+                                <ol class="mt-3 grid gap-1.5 text-sm text-white/70">
+                                    <?php foreach (array_slice($ids, 0, 3) as $n => $pid) : ?>
+                                        <li class="flex gap-2"><span class="text-white/40"><?= esc_html(gl_fa_num($n + 1)); ?>.</span><span class="line-clamp-1"><?= esc_html(get_the_title($pid)); ?></span></li>
+                                    <?php endforeach; ?>
+                                    <?php if (count($ids) > 3) : ?><li class="text-white/40">و <?= esc_html(gl_fa_num(count($ids) - 3)); ?> قسمت دیگر…</li><?php endif; ?>
+                                </ol>
+                                <span class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-white transition-all group-hover:gap-3">شروع پرونده
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
+                                </span>
+                            </span>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         </section>
     <?php endif;
 endif;
-?>
 
-<?php get_footer(); ?>
+/* ---------- all posts (main query: 9/page, featured excluded — see inc/blog/magazine.php) ---------- */
+global $wp_query;
+?>
+<section class="container px-4 pb-14 pt-6 lg:px-0" aria-labelledby="all-title">
+    <?php if ($first && is_home()) : ?><h2 id="all-title" class="mb-8 text-2xl font-black text-gray-900 lg:text-3xl">همه مقالات</h2><?php endif; ?>
+    <?php if (have_posts()) : ?>
+        <div class="grid gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+            <?php while (have_posts()) : the_post();
+                get_template_part('template-parts/blog/mag-card', null, ['d' => $wp_query->current_post % 3, 'eager' => !$first && $wp_query->current_post < 3]);
+            endwhile; ?>
+        </div>
+        <?php get_template_part('template-parts/global/pagination'); ?>
+    <?php elseif (!$exclude) : ?>
+        <p class="py-20 text-center text-2xl text-gray-400">مقاله‌ای یافت نشد!</p>
+    <?php endif; ?>
+</section>
+
+<?php if ($first) :
+    get_template_part('template-parts/global/content', null, ['content' => $page_content]);
+    if ($faq) : ?>
+        <section class="container px-4 lg:mb-4 lg:px-0">
+            <?php get_template_part('template-parts/global/faq-list', null, ['items' => $faq]); ?>
+        </section>
+    <?php endif;
+endif;
+
+get_footer();

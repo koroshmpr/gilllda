@@ -1,148 +1,271 @@
 <?php
 /**
- * WooCommerce Cart AJAX Fragments Hooks
+ * Cart drawer markup + WooCommerce fragments.
+ *
+ * `#gl-cart-body` (drawer content) and `span.header-cart-count` (header badge)
+ * are returned as fragments by every AJAX cart response (see ajax-cart.php)
+ * and by WooCommerce's own fragment refreshes.
+ *
+ * The body contains no Alpine directives on purpose: javascript/cart.js uses
+ * event delegation on data-gl-* attributes, so swapping the HTML is safe.
  */
 
 defined( 'ABSPATH' ) || exit;
 
 add_filter( 'woocommerce_add_to_cart_fragments', 'gilllda_cart_fragments' );
 function gilllda_cart_fragments( $fragments ) {
-    if ( ! class_exists( 'WooCommerce' ) ) {
-        return $fragments;
-    }
+	if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+		return $fragments;
+	}
 
-    // 1. Update Header Cart Count Badge
-    ob_start();
-    $cart_count = WC()->cart->get_cart_contents_count() ?? 0;
-    ?>
-    <span class="header-cart-count absolute top-0 start-2 lg:start-0 lg:translate-x-1/2 lg:-translate-y-1/2 translate-y-1 bg-secondary/80 text-white flex leading-auto justify-center items-center pt-1 p-0.5 rounded-sm text-xs size-4">
-         <?= $cart_count; ?>
-    </span>
-    <?php
-    $fragments['span.header-cart-count'] = ob_get_clean();
+	$fragments['span.header-cart-count'] = gl_header_cart_count_html();
 
-    // 2. Update Cart Modal Inner Content
-    ob_start();
-    ?>
-    <div class="cart-modal-inner flex flex-col h-full">
-        <?php
-        $cart_count = WC()->cart->get_cart_contents_count() ?? 0;
-        $is_empty = $cart_count == 0;
-        ?>
-        <div class="flex items-center justify-between p-4 bg-white border-b border-gray-200">
-            <h3 class="text-base font-bold text-gray-800 flex items-center gap-2">
-                سبد خرید شما
-                <span class="text-xs bg-red-500 text-white px-2 py-0.5 rounded-md shadow-sm"><?= $cart_count; ?></span>
-            </h3>
-            <button @click="cart = false" class="p-1.5 text-gray-400 bg-gray-50 rounded-lg hover:text-gray-700 hover:bg-gray-100 transition-all">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-        </div>
+	ob_start();
+	gl_cart_drawer_body();
+	$fragments['#gl-cart-body'] = ob_get_clean();
 
-        <div class="flex-1 overflow-y-auto p-4 space-y-3">
-            <?php if ($is_empty) : ?>
-                <div class="flex flex-col items-center justify-center h-full text-gray-400 space-y-4">
-                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-sm">
-                        <svg class="w-10 h-10 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
-                    </div>
-                    <p class="text-sm font-medium text-gray-500">سبد خرید شما خالی است!</p>
-                </div>
-            <?php else : ?>
-                <div class="flex flex-col gap-3">
-                    <?php
-                    foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
-                        $_product = apply_filters('woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key);
+	return $fragments;
+}
 
-                        if ($_product && $_product->exists() && $cart_item['quantity'] > 0) {
-                            $product_name = $_product->get_name();
-                            $thumbnail = $_product->get_image('woocommerce_gallery_thumbnail', ['class' => 'w-full h-full object-cover']);
-                            $product_permalink = $_product->is_visible() ? $_product->get_permalink($cart_item) : '#';
+/**
+ * Header badge (same classes as template-parts/layout/header-content.php).
+ */
+function gl_header_cart_count_html() {
+	$count = WC()->cart ? (int) WC()->cart->get_cart_contents_count() : 0;
+	return '<span class="header-cart-count absolute top-0 start-2 lg:start-0 lg:translate-x-1/2 lg:-translate-y-1/2 translate-y-1 bg-secondary/80 text-white flex leading-auto justify-center items-center pt-1 p-0.5 rounded-sm text-xs size-4" data-count="' . esc_attr( $count ) . '">' . esc_html( $count ) . '</span>';
+}
 
-                            $item_price_raw = wc_get_price_to_display($_product);
-                            $remove_url = wc_get_cart_remove_url($cart_item_key);
-                            ?>
-                            <div class="flex items-stretch gap-3 p-3 bg-white rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all group relative">
+/**
+ * Human readable variation attributes of a cart item (label, value, ACF swatch colour).
+ */
+function gl_cart_item_attrs( $cart_item, $product ) {
+	$attrs = array();
+	foreach ( (array) ( $cart_item['variation'] ?? array() ) as $attr_key => $value ) {
+		if ( '' === $value || null === $value ) {
+			continue;
+		}
+		$taxonomy = wc_attribute_taxonomy_name( str_replace( array( 'attribute_pa_', 'attribute_' ), '', $attr_key ) );
+		$label    = $value;
+		$swatch   = '';
+		if ( taxonomy_exists( $taxonomy ) ) {
+			$term = get_term_by( 'slug', $value, $taxonomy );
+			if ( $term && ! is_wp_error( $term ) ) {
+				$label  = $term->name;
+				$swatch = function_exists( 'get_field' ) ? (string) get_field( 'color', $taxonomy . '_' . $term->term_id ) : '';
+			}
+			$attr_label = wc_attribute_label( $taxonomy, $product );
+		} else {
+			$attr_label = wc_attribute_label( str_replace( 'attribute_', '', $attr_key ), $product );
+		}
+		$attrs[] = array(
+			'label'  => $attr_label,
+			'value'  => $label,
+			'swatch' => $swatch,
+		);
+	}
+	return $attrs;
+}
 
-                                <a href="<?= esc_url($product_permalink); ?>" class="shrink-0 w-24 h-24 relative overflow-hidden rounded-xl bg-gray-50 border border-gray-50">
-                                    <?= $thumbnail; ?>
-                                </a>
+/**
+ * Normalised data for every visible cart item.
+ */
+function gl_cart_items_view() {
+	$items = array();
+	if ( ! WC()->cart ) {
+		return $items;
+	}
 
-                                <div class="flex flex-col flex-1 justify-between py-0.5">
-                                    <div class="flex items-start justify-between gap-2">
-                                        <a href="<?= esc_url($product_permalink); ?>"
-                                           class="text-sm font-semibold text-gray-800 leading-6 line-clamp-2 hover:text-red-500 transition-colors">
-                                            <?= wp_kses_post($product_name); ?>
-                                        </a>
-                                        <a href="<?= esc_url($remove_url); ?>" aria-label="حذف محصول" class="text-gray-300 hover:text-red-500 hover:bg-red-50 p-1.5 -m-1.5 rounded-lg transition-all shrink-0">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                            </svg>
-                                        </a>
-                                    </div>
+	foreach ( WC()->cart->get_cart() as $key => $cart_item ) {
+		$product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $key );
+		if ( ! $product || ! $product->exists() || $cart_item['quantity'] <= 0 || ! apply_filters( 'woocommerce_widget_cart_item_visible', true, $cart_item, $key ) ) {
+			continue;
+		}
 
-                                    <div class="flex items-end justify-between mt-2">
-                                        <div class="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-lg border border-gray-100">
-                                            <span class="text-[11px] text-gray-500">تعداد:</span>
-                                            <span class="text-xs font-bold text-gray-700"><?= $cart_item['quantity']; ?></span>
-                                        </div>
+		$name      = function_exists( 'gl_cart_item_base_name' ) ? gl_cart_item_base_name( $product ) : $product->get_name();
+		$permalink = apply_filters( 'woocommerce_cart_item_permalink', $product->is_visible() ? $product->get_permalink( $cart_item ) : '', $cart_item, $key );
 
-                                        <div class="flex items-center gap-1.5">
-                                            <span class="text-[15px] font-bold text-gray-800 tracking-tight">
-                                                <?= number_format((float)$item_price_raw); ?>
-                                            </span>
-                                            <div class="flex flex-col items-center justify-center text-[9px] font-black leading-[0.85] text-gray-500 mt-0.5">
-                                                <span>ن</span>
-                                                <span class="-mb-[2px]">توما</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php
-                        }
-                    }
-                    ?>
-                </div>
-            <?php endif; ?>
-        </div>
+		$attrs = gl_cart_item_attrs( $cart_item, $product );
 
-        <?php if (!$is_empty) :
-            $subtotal_raw = WC()->cart->subtotal;
-            ?>
-            <div class="border-t border-gray-200 p-4 bg-white shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.03)] z-20">
-                <div class="flex justify-between items-center mb-4 px-1">
-                    <span class="text-sm font-medium text-gray-500">مبلغ قابل پرداخت:</span>
+		$max = $product->is_sold_individually() ? 1 : (int) $product->get_max_purchase_quantity();
 
-                    <div class="flex items-center gap-1.5">
-                        <span class="font-bold text-lg text-gray-900 tracking-tight">
-                            <?= number_format((float)$subtotal_raw); ?>
-                        </span>
-                        <div class="flex flex-col items-center justify-center text-[10px] font-black leading-[0.85] text-gray-500 mt-1">
-                            <span>ن</span>
-                            <span class="-mb-[2px]">توما</span>
-                        </div>
-                    </div>
-                </div>
+		$items[] = array(
+			'key'       => $key,
+			'name'      => $name,
+			'permalink' => $permalink,
+			'thumbnail' => $product->get_image(
+				'woocommerce_thumbnail',
+				array(
+					'class'   => 'size-full object-cover',
+					'alt'     => $name,
+					'loading' => 'lazy',
+				)
+			),
+			'attrs'     => $attrs,
+			'qty'       => (int) $cart_item['quantity'],
+			'max'       => $max,
+			'price'     => (float) wc_get_price_to_display( $product ),
+			'line'      => (float) wc_get_price_to_display( $product, array( 'qty' => $cart_item['quantity'] ) ),
+		);
+	}
 
-                <div class="grid grid-cols-2 gap-3">
-                    <a href="<?= esc_url(wc_get_checkout_url()); ?>"
-                       class="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white py-3 px-4 rounded-xl font-semibold transition-all shadow-sm shadow-red-200 text-sm">
-                        ثبت و پرداخت
-                    </a>
-                    <a href="<?= esc_url(wc_get_cart_url()); ?>"
-                       class="flex items-center justify-center bg-white border-2 border-gray-100 hover:border-gray-200 hover:bg-gray-50 text-gray-700 py-3 px-4 rounded-xl font-semibold transition-all text-sm">
-                        مشاهده سبد
-                    </a>
-                </div>
-            </div>
-        <?php endif; ?>
-    </div>
-    <?php
-    $fragments['div.cart-modal-inner'] = ob_get_clean();
+	return $items;
+}
 
-    return $fragments;
+/**
+ * Inner, swappable part of the drawer.
+ */
+function gl_cart_drawer_body() {
+	$cart     = WC()->cart;
+	$count    = $cart ? (int) $cart->get_cart_contents_count() : 0;
+	$items    = $cart ? gl_cart_items_view() : array();
+	$hash     = $count ? $cart->get_cart_hash() : '';
+	$subtotal = $cart ? (float) $cart->get_displayed_subtotal() : 0;
+	$discount = $cart ? (float) $cart->get_discount_total() : 0;
+	if ( $cart && $cart->display_prices_including_tax() ) {
+		$discount += (float) $cart->get_discount_tax();
+	}
+	$threshold = function_exists( 'gl_free_shipping_threshold' ) ? gl_free_shipping_threshold() : 0;
+	$shop_url  = wc_get_page_permalink( 'shop' );
+	?>
+	<div id="gl-cart-body" class="flex flex-1 min-h-0 flex-col" data-count="<?php echo esc_attr( $count ); ?>" data-hash="<?php echo esc_attr( $hash ); ?>">
+		<?php if ( ! $items ) : ?>
+			<div class="flex flex-1 flex-col items-center justify-center gap-4 px-6 py-12 text-center">
+				<div class="flex size-24 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-gray-100">
+					<svg class="size-11 text-primary/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+					</svg>
+				</div>
+				<div class="space-y-1">
+					<p class="text-base font-bold text-gray-800">سبد خرید شما خالی است</p>
+					<p class="text-sm text-gray-500">کیف محبوبت را پیدا کن و با یک ضربه به سبد اضافه کن.</p>
+				</div>
+				<a href="<?php echo esc_url( $shop_url ); ?>" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-8 text-sm font-bold text-white shadow-sm transition hover:brightness-110">
+					رفتن به فروشگاه
+				</a>
+			</div>
+		<?php else : ?>
+			<?php
+			if ( $threshold > 0 ) :
+				$basis     = max( 0, $subtotal - $discount );
+				$remaining = max( 0, $threshold - $basis );
+				$percent   = min( 100, (int) round( ( $basis / $threshold ) * 100 ) );
+				?>
+				<div class="mx-4 mt-3 rounded-2xl bg-white px-4 py-3 ring-1 ring-gray-100">
+					<p class="mb-2 text-xs text-gray-600">
+						<?php if ( $remaining > 0 ) : ?>
+							فقط <b class="font-bold text-primary"><?php echo esc_html( gl_cart_number( $remaining ) ); ?> تومان</b> تا ارسال رایگان
+						<?php else : ?>
+							<b class="font-bold text-emerald-700">ارسال این سفارش رایگان است.</b>
+						<?php endif; ?>
+					</p>
+					<div class="h-1.5 overflow-hidden rounded-full bg-gray-100" role="progressbar" aria-label="پیشرفت تا ارسال رایگان" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<?php echo esc_attr( $percent ); ?>">
+						<div class="gl-progress h-full rounded-full <?php echo $remaining > 0 ? 'bg-secondary' : 'bg-emerald-600'; ?>" style="width: <?php echo esc_attr( $percent ); ?>%"></div>
+					</div>
+				</div>
+			<?php endif; ?>
+
+			<ul class="flex-1 min-h-0 space-y-3 overflow-y-auto overscroll-contain p-4" aria-label="کالاهای سبد خرید">
+				<?php foreach ( $items as $item ) :
+					$at_max = $item['max'] > 0 && $item['qty'] >= $item['max'];
+					?>
+					<li class="gl-item relative flex gap-3 rounded-2xl border border-gray-100 bg-white p-3 transition-all duration-300"
+						data-gl-item="<?php echo esc_attr( $item['key'] ); ?>"
+						data-qty="<?php echo esc_attr( $item['qty'] ); ?>"
+						data-max="<?php echo esc_attr( $item['max'] ); ?>"
+						data-name="<?php echo esc_attr( $item['name'] ); ?>">
+
+						<?php if ( $item['permalink'] ) : ?>
+							<a href="<?php echo esc_url( $item['permalink'] ); ?>" class="block size-20 shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-gray-50" tabindex="-1" aria-hidden="true">
+								<?php echo $item['thumbnail']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							</a>
+						<?php else : ?>
+							<span class="block size-20 shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-gray-50"><?php echo $item['thumbnail']; // phpcs:ignore ?></span>
+						<?php endif; ?>
+
+						<div class="flex min-w-0 flex-1 flex-col gap-1">
+							<div class="flex items-start justify-between gap-2">
+								<?php if ( $item['permalink'] ) : ?>
+									<a href="<?php echo esc_url( $item['permalink'] ); ?>" class="line-clamp-2 pt-0.5 text-sm font-bold leading-6 text-gray-800 hover:text-primary"><?php echo esc_html( $item['name'] ); ?></a>
+								<?php else : ?>
+									<span class="line-clamp-2 pt-0.5 text-sm font-bold leading-6 text-gray-800"><?php echo esc_html( $item['name'] ); ?></span>
+								<?php endif; ?>
+								<button type="button" data-gl-remove
+										class="-me-2 -mt-2 flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-xl text-gray-400 transition hover:bg-secondary/5 hover:text-secondary"
+										aria-label="<?php echo esc_attr( sprintf( 'حذف %s از سبد', $item['name'] ) ); ?>">
+									<svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+								</button>
+							</div>
+
+							<?php foreach ( $item['attrs'] as $attr ) : ?>
+								<p class="flex items-center gap-1.5 text-xs text-gray-500">
+									<?php if ( $attr['swatch'] ) : ?>
+										<span class="size-3 rounded-full ring-1 ring-black/10" style="background-color: <?php echo esc_attr( $attr['swatch'] ); ?>;" aria-hidden="true"></span>
+									<?php endif; ?>
+									<span><?php echo esc_html( $attr['label'] ); ?>: <?php echo esc_html( $attr['value'] ); ?></span>
+								</p>
+							<?php endforeach; ?>
+
+							<div class="mt-auto flex items-end justify-between gap-2 pt-1">
+								<div class="gl-stepper flex items-center rounded-xl border border-gray-200 bg-gray-50" role="group" aria-label="<?php echo esc_attr( sprintf( 'تعداد %s', $item['name'] ) ); ?>">
+									<button type="button" data-gl-qty="1"
+											class="flex size-11 cursor-pointer items-center justify-center rounded-xl text-primary transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-30"
+											aria-label="افزایش تعداد" <?php disabled( $at_max ); ?>>
+										<svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-width="2.4" d="M12 5v14M5 12h14"/></svg>
+									</button>
+									<output class="w-7 text-center text-sm font-black text-gray-800" data-gl-qty-value aria-live="polite"><?php echo esc_html( $item['qty'] ); ?></output>
+									<button type="button" data-gl-qty="-1"
+											class="flex size-11 cursor-pointer items-center justify-center rounded-xl text-primary transition hover:bg-white"
+											aria-label="<?php echo 1 === $item['qty'] ? 'حذف از سبد' : 'کاهش تعداد'; ?>">
+										<svg class="gl-ico-minus size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-width="2.4" d="M5 12h14"/></svg>
+										<svg class="gl-ico-trash size-[18px] text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+									</button>
+								</div>
+
+								<div class="flex flex-col items-end gap-0.5">
+									<?php if ( $item['qty'] > 1 ) : ?>
+										<span class="text-[11px] text-gray-400"><?php echo esc_html( gl_cart_number( $item['price'] ) ); ?> × <?php echo esc_html( $item['qty'] ); ?></span>
+									<?php endif; ?>
+									<?php echo gl_cart_money_html( $item['line'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								</div>
+							</div>
+						</div>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+
+			<div class="border-t border-gray-100 bg-white px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-10px_20px_-12px_rgba(16,37,66,0.12)]">
+				<dl class="mb-3 space-y-1.5 text-sm">
+					<div class="flex items-center justify-between gap-3">
+						<dt class="text-gray-500">جمع سبد (<?php echo esc_html( $count ); ?> کالا)</dt>
+						<dd><?php echo gl_cart_money_html( $subtotal, 'lg' ); // phpcs:ignore ?></dd>
+					</div>
+					<?php if ( $discount > 0 ) : ?>
+						<div class="flex items-center justify-between gap-3 text-emerald-700">
+							<dt>سود شما از تخفیف</dt>
+							<dd class="font-bold"><?php echo esc_html( gl_cart_number( $discount ) ); ?> تومان</dd>
+						</div>
+					<?php endif; ?>
+					<div class="flex items-start justify-between gap-3 text-xs text-gray-500">
+						<dt class="shrink-0">هزینه ارسال</dt>
+						<dd class="text-left leading-5"><?php echo esc_html( gl_cart_shipping_note() ); ?></dd>
+					</div>
+				</dl>
+				<div class="grid grid-cols-[1fr_1.5fr] gap-2">
+					<button type="button" data-gl-close
+							class="min-h-12 cursor-pointer rounded-xl border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700 transition hover:bg-gray-50">
+						ادامه خرید
+					</button>
+					<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>"
+					   class="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-3 text-sm font-bold text-white shadow-sm shadow-primary/20 transition hover:brightness-110">
+						تسویه حساب
+						<svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7"/></svg>
+					</a>
+				</div>
+				<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="mt-1 flex min-h-11 items-center justify-center text-xs text-gray-500 transition hover:text-primary">
+					مشاهده و ویرایش سبد خرید
+				</a>
+			</div>
+		<?php endif; ?>
+	</div>
+	<?php
 }

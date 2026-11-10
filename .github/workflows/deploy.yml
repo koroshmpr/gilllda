@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'themes/Gilllda/**'
+      - 'plugins/gilllda-ai/**'
       - '.github/workflows/deploy.yml'
   workflow_dispatch: # "Run workflow" button in the Actions tab
 
@@ -37,10 +38,9 @@ jobs:
           npm run production
 
       - name: PHP syntax check
-        working-directory: ${{ env.THEME_DIR }}/theme
         run: |
           php -v | head -1
-          find . -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -d display_errors=1 > /tmp/lint.txt 2>&1 || {
+          find "$THEME_DIR/theme" plugins/gilllda-ai -name '*.php' -print0 2>/dev/null | xargs -0 -n1 -P4 php -l -d display_errors=1 > /tmp/lint.txt 2>&1 || {
             grep -v '^No syntax errors' /tmp/lint.txt; exit 1; }
           echo "All PHP files OK"
 
@@ -49,6 +49,14 @@ jobs:
         with:
           name: theme
           path: ${{ env.THEME_DIR }}/theme/
+          retention-days: 14
+
+      - name: Upload plugin
+        if: hashFiles('plugins/gilllda-ai/gilllda-ai.php') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin-gilllda-ai
+          path: plugins/gilllda-ai/
           retention-days: 14
 
   deploy:
@@ -100,6 +108,37 @@ jobs:
             **/node_modules/**
             **/.DS_Store
             **/*.map
+
+      - name: Download plugin
+        id: plugin
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: plugin-gilllda-ai
+          path: plugin
+
+      - name: Plugin server path
+        id: ppath
+        if: steps.plugin.outcome == 'success'
+        env:
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+        run: echo "dir=${FTP_SERVER_DIR%themes/Gilllda/theme/}plugins/gilllda-ai/" >> "$GITHUB_OUTPUT"
+
+      - name: Upload plugin via FTP(S)
+        if: steps.plugin.outcome == 'success'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT || 21 }}
+          protocol: ${{ secrets.FTP_PROTOCOL || 'ftps' }}
+          local-dir: ./plugin/
+          server-dir: ${{ steps.ppath.outputs.dir }}
+          state-name: .ftp-deploy-sync-state.json
+          exclude: |
+            **/.git*
+            **/.DS_Store
 
       - name: Smoke test the live site
         run: |

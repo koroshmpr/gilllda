@@ -102,15 +102,7 @@ ob_start(); ?>
         </button>
     </div>
 
-    <!-- Minimum Weight -->
-    <div class="border-t border-gray-200 pt-4">
-        <div class="flex justify-between items-center mb-3">
-            <p class="text-sm font-black my-0 text-gray-700">حداقل وزن</p>
-            <span class="text-[10px] font-black px-2 py-1 bg-primary/5 rounded-lg text-primary" x-text="filters.min_weight + ' <?= esc_js($weight_unit) ?>'"></span>
-        </div>
-        <input aria-label="change the weight filter" type="range" min="0" max="50" step="0.5" x-model="filters.min_weight" class="w-full h-1.5 bg-gray-200 hover:bg-gray-300 transition-all rounded-lg appearance-none cursor-pointer accent-primary">
-    </div>
-
+    <?php /* Weight filter removed: meaningless for bags (left over from the shoe catalogue). min_weight URL param still works. */ ?>
     <!-- Maximum Price -->
     <div class="border-t border-gray-200 pt-4">
         <div class="flex justify-between items-center mb-3">

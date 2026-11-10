@@ -1,0 +1,10 @@
+# Deploy bookkeeping and source maps must not be web-readable.
+<FilesMatch "^(\.ftp-deploy-sync-state\.json|readme\.txt|.*\.map)$">
+	<IfModule mod_authz_core.c>
+		Require all denied
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		Order allow,deny
+		Deny from all
+	</IfModule>
+</FilesMatch>

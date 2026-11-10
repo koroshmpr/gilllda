@@ -6,7 +6,7 @@ $boxClass = 'min-w-10 aspect-square bg-icon text-black border font-bold text-lg 
 
 <div class="flex justify-center items-center gap-x-1 text-center"
      x-data="{
-        targetTime: '<?= $timer; ?>',
+        targetTime: '<?= esc_js(preg_match('/^\d{1,2}:\d{2}(:\d{2})?$/', $timer) ? $timer : '23:59:59'); ?>',
         hours: '00',
         minutes: '00',
         seconds: '00',
@@ -22,9 +22,9 @@ $boxClass = 'min-w-10 aspect-square bg-icon text-black border font-bold text-lg 
             // Calculate distance in milliseconds
             let distance = target.getTime() - now.getTime();
 
+            // daily offer: once today's end time has passed, count to the same time tomorrow
             if (distance <= 0) {
-                this.hours = '00'; this.minutes = '00'; this.seconds = '00';
-                return;
+                distance += 24 * 60 * 60 * 1000;
             }
 
             this.hours = String(Math.floor(distance / (1000 * 60 * 60))).padStart(2, '0');

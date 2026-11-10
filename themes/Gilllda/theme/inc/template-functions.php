@@ -269,6 +269,11 @@ add_action('wp_ajax_fetch_comment_replies', 'bluebox_fetch_comment_replies');
 function bluebox_fetch_comment_replies() {
     $parent_id = isset($_POST['parent_id']) ? intval($_POST['parent_id']) : 0;
     if (!$parent_id) wp_send_json_error();
+    $parent = get_comment($parent_id);
+    $parent_post = $parent ? get_post($parent->comment_post_ID) : null;
+    if (!$parent_post || get_post_status($parent_post) !== 'publish' || post_password_required($parent_post)) {
+        wp_send_json_error();
+    }
 
     $replies = get_comments(array(
         'parent' => $parent_id,

@@ -28,16 +28,10 @@ $activeClass = 'max-lg:!bg-primary/15 border max-lg:!border-primary/20 max-lg:ro
             <div class="flex items-center max-lg:justify-between max-lg:w-full gap-1 lg:gap-3">
                 <?php
                 if (!wp_is_mobile()):
-                    // Get the current post type
-                    $post_type = get_post_type();
-
-                    if ('post' === $post_type) {
-                        // Shows on single blog posts and the blog archive
-                        get_template_part('template-parts/global/channel-btn', null, ['type' => 'blog']);
-
-                    } elseif ($woo_active && ('product' === $post_type || is_shop())) {
-                        // Shows on single products and the shop archive (assuming WooCommerce)
-                        get_template_part('template-parts/global/channel-btn', null, ['type' => 'shop']);
+                    // Magazine pages → articles channel, store pages → shop channel
+                    $channel = gl_header_channel();
+                    if ($channel) {
+                        get_template_part('template-parts/global/channel-btn', null, ['type' => $channel]);
                     }
                 endif;
 
@@ -143,17 +137,9 @@ if (wp_is_mobile()):
         ]); ?>
         <div class="flex gap-1 items-center">
             <?php
-            // Get the current post type
-            $post_type = get_post_type();
-
-            if ('post' === $post_type) {
-                // Shows on single blog posts and the blog archive
-                get_template_part('template-parts/global/channel-btn', null, ['type' => 'blog']);
-
-            } elseif ($woo_active && ('product' === $post_type || is_shop())) {
-
-                // Shows on single products and the shop archive (assuming WooCommerce)
-                get_template_part('template-parts/global/channel-btn', null, ['type' => 'shop']);
+            $channel = gl_header_channel();
+            if ($channel) {
+                get_template_part('template-parts/global/channel-btn', null, ['type' => $channel]);
             }
             ?>
             <?php
