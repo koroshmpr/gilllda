@@ -2,6 +2,13 @@
 
 _Last updated: 2026-11-10 (v1.6.x / v1.7.0 batch)._ Keep this short; newest on top.
 
+## Shipped 2026-11-11 (v1.8.0)
+- My Account redesign + animated 5-step order tracker (`inc/account/`), Woo 11.2.2 template sync.
+- Compare (REST `gilllda/v1/compare`, tray, new page) and instant search (REST `gilllda/v1/search`, Persian/Arabic normalisation, results page).
+- Footer rebuilt, FAQ page + content rewritten (24 Q; free-shipping claim removed, coupon = 5%), header unified, design system in CLAUDE.md.
+- Fixes: mobile overflow on series posts, drop cap removed, cart/card/checkout layout, mobile phone required at every layer.
+- Verified live: 13 key pages 200, no PHP notices, 390px width on mobile, endpoints OK.
+
 ## Shipped in the 2026-11-10 batch
 - Deploy pipeline (GitHub Actions → FTPS, PHP lint, smoke test); plugin `plugins/gilllda-ai/` deployed by the same workflow.
 - Security: OTP login takeover fixed (strict compare, attempt limits, endpoints only when Kavenegar configured), password brute-force limit, rating spam & fake Product stars removed, comment-reply leak, search input bounds.
@@ -31,6 +38,8 @@ _Last updated: 2026-11-10 (v1.6.x / v1.7.0 batch)._ Keep this short; newest on t
 - `.ftp-deploy-sync-state.json` under the theme returns 403.
 
 ## Known leftovers / ideas
+- Deploy state file (`.htftp-deploy-state.json`, old `.ftp-deploy-sync-state.json`) is publicly readable: this host ignores the theme `.htaccess` FilesMatch and doesn't block `.ht*`. Only lists theme file names/hashes. Could delete the old one via FTP.
+- Product image filenames are swapped (ونوس uses `parastoo-*`, پرستو uses `nikka-*`) — images are correct, only names; rename for image SEO if desired.
 - `header-content.php` still uses `wp_is_mobile()` for the mobile header (page-cache needs "Cache Mobile" ON).
 - Product reviews: 0 — ask buyers for reviews (enables rating rich results).
 - Category pages: add hero banners/description styling; shop page has no intro copy.
