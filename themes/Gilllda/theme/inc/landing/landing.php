@@ -18,10 +18,20 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const GL_LP_META   = '_gl_lp';        // array of settings
-const GL_LP_STATS  = '_gl_lp_stats';  // array of counters
-const GL_LP_ON     = '_gl_lp_on';     // 'yes' when enabled (separate key so it is queryable)
+// Settings/toggle keys are deliberately not "_"-prefixed so they can also be managed
+// over the REST/MCP API (e.g. turning a landing on for a campaign); they are hidden
+// from the classic "Custom Fields" box below.
+const GL_LP_META   = 'gl_lp_settings'; // array of settings
+const GL_LP_STATS  = '_gl_lp_stats';   // array of counters
+const GL_LP_ON     = 'gl_lp_on';       // 'yes' when enabled (separate key so it is queryable)
 const GL_LP_REWRITE_VERSION = '1';
+
+add_filter('is_protected_meta', function ($protected, $key) {
+    if (in_array($key, [GL_LP_META, GL_LP_ON], true) && is_admin() && !wp_doing_ajax()) {
+        return true;
+    }
+    return $protected;
+}, 10, 2);
 
 /* -------------------------------------------------------------------------
  * Settings
